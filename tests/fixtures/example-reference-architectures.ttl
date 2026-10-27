@@ -1,0 +1,129 @@
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX ai-factory-model: <https://w3id.org/ai-factory/model/>
+PREFIX ai-factory-source: <https://w3id.org/ai-factory/source/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ai-factory-model:example-ra-hgx-b300-ethernet
+    a ai-factory:ReferenceArchitecture ;
+    rdfs:label "Example HGX B300 reference architecture with Ethernet"@en ;
+    prov:wasDerivedFrom ai-factory-source:example-reference-architecture-ethernet-page ;
+    ai-factory:computeFabric ai-factory:NetworkProtocol-Ethernet ;
+    ai-factory:gpuPlatform ai-factory:GPUPlatform-HGX-B300 ;
+    ai-factory:hasReferenceRole
+        ai-factory-model:example-ra-hgx-b300-ethernet.compute-switch ,
+        ai-factory-model:example-ra-hgx-b300-ethernet.oob-switch ;
+.
+
+ai-factory-model:example-ra-hgx-b300-infiniband
+    a ai-factory:ReferenceArchitecture ;
+    rdfs:label "Example HGX B300 reference architecture with InfiniBand"@en ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=3" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-reference-architecture-ib ;
+        ] ;
+    ai-factory:computeFabric ai-factory:NetworkProtocol-InfiniBand ;
+    ai-factory:gpuPlatform ai-factory:GPUPlatform-HGX-B300 ;
+    ai-factory:hasReferenceRole
+        ai-factory-model:example-ra-hgx-b300-infiniband.compute-switch ,
+        ai-factory-model:example-ra-hgx-b300-infiniband.fabric-manager ,
+        ai-factory-model:example-ra-hgx-b300-infiniband.oob-switch ,
+        ai-factory-model:example-ra-hgx-b300-infiniband.storage-switch ;
+.
+
+ai-factory-model:example-ra-hgx-b300-ethernet.compute-switch
+    a ai-factory:ReferenceRole ;
+    rdfs:label "Ethernet compute network switch"@en ;
+    prov:wasDerivedFrom ai-factory-source:example-reference-architecture-ethernet-page ;
+    ai-factory:roleClass ai-factory:EthernetSwitch ;
+    ai-factory:roleFunction ai-factory:NetworkPlaneFunction-ComputeFabric ;
+.
+
+ai-factory-model:example-ra-hgx-b300-ethernet.oob-switch
+    a ai-factory:ReferenceRole ;
+    rdfs:label "Out-of-band management switch"@en ;
+    prov:wasDerivedFrom ai-factory-source:example-reference-architecture-ethernet-page ;
+    ai-factory:roleClass ai-factory:EthernetSwitch ;
+    ai-factory:roleFunction ai-factory:NetworkPlaneFunction-OutOfBandManagement ;
+.
+
+ai-factory-model:example-ra-hgx-b300-infiniband.compute-switch
+    a ai-factory:ReferenceRole ;
+    rdfs:label "InfiniBand compute network switch"@en ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=7" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-reference-architecture-ib ;
+        ] ;
+    ai-factory:roleClass ai-factory:InfiniBandSwitch ;
+.
+
+ai-factory-model:example-ra-hgx-b300-infiniband.fabric-manager
+    a ai-factory:ReferenceRole ;
+    rdfs:label "InfiniBand fabric management server"@en ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=8" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-reference-architecture-ib ;
+        ] ;
+    ai-factory:roleClass ai-factory:Server ;
+    ai-factory:roleFunction ai-factory:ServerFunction-FabricManagement ;
+.
+
+ai-factory-model:example-ra-hgx-b300-infiniband.oob-switch
+    a ai-factory:ReferenceRole ;
+    rdfs:label "Out-of-band management switch"@en ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=9" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-reference-architecture-ib ;
+        ] ;
+    ai-factory:roleClass ai-factory:EthernetSwitch ;
+    ai-factory:roleFunction ai-factory:NetworkPlaneFunction-OutOfBandManagement ;
+.
+
+ai-factory-model:example-ra-hgx-b300-infiniband.storage-switch
+    a ai-factory:ReferenceRole ;
+    rdfs:label "Storage network switch"@en ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=10" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-reference-architecture-ib ;
+        ] ;
+    ai-factory:roleClass ai-factory:EthernetSwitch ;
+    ai-factory:roleFunction ai-factory:NetworkPlaneFunction-StorageFabric ;
+.

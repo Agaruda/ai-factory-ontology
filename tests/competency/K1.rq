@@ -1,0 +1,20 @@
+# K1. What supply temperature range and flow per unit does a liquid-cooled device need? Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?point ?minimum ?maximum ?flow ?condition WHERE {
+  ?model s223:hasConnectionPoint ?point . ?point a ai-factory:LiquidInlet ; s223:hasRole s223:Role-Supply .
+  OPTIONAL { ?point s223:hasProperty ?lo . ?lo qudt:hasQuantityKind quantitykind:Temperature ;
+                 s223:hasAspect s223:Aspect-Minimum, ai-factory:Aspect-Operating ; s223:hasValue ?minimum }
+  OPTIONAL { ?point s223:hasProperty ?hi . ?hi qudt:hasQuantityKind quantitykind:Temperature ;
+                 s223:hasAspect s223:Aspect-Maximum, ai-factory:Aspect-Operating ; s223:hasValue ?maximum }
+  OPTIONAL { ?point s223:hasProperty ?f . ?f qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+                 s223:hasAspect ai-factory:Aspect-Required ; s223:hasValue ?flow .
+             OPTIONAL { ?f ai-factory:condition ?condition } }
+}

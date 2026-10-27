@@ -1,0 +1,344 @@
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX ai-factory-model: <https://w3id.org/ai-factory/model/>
+PREFIX ai-factory-org: <https://w3id.org/ai-factory/org/>
+PREFIX ai-factory-source: <https://w3id.org/ai-factory/source/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rec: <https://w3id.org/rec#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX unit: <http://qudt.org/vocab/unit/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+ai-factory-model:example-cdu-l2l-500.not-stated.pressure-drop
+    a ai-factory:NotStatedRecord ;
+    ai-factory:aboutConnectionPointClass ai-factory:LiquidOutlet ;
+    ai-factory:aboutModel ai-factory-model:example-cdu-l2l-500 ;
+    ai-factory:aboutPropertyClass ai-factory:PressureDrop ;
+    ai-factory:aboutQuantityKind quantitykind:Pressure ;
+    ai-factory:checkedSource
+        ai-factory-source:example-cdu-l2l-500-datasheet ,
+        ai-factory-source:example-cdu-l2l-500-manual ;
+.
+
+ai-factory-model:example-cdu-l2l-500.atd
+    a ai-factory:ApproachTemperatureDifference ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 4.0 ;
+    qudt:hasQuantityKind quantitykind:TemperatureDifference ;
+    qudt:hasUnit unit:K ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.cooling-capacity
+    a ai-factory:CoolingCapacity ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 500.0 ;
+    qudt:hasQuantityKind quantitykind:HeatFlowRate ;
+    qudt:hasUnit unit:KiloW ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+    ai-factory:condition "at a 4 K approach temperature difference" ;
+.
+
+ai-factory-model:example-cdu-l2l-500.fws-in
+    a ai-factory:LiquidInlet ;
+    s223:hasMedium s223:Fluid-Water ;
+    s223:hasProperty
+        ai-factory-model:example-cdu-l2l-500.fws-in.temp-max ,
+        ai-factory-model:example-cdu-l2l-500.fws-in.water-class ;
+    s223:hasRole
+        s223:Role-Primary ,
+        s223:Role-Supply ;
+    s223:isConnectionPointOf ai-factory-model:example-cdu-l2l-500 ;
+.
+
+ai-factory-model:example-cdu-l2l-500.fws-in.temp-max
+    a s223:QuantifiableProperty ;
+    s223:hasAspect
+        s223:Aspect-Maximum ,
+        ai-factory:Aspect-Operating ;
+    s223:hasValue 32.0 ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasUnit unit:DEG_C ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.fws-in.water-class
+    a ai-factory:LiquidCoolingWaterClassProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-LiquidCoolingWaterClass ;
+    s223:hasValue ai-factory:LiquidCoolingWaterClass-W32 ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.fws-out
+    a ai-factory:LiquidOutlet ;
+    s223:hasMedium s223:Fluid-Water ;
+    s223:hasRole
+        s223:Role-Primary ,
+        s223:Role-Return ;
+    s223:isConnectionPointOf ai-factory-model:example-cdu-l2l-500 ;
+.
+
+ai-factory-model:example-cdu-l2l-500.placement
+    a ai-factory:CoolingPlacementProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-CoolingPlacement ;
+    s223:hasValue ai-factory:CoolingPlacement-InRow ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.power-in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz-60Hz ;
+    s223:hasProperty
+        ai-factory-model:example-cdu-l2l-500.power-in.connector ,
+        ai-factory-model:example-cdu-l2l-500.power-in.voltage-max ,
+        ai-factory-model:example-cdu-l2l-500.power-in.voltage-min ;
+    s223:isConnectionPointOf ai-factory-model:example-cdu-l2l-500 ;
+.
+
+ai-factory-model:example-cdu-l2l-500.power-in.connector
+    a ai-factory:PowerConnectorProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-PowerConnector ;
+    s223:hasValue ai-factory:PowerConnector-Hardwired ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=20" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.power-in.voltage-max
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect
+        s223:Aspect-Maximum ,
+        s223:Aspect-Rated ;
+    s223:hasValue 415.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=3" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.power-in.voltage-min
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect
+        s223:Aspect-Minimum ,
+        s223:Aspect-Rated ;
+    s223:hasValue 380.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=3" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-return
+    a ai-factory:LiquidInlet ;
+    s223:hasMedium ai-factory:PropyleneGlycolSolution-25Percent ;
+    s223:hasRole
+        s223:Role-Return ,
+        s223:Role-Secondary ;
+    s223:isConnectionPointOf ai-factory-model:example-cdu-l2l-500 ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-supply
+    a ai-factory:LiquidOutlet ;
+    s223:hasMedium ai-factory:PropyleneGlycolSolution-25Percent ;
+    s223:hasProperty
+        ai-factory-model:example-cdu-l2l-500.tcs-supply.flow-max ,
+        ai-factory-model:example-cdu-l2l-500.tcs-supply.flow-max-manual ,
+        ai-factory-model:example-cdu-l2l-500.tcs-supply.temp-max ,
+        ai-factory-model:example-cdu-l2l-500.tcs-supply.temp-min ;
+    s223:hasRole
+        s223:Role-Secondary ,
+        s223:Role-Supply ;
+    s223:isConnectionPointOf ai-factory-model:example-cdu-l2l-500 ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-supply.flow-max
+    a s223:QuantifiableProperty ;
+    s223:hasAspect s223:Aspect-Maximum ;
+    s223:hasValue 600.0 ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:hasUnit unit:L-PER-MIN ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-supply.flow-max-manual
+    a s223:QuantifiableProperty ;
+    s223:hasAspect s223:Aspect-Maximum ;
+    s223:hasValue 580.0 ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:hasUnit unit:L-PER-MIN ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=14" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-supply.temp-max
+    a s223:QuantifiableProperty ;
+    s223:hasAspect
+        s223:Aspect-Maximum ,
+        ai-factory:Aspect-Operating ;
+    s223:hasValue 45.0 ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasUnit unit:DEG_C ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-supply.temp-min
+    a s223:QuantifiableProperty ;
+    s223:hasAspect
+        s223:Aspect-Minimum ,
+        ai-factory:Aspect-Operating ;
+    s223:hasValue 25.0 ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasUnit unit:DEG_C ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500
+    a
+        ai-factory:LiquidToLiquidCDU ,
+        ai-factory:ProductModel ;
+    rdfs:label "Example CDU L2L-500"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-cdu-l2l-500.fws-in ,
+        ai-factory-model:example-cdu-l2l-500.fws-out ,
+        ai-factory-model:example-cdu-l2l-500.power-in ,
+        ai-factory-model:example-cdu-l2l-500.tcs-return ,
+        ai-factory-model:example-cdu-l2l-500.tcs-supply ;
+    s223:hasProperty
+        ai-factory-model:example-cdu-l2l-500.atd ,
+        ai-factory-model:example-cdu-l2l-500.cooling-capacity ,
+        ai-factory-model:example-cdu-l2l-500.placement ;
+    rec:manufacturedBy ai-factory-org:example-thermal ;
+    rec:modelNumber "L2L-500" ;
+.

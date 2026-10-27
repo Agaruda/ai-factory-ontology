@@ -1,0 +1,660 @@
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX ai-factory-model: <https://w3id.org/ai-factory/model/>
+PREFIX ai-factory-org: <https://w3id.org/ai-factory/org/>
+PREFIX ai-factory-source: <https://w3id.org/ai-factory/source/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rec: <https://w3id.org/rec#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX unit: <http://qudt.org/vocab/unit/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+ai-factory-model:example-ats-1600.emergency-in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz-60Hz ;
+    s223:hasProperty ai-factory-model:example-ats-1600.emergency-in.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-ats-1600 ;
+.
+
+ai-factory-model:example-ats-1600.emergency-in.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 480.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ats-1600-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ats-1600.normal-in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz-60Hz ;
+    s223:hasProperty ai-factory-model:example-ats-1600.normal-in.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-ats-1600 ;
+.
+
+ai-factory-model:example-ats-1600.normal-in.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 480.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ats-1600-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ats-1600.out
+    a ai-factory:PowerOutlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz-60Hz ;
+    s223:hasProperty ai-factory-model:example-ats-1600.out.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-ats-1600 ;
+.
+
+ai-factory-model:example-ats-1600.out.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 480.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ats-1600-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-busway-800.current
+    a s223:QuantifiableProperty ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 800.0 ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
+    qudt:hasUnit unit:A ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=12" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-busway-800-catalogue ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-busway-800.in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz-60Hz ;
+    s223:hasProperty ai-factory-model:example-busway-800.in.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-busway-800 ;
+.
+
+ai-factory-model:example-busway-800.in.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Maximum ;
+    s223:hasValue 480.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=12" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-busway-800-catalogue ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-busway-800.tap
+    a ai-factory:PowerOutlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz-60Hz ;
+    s223:hasProperty ai-factory-model:example-busway-800.tap.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-busway-800 ;
+.
+
+ai-factory-model:example-busway-800.tap.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Maximum ;
+    s223:hasValue 480.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=12" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-busway-800-catalogue ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-lv-board-4000.in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz-60Hz ;
+    s223:hasProperty ai-factory-model:example-lv-board-4000.in.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-lv-board-4000 ;
+.
+
+ai-factory-model:example-lv-board-4000.in.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 480.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-lv-board-4000-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-lv-board-4000.out
+    a ai-factory:PowerOutlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz-60Hz ;
+    s223:hasProperty ai-factory-model:example-lv-board-4000.out.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-lv-board-4000 ;
+.
+
+ai-factory-model:example-lv-board-4000.out.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 480.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-lv-board-4000-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-nvl
+    a
+        ai-factory:ProductModel ,
+        ai-factory:RackScaleSystem ;
+    rdfs:label "Example NVL rack"@en ;
+    s223:hasConnectionPoint ai-factory-model:example-rack-nvl.power-in ;
+    s223:hasProperty
+        ai-factory-model:example-rack-nvl.platform ,
+        ai-factory-model:example-rack-nvl.power-max ;
+    rec:manufacturedBy ai-factory-org:example-compute ;
+    rec:modelNumber "NVL-R1" ;
+.
+
+ai-factory-model:example-rack-nvl.platform
+    a ai-factory:GPUPlatformProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-GPUPlatform ;
+    s223:hasValue ai-factory:GPUPlatform-GB300-NVL72 ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=5" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-nvl-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-nvl.power-in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-3PhN-50Hz-60Hz ;
+    s223:hasProperty
+        ai-factory-model:example-rack-nvl.power-in.voltage-ln-max ,
+        ai-factory-model:example-rack-nvl.power-in.voltage-ln-min ;
+    s223:isConnectionPointOf ai-factory-model:example-rack-nvl ;
+.
+
+ai-factory-model:example-rack-nvl.power-in.voltage-ln-max
+    a ai-factory:LineToNeutralVoltage ;
+    s223:hasAspect
+        s223:Aspect-Maximum ,
+        ai-factory:Aspect-Required ;
+    s223:hasValue 240.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=20" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-nvl-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-nvl.power-in.voltage-ln-min
+    a ai-factory:LineToNeutralVoltage ;
+    s223:hasAspect
+        s223:Aspect-Minimum ,
+        ai-factory:Aspect-Required ;
+    s223:hasValue 220.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=20" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-nvl-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-nvl.power-max
+    a s223:QuantifiableProperty ;
+    s223:hasAspect
+        s223:Aspect-Maximum ,
+        ai-factory:Aspect-Required ;
+    s223:hasValue 132.0 ;
+    qudt:hasQuantityKind quantitykind:ActivePower ;
+    qudt:hasUnit unit:KiloW ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=21" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-nvl-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-pdu-c19.in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-3PhN-50Hz-60Hz ;
+    s223:hasProperty ai-factory-model:example-rack-pdu-c19.in.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-rack-pdu-c19 ;
+.
+
+ai-factory-model:example-rack-pdu-c19.in.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 400.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-pdu-c19-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-pdu-c19.out-c13
+    a ai-factory:PowerOutlet ;
+    s223:hasMedium ai-factory:AC-1Ph-50Hz-60Hz ;
+    s223:hasProperty
+        ai-factory-model:example-rack-pdu-c19.out-c13.connector ,
+        ai-factory-model:example-rack-pdu-c19.out-c13.count ,
+        ai-factory-model:example-rack-pdu-c19.out-c13.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-rack-pdu-c19 ;
+.
+
+ai-factory-model:example-rack-pdu-c19.out-c13.connector
+    a ai-factory:PowerConnectorProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-PowerConnector ;
+    s223:hasValue ai-factory:PowerConnector-IEC60320-C13 ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-pdu-c19-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-pdu-c19.out-c13.count
+    a ai-factory:ConnectionPointCount ;
+    s223:hasValue 24.0 ;
+    qudt:hasQuantityKind quantitykind:Count ;
+    qudt:hasUnit unit:NUM ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-pdu-c19-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-pdu-c19.out-c13.voltage
+    a ai-factory:LineToNeutralVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 230.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-pdu-c19-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-pdu-c19.out-c19
+    a ai-factory:PowerOutlet ;
+    s223:hasMedium ai-factory:AC-1Ph-50Hz-60Hz ;
+    s223:hasProperty
+        ai-factory-model:example-rack-pdu-c19.out-c19.connector ,
+        ai-factory-model:example-rack-pdu-c19.out-c19.count ,
+        ai-factory-model:example-rack-pdu-c19.out-c19.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-rack-pdu-c19 ;
+.
+
+ai-factory-model:example-rack-pdu-c19.out-c19.connector
+    a ai-factory:PowerConnectorProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-PowerConnector ;
+    s223:hasValue ai-factory:PowerConnector-IEC60320-C19 ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-pdu-c19-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-pdu-c19.out-c19.count
+    a ai-factory:ConnectionPointCount ;
+    s223:hasValue 12.0 ;
+    qudt:hasQuantityKind quantitykind:Count ;
+    qudt:hasUnit unit:NUM ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-pdu-c19-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-pdu-c19.out-c19.voltage
+    a ai-factory:LineToNeutralVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 230.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-pdu-c19-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-rack-pdu-c19.power
+    a s223:QuantifiableProperty ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 17.3 ;
+    qudt:hasQuantityKind quantitykind:ApparentPower ;
+    qudt:hasUnit unit:KiloV-A ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-rack-pdu-c19-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ups-500.battery
+    a ai-factory:BidirectionalPowerPort ;
+    s223:hasMedium s223:Electricity-DC ;
+    s223:isConnectionPointOf ai-factory-model:example-ups-500 ;
+.
+
+ai-factory-model:example-ups-500.in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-3Ph-50Hz ;
+    s223:hasProperty ai-factory-model:example-ups-500.in.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-ups-500 ;
+.
+
+ai-factory-model:example-ups-500.in.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect
+        s223:Aspect-Rated ,
+        ai-factory:Aspect-Required ;
+    s223:hasValue 400.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=3" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ups-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ups-500.out
+    a ai-factory:PowerOutlet ;
+    s223:hasMedium ai-factory:AC-3Ph-60Hz ;
+    s223:hasProperty
+        ai-factory-model:example-ups-500.out.power ,
+        ai-factory-model:example-ups-500.out.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-ups-500 ;
+.
+
+ai-factory-model:example-ups-500.out.power
+    a s223:QuantifiableProperty ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 500.0 ;
+    qudt:hasQuantityKind quantitykind:ActivePower ;
+    qudt:hasUnit unit:KiloW ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=3" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ups-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ups-500.out.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 480.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=3" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ups-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-busway-800
+    a
+        ai-factory:Busway ,
+        ai-factory:ProductModel ;
+    rdfs:label "Example BW-800 busway"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-busway-800.in ,
+        ai-factory-model:example-busway-800.tap ;
+    s223:hasProperty ai-factory-model:example-busway-800.current ;
+    rec:manufacturedBy ai-factory-org:example-power ;
+    rec:modelNumber "BW-800" ;
+.
+
+ai-factory-model:example-lv-board-4000
+    a
+        ai-factory:LowVoltageSwitchboard ,
+        ai-factory:ProductModel ;
+    rdfs:label "Example LV-4000 low-voltage switchboard"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-lv-board-4000.in ,
+        ai-factory-model:example-lv-board-4000.out ;
+    rec:manufacturedBy ai-factory-org:example-power ;
+    rec:modelNumber "LV-4000" ;
+.
+
+ai-factory-model:example-ats-1600
+    a
+        ai-factory:AutomaticTransferSwitch ,
+        ai-factory:ProductModel ;
+    rdfs:label "Example ATS-1600 transfer switch"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-ats-1600.emergency-in ,
+        ai-factory-model:example-ats-1600.normal-in ,
+        ai-factory-model:example-ats-1600.out ;
+    rec:manufacturedBy ai-factory-org:example-power ;
+    rec:modelNumber "ATS-1600" ;
+.
+
+ai-factory-model:example-rack-pdu-c19
+    a
+        ai-factory:ProductModel ,
+        ai-factory:RackPDU ;
+    rdfs:label "Example PDU-C19 rack PDU"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-rack-pdu-c19.in ,
+        ai-factory-model:example-rack-pdu-c19.out-c13 ,
+        ai-factory-model:example-rack-pdu-c19.out-c19 ;
+    s223:hasProperty ai-factory-model:example-rack-pdu-c19.power ;
+    rec:manufacturedBy ai-factory-org:example-power ;
+    rec:modelNumber "PDU-C19" ;
+.
+
+ai-factory-model:example-ups-500
+    a
+        ai-factory:ProductModel ,
+        ai-factory:UPS ;
+    rdfs:label "Example UPS-500"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-ups-500.battery ,
+        ai-factory-model:example-ups-500.in ,
+        ai-factory-model:example-ups-500.out ;
+    rec:manufacturedBy ai-factory-org:example-power ;
+    rec:modelNumber "UPS-500" ;
+.

@@ -1,0 +1,19 @@
+# P1. What voltage, phases, frequency and connector does a power inlet accept? Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?inlet ?voltageClass ?voltage ?bound ?phases ?frequency ?connector WHERE {
+  ?model s223:hasConnectionPoint ?inlet . ?inlet a/rdfs:subClassOf* ai-factory:PowerInlet ; s223:hasMedium ?medium .
+  OPTIONAL { ?medium s223:hasNumberOfElectricalPhases ?phases }
+  OPTIONAL { ?medium s223:hasFrequency ?frequency }
+  OPTIONAL { ?inlet s223:hasProperty ?v . ?v a ?voltageClass ; s223:hasValue ?voltage ; s223:hasAspect ?bound .
+             VALUES ?voltageClass { ai-factory:LineToLineVoltage ai-factory:LineToNeutralVoltage ai-factory:DCVoltage }
+             VALUES ?bound { s223:Aspect-Minimum s223:Aspect-Maximum s223:Aspect-Nominal } }
+  OPTIONAL { ?inlet s223:hasProperty ?c . ?c a ai-factory:PowerConnectorProperty ; s223:hasValue ?connector }
+}

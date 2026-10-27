@@ -1,0 +1,20 @@
+# C6. Do two documents give different values for the same item of a model? Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?owner ?first ?firstValue ?firstSource ?second ?secondValue ?secondSource WHERE {
+  ?model s223:hasConnectionPoint? ?owner .
+  ?owner s223:hasProperty ?first, ?second .
+  FILTER (STR(?first) < STR(?second))
+  ?first a ?class ; qudt:hasQuantityKind ?kind ; s223:hasValue ?firstValue ; prov:wasDerivedFrom/oa:hasSource ?firstSource .
+  ?second a ?class ; qudt:hasQuantityKind ?kind ; s223:hasValue ?secondValue ; prov:wasDerivedFrom/oa:hasSource ?secondSource .
+  FILTER (?firstValue != ?secondValue && ?firstSource != ?secondSource)
+  FILTER NOT EXISTS { ?first s223:hasAspect ?a . FILTER NOT EXISTS { ?second s223:hasAspect ?a } }
+  FILTER NOT EXISTS { ?second s223:hasAspect ?b . FILTER NOT EXISTS { ?first s223:hasAspect ?b } }
+}

@@ -1,0 +1,365 @@
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX ai-factory-model: <https://w3id.org/ai-factory/model/>
+PREFIX ai-factory-org: <https://w3id.org/ai-factory/org/>
+PREFIX ai-factory-source: <https://w3id.org/ai-factory/source/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rec: <https://w3id.org/rec#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX unit: <http://qudt.org/vocab/unit/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+ai-factory-model:example-ib-switch-64.not-stated.cage-supply-voltage
+    a ai-factory:NotStatedRecord ;
+    ai-factory:aboutConnectionPointClass ai-factory:PluggableCage ;
+    ai-factory:aboutModel ai-factory-model:example-ib-switch-64 ;
+    ai-factory:aboutPropertyClass ai-factory:DCVoltage ;
+    ai-factory:aboutQuantityKind quantitykind:Voltage ;
+    ai-factory:checkedSource
+        ai-factory-source:example-ib-switch-64-datasheet ,
+        ai-factory-source:example-ib-switch-64-manual ;
+.
+
+ai-factory-model:qualification.example-ib-switch-64.example-osfp-800-sr8
+    a ai-factory:Qualification ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSource ai-factory-source:example-validated-cables-page ;
+            ai-factory:section "Validated transceivers" ;
+        ] ;
+    ai-factory:firmwareVersion "1.2.3" ;
+    ai-factory:qualificationScope ai-factory:QualificationScope-ComponentPairing ;
+    ai-factory:qualifiedBy ai-factory-org:example-networks ;
+    ai-factory:qualifiedItem
+        ai-factory-model:example-ib-switch-64 ,
+        ai-factory-model:example-osfp-800-sr8 ;
+.
+
+ai-factory-model:example-ib-switch-64.mgmt
+    a ai-factory:ManagementPort ;
+    s223:hasMedium s223:WiredEthernet-1000BASE-T ;
+    s223:isConnectionPointOf ai-factory-model:example-ib-switch-64 ;
+.
+
+ai-factory-model:example-ib-switch-64.port-osfp
+    a ai-factory:PluggableCage ;
+    s223:hasMedium ai-factory:Signal-InfiniBand ;
+    s223:hasProperty
+        ai-factory-model:example-ib-switch-64.port-osfp.form-factor ,
+        ai-factory-model:example-ib-switch-64.port-osfp.ib-generation ,
+        ai-factory-model:example-ib-switch-64.port-osfp.protocol ,
+        ai-factory-model:example-ib-switch-64.port-osfp.rate-max ;
+    s223:isConnectionPointOf ai-factory-model:example-ib-switch-64 ;
+.
+
+ai-factory-model:example-ib-switch-64.port-osfp.form-factor
+    a ai-factory:PluggableFormFactorProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-PluggableFormFactor ;
+    s223:hasValue ai-factory:PluggableFormFactor-OSFP ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ib-switch-64-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ib-switch-64.port-osfp.ib-generation
+    a ai-factory:InfiniBandGenerationProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-InfiniBandGeneration ;
+    s223:hasValue ai-factory:InfiniBandGeneration-NDR ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ib-switch-64-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ib-switch-64.port-osfp.protocol
+    a ai-factory:NetworkProtocolProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-NetworkProtocol ;
+    s223:hasValue ai-factory:NetworkProtocol-InfiniBand ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ib-switch-64-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ib-switch-64.port-osfp.rate-max
+    a ai-factory:PortDataRate ;
+    s223:hasAspect s223:Aspect-Maximum ;
+    s223:hasValue 400.0 ;
+    qudt:hasQuantityKind quantitykind:DataRate ;
+    qudt:hasUnit unit:GigaBIT-PER-SEC ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ib-switch-64-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ib-switch-64.power-in
+    a ai-factory:PowerInlet ;
+    s223:hasMedium ai-factory:AC-1Ph-50Hz-60Hz ;
+    s223:hasProperty
+        ai-factory-model:example-ib-switch-64.power-in.voltage-max ,
+        ai-factory-model:example-ib-switch-64.power-in.voltage-min ;
+    s223:isConnectionPointOf ai-factory-model:example-ib-switch-64 ;
+.
+
+ai-factory-model:example-ib-switch-64.power-in.voltage-max
+    a ai-factory:LineToNeutralVoltage ;
+    s223:hasAspect
+        s223:Aspect-Maximum ,
+        ai-factory:Aspect-Required ;
+    s223:hasValue 240.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=40" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ib-switch-64-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-ib-switch-64.power-in.voltage-min
+    a ai-factory:LineToNeutralVoltage ;
+    s223:hasAspect
+        s223:Aspect-Minimum ,
+        ai-factory:Aspect-Required ;
+    s223:hasValue 200.0 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=40" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-ib-switch-64-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-osfp-800-sr8.fiber
+    a ai-factory:FiberPort ;
+    s223:hasMedium s223:Infrared-Signal ;
+    s223:hasProperty
+        ai-factory-model:example-osfp-800-sr8.fiber.connector ,
+        ai-factory-model:example-osfp-800-sr8.fiber.reach ;
+    s223:isConnectionPointOf ai-factory-model:example-osfp-800-sr8 ;
+.
+
+ai-factory-model:example-osfp-800-sr8.fiber.connector
+    a ai-factory:FiberConnectorProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-FiberConnector ;
+    s223:hasValue ai-factory:FiberConnector-MPO-12 ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-osfp-800-sr8-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-osfp-800-sr8.fiber.reach
+    a ai-factory:OpticalReachClassProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-OpticalReachClass ;
+    s223:hasValue ai-factory:OpticalReachClass-SR8 ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-osfp-800-sr8-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-osfp-800-sr8.plug
+    a ai-factory:PluggablePlug ;
+    s223:hasMedium s223:Electricity-Signal ;
+    s223:hasProperty
+        ai-factory-model:example-osfp-800-sr8.plug.form-factor ,
+        ai-factory-model:example-osfp-800-sr8.plug.protocol-eth ,
+        ai-factory-model:example-osfp-800-sr8.plug.protocol-ib ,
+        ai-factory-model:example-osfp-800-sr8.plug.rate-max ,
+        ai-factory-model:example-osfp-800-sr8.plug.supply-voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-osfp-800-sr8 ;
+.
+
+ai-factory-model:example-osfp-800-sr8.plug.form-factor
+    a ai-factory:PluggableFormFactorProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-PluggableFormFactor ;
+    s223:hasValue ai-factory:PluggableFormFactor-OSFP ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-osfp-800-sr8-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-osfp-800-sr8.plug.protocol-eth
+    a ai-factory:NetworkProtocolProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-NetworkProtocol ;
+    s223:hasValue ai-factory:NetworkProtocol-Ethernet ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-osfp-800-sr8-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-osfp-800-sr8.plug.protocol-ib
+    a ai-factory:NetworkProtocolProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-NetworkProtocol ;
+    s223:hasValue ai-factory:NetworkProtocol-InfiniBand ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-osfp-800-sr8-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-osfp-800-sr8.plug.rate-max
+    a ai-factory:PortDataRate ;
+    s223:hasAspect s223:Aspect-Maximum ;
+    s223:hasValue 800.0 ;
+    qudt:hasQuantityKind quantitykind:DataRate ;
+    qudt:hasUnit unit:GigaBIT-PER-SEC ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-osfp-800-sr8-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-osfp-800-sr8.plug.supply-voltage
+    a ai-factory:DCVoltage ;
+    s223:hasAspect
+        s223:Aspect-Nominal ,
+        ai-factory:Aspect-Required ;
+    s223:hasValue 3.3 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:V ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-osfp-800-sr8-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-osfp-800-sr8
+    a
+        ai-factory:OpticalTransceiver ,
+        ai-factory:ProductModel ;
+    rdfs:label "Example OSFP 800G SR8 transceiver"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-osfp-800-sr8.fiber ,
+        ai-factory-model:example-osfp-800-sr8.plug ;
+    rec:manufacturedBy ai-factory-org:example-optics ;
+    rec:modelNumber "OSFP-800-SR8" ;
+.
+
+ai-factory-model:example-ib-switch-64
+    a
+        ai-factory:InfiniBandSwitch ,
+        ai-factory:ProductModel ;
+    rdfs:label "Example 64-port InfiniBand switch"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-ib-switch-64.mgmt ,
+        ai-factory-model:example-ib-switch-64.port-osfp ,
+        ai-factory-model:example-ib-switch-64.power-in ;
+    rec:manufacturedBy ai-factory-org:example-networks ;
+    rec:modelNumber "IBS-64" ;
+    rec:numberOfPorts 64 ;
+.

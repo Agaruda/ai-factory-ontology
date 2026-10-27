@@ -1,0 +1,2985 @@
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX unit: <http://qudt.org/vocab/unit/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+ai-factory:ActiveRearDoorHeatExchangerShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "An active rear-door heat exchanger has at least one power inlet for its fans."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:ActiveRearDoorHeatExchanger ;
+.
+
+ai-factory:AddInCardFormFactorPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-AddInCardFormFactor ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:AddInCardFormFactorProperty ;
+.
+
+ai-factory:AdiabaticCoolerShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "An adiabatic cooler has an inlet for the process fluid and a separate water inlet for its pre-cooling pads or sprays."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 2 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:AdiabaticCooler ;
+.
+
+ai-factory:AirCooledChillerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "An air-cooled chiller has at least one air discharge."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An air-cooled chiller has at least one air intake."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:AirCooledChiller ;
+.
+
+ai-factory:AirCooledCondenserShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "An air-cooled condenser has at least one refrigerant outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class s223:OutletConnectionPoint ;
+                    sh:property
+                        [
+                            sh:class s223:Constituent-Refrigerant ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An air-cooled condenser has at least one refrigerant inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class s223:InletConnectionPoint ;
+                    sh:property
+                        [
+                            sh:class s223:Constituent-Refrigerant ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An air-cooled condenser has at least one air discharge."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An air-cooled condenser has at least one air intake."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:AirCooledCondenser ;
+.
+
+ai-factory:ApproachTemperatureDifferenceShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:TemperatureDifference ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:K
+                unit:DEG_C
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:ApproachTemperatureDifference ;
+.
+
+ai-factory:AvailableExternalPressureShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:KiloPA
+                unit:BAR
+                unit:PSI
+                unit:M_H2O
+                unit:FT_H2O
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Pressure ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:AvailableExternalPressure ;
+.
+
+ai-factory:BackupRuntimeShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:Time ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:SEC
+                unit:MIN
+                unit:HR
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:BackupRuntime ;
+.
+
+ai-factory:BasicImpulseLevelShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:KiloV
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Voltage ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:BasicImpulseLevel ;
+.
+
+ai-factory:BatteryCabinetShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A battery cabinet has at least one direct-current port through which it is charged and discharged."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:BidirectionalPowerPort ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:BatteryCabinet ;
+.
+
+ai-factory:BatteryChemistryPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-BatteryChemistry ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:BatteryChemistryProperty ;
+.
+
+ai-factory:BatteryEnergyStorageSystemShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A battery energy storage system has at least one power port through which it is charged and discharged."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:BidirectionalPowerPort ;
+                    sh:property
+                        [
+                            sh:class s223:Constituent-Electricity ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:BatteryEnergyStorageSystem ;
+.
+
+ai-factory:BatteryInverterShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A battery inverter has at least one alternating-current port on its grid side."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:BidirectionalPowerPort ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A battery inverter has at least one direct-current port on its battery side."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:BidirectionalPowerPort ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:BatteryInverter ;
+.
+
+ai-factory:BreakerContinuousRatingPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-BreakerContinuousRating ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:BreakerContinuousRatingProperty ;
+.
+
+ai-factory:BuswayShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A busway has at least one power outlet where a tap-off unit plugs in."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A busway has at least one power inlet where its feeder is terminated."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:Busway ;
+.
+
+ai-factory:BuswayTapOffUnitShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A busway tap-off unit has at least one power outlet to the load it feeds."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A busway tap-off unit has at least one power inlet that plugs into the busway."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:BuswayTapOffUnit ;
+.
+
+ai-factory:CDUControlModuleShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A coolant distribution unit control module has at least one data port for monitoring and control."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:DataPort ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:CDUControlModule ;
+.
+
+ai-factory:CDUHydronicsModuleShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A coolant distribution unit hydronics module has at least one connection to the secondary loop it keeps full."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class s223:BidirectionalConnectionPoint ;
+                    sh:property 
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Secondary ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:CDUHydronicsModule ;
+.
+
+ai-factory:CDUPumpModuleShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A coolant distribution unit pump module has at least one secondary coolant inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property 
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Secondary ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A coolant distribution unit pump module has at least one secondary coolant outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property 
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Secondary ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:CDUPumpModule ;
+.
+
+ai-factory:CRACShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A computer room air conditioner has at least one air intake."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A computer room air conditioner has at least one air discharge."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:CRAC ;
+.
+
+ai-factory:CRAHFormPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-CRAHForm ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:CRAHFormProperty ;
+.
+
+ai-factory:CableAssemblyTechnologyPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-CableAssemblyTechnology ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:CableAssemblyTechnologyProperty ;
+.
+
+ai-factory:CableLengthShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:M
+                unit:CentiM
+                unit:FT
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Length ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:CableLength ;
+.
+
+ai-factory:ChassisAirflowDirectionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-ChassisAirflowDirection ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:ChassisAirflowDirectionProperty ;
+.
+
+ai-factory:ChillerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A chiller has at least one chilled-water inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property 
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Evaporator ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A chiller has at least one chilled-water outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property 
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Evaporator ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:Chiller ;
+.
+
+ai-factory:CircuitBreakerTypePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-CircuitBreakerType ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:CircuitBreakerTypeProperty ;
+.
+
+ai-factory:ColdPlateShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A cold plate has at least one coolant outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A cold plate has at least one coolant inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:ColdPlate ;
+.
+
+ai-factory:ComputeTrayShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A compute tray has pluggable cages on its network adapters for the scale-out and storage networks."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PluggableCage ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-Signal ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A compute tray takes direct-current power from the rack busbar."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:ComputeTray ;
+.
+
+ai-factory:ConnectionPointCountShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:Count ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:NUM
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:ConnectionPointCount ;
+.
+
+ai-factory:CoolantDistributionUnitShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A coolant distribution unit has at least one secondary return inlet that takes warm coolant back from the technology cooling loop."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property 
+                        [
+                            sh:hasValue s223:Role-Return ;
+                            sh:path s223:hasRole ;
+                        ] ,
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Secondary ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A coolant distribution unit has at least one secondary supply outlet that sends coolant to the technology cooling loop."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property 
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Secondary ;
+                            sh:path s223:hasRole ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Supply ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:CoolantDistributionUnit ;
+.
+
+ai-factory:CoolantManifoldShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A coolant manifold has at least one coolant inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A coolant manifold has at least one coolant outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:CoolantManifold ;
+.
+
+ai-factory:CoolingCapacityShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:HeatFlowRate ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:W
+                unit:KiloW
+                unit:MegaW
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:CoolingCapacity ;
+.
+
+ai-factory:CoolingMethodPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-CoolingMethod ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:CoolingMethodProperty ;
+.
+
+ai-factory:CoolingPlacementPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-CoolingPlacement ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:CoolingPlacementProperty ;
+.
+
+ai-factory:CoolingTowerCircuitPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-CoolingTowerCircuit ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:CoolingTowerCircuitProperty ;
+.
+
+ai-factory:CoolingTowerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A cooling tower has at least one water inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A cooling tower has at least one water outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:CoolingTower ;
+.
+
+ai-factory:CouplingGenderPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-CouplingGender ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:CouplingGenderProperty ;
+.
+
+ai-factory:CouplingTypePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-CouplingType ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:CouplingTypeProperty ;
+.
+
+ai-factory:DCPowerRackShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A DC power rack has at least one direct-current power outlet to the racks it feeds."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A DC power rack has at least one alternating-current power inlet from the facility."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:DCPowerRack ;
+.
+
+ai-factory:DCVoltageShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:Voltage ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:V
+                unit:KiloV
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:DCVoltage ;
+.
+
+ai-factory:DPUShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A data processing unit has its own copper Ethernet management port."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:ManagementPort ;
+                    sh:property
+                        [
+                            sh:class s223:Signal-WiredEthernet ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:DPU ;
+.
+
+ai-factory:DepthShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:MilliM
+                unit:M
+                unit:IN
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Depth ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:Depth ;
+.
+
+ai-factory:DryCoolerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A dry cooler has at least one air intake."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A dry cooler has at least one air discharge."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A dry cooler has at least one process fluid outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A dry cooler has at least one process fluid inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:DryCooler ;
+.
+
+ai-factory:EthernetRatePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-EthernetRate ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:EthernetRateProperty ;
+.
+
+ai-factory:ExpansionTankShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "An expansion tank has at least one connection through which loop liquid flows in and out."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class s223:BidirectionalConnectionPoint ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:ExpansionTank ;
+.
+
+ai-factory:FabricTierPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-FabricTier ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:FabricTierProperty ;
+.
+
+ai-factory:FanShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A fan has at least one air discharge."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A fan has at least one air intake."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:Fan ;
+.
+
+ai-factory:FiberCableShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A fiber cable has an optical connector at each end."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 2 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:FiberPort ;
+                    sh:property
+                        [
+                            sh:class s223:Infrared-Signal ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:FiberCable ;
+.
+
+ai-factory:FiberConnectorPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-FiberConnector ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:FiberConnectorProperty ;
+.
+
+ai-factory:FiberGradePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-FiberGrade ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:FiberGradeProperty ;
+.
+
+ai-factory:FiberPolarityPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-FiberPolarity ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:FiberPolarityProperty ;
+.
+
+ai-factory:FiberPolishPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-FiberPolish ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:FiberPolishProperty ;
+.
+
+ai-factory:FiltrationRatingShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:Length ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:MicroM
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:FiltrationRating ;
+.
+
+ai-factory:FloorPDUShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A floor power distribution unit has at least one alternating-current power outlet for a branch circuit."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A floor power distribution unit has at least one alternating-current power inlet for its bulk feed."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:FloorPDU ;
+.
+
+ai-factory:FuelCellPowerModuleShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A fuel cell power module has at least one fuel inlet for natural gas, biogas, hydrogen or another fuel."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:FuelInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Mix-Fluid ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A fuel cell power module has at least one power outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:FuelCellPowerModule ;
+.
+
+ai-factory:FuelCellTypePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-FuelCellType ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:FuelCellTypeProperty ;
+.
+
+ai-factory:GPUPlatformPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-GPUPlatform ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:GPUPlatformProperty ;
+.
+
+ai-factory:GeneratorSetShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A generator set has at least one alternating-current power outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A generator set has at least one fuel inlet for diesel fuel, natural gas or another fuel."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:FuelInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Mix-Fluid ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:GeneratorSet ;
+.
+
+ai-factory:HeatExchangerConstructionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-HeatExchangerConstruction ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:HeatExchangerConstructionProperty ;
+.
+
+ai-factory:HeatLoadShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:W
+                unit:KiloW
+                unit:MegaW
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:HeatFlowRate ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:HeatLoad ;
+.
+
+ai-factory:HeightShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:MilliM
+                unit:M
+                unit:IN
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Height ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:Height ;
+.
+
+ai-factory:HoldUpTimeShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:MilliSEC
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Time ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:HoldUpTime ;
+.
+
+ai-factory:ImmersionPhasePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-ImmersionPhase ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:ImmersionPhaseProperty ;
+.
+
+ai-factory:ImmersionTankShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "An immersion tank has at least one liquid inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An immersion tank has at least one liquid outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:ImmersionTank ;
+.
+
+ai-factory:InfiniBandGenerationPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-InfiniBandGeneration ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:InfiniBandGenerationProperty ;
+.
+
+ai-factory:InterconnectCartridgeShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "An interconnect cartridge has blind-mate connectors that mate with the trays of the rack."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 2 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:DataPort ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:InterconnectCartridge ;
+.
+
+ai-factory:InterruptingRatingShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:A
+                unit:KiloA
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:ElectricCurrent ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:InterruptingRating ;
+.
+
+ai-factory:LaneCountShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:NUM
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Count ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:LaneCount ;
+.
+
+ai-factory:LineToLineVoltageShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:V
+                unit:KiloV
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Voltage ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:LineToLineVoltage ;
+.
+
+ai-factory:LineToNeutralVoltageShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:V
+                unit:KiloV
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Voltage ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:LineToNeutralVoltage ;
+.
+
+ai-factory:LinkReachShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:M
+                unit:KiloM
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Length ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:LinkReach ;
+.
+
+ai-factory:LiquidCooledAirCoolerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A liquid-cooled air cooler has at least one air intake."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A liquid-cooled air cooler has at least one water outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A liquid-cooled air cooler has at least one air discharge."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A liquid-cooled air cooler has at least one water inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:LiquidCooledAirCooler ;
+.
+
+ai-factory:LiquidCoolingWaterClassPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-LiquidCoolingWaterClass ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:LiquidCoolingWaterClassProperty ;
+.
+
+ai-factory:LiquidFilterShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A liquid filter has at least one liquid inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A liquid filter has at least one liquid outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:LiquidFilter ;
+.
+
+ai-factory:LiquidToAirCDUShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A liquid-to-air coolant distribution unit has at least one air intake."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A liquid-to-air coolant distribution unit has at least one air discharge."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:AirOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Air ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:LiquidToAirCDU ;
+.
+
+ai-factory:LiquidToLiquidCDUShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A liquid-to-liquid coolant distribution unit has at least one primary return outlet for facility water."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property 
+                        [
+                            sh:hasValue s223:Role-Return ;
+                            sh:path s223:hasRole ;
+                        ] ,
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Primary ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A liquid-to-liquid coolant distribution unit has at least one primary supply inlet for facility water."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property 
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Primary ;
+                            sh:path s223:hasRole ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Supply ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:LiquidToLiquidCDU ;
+.
+
+ai-factory:LiquidToLiquidHeatExchangerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A liquid-to-liquid heat exchanger has an outlet on each of its two sides."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 2 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A liquid-to-liquid heat exchanger has an inlet on each of its two sides."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 2 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:LiquidToLiquidHeatExchanger ;
+.
+
+ai-factory:LowVoltageSwitchboardShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A low-voltage switchboard has at least one power inlet for its incoming supply."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A low-voltage switchboard has at least one power outlet for an outgoing feeder."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:LowVoltageSwitchboard ;
+.
+
+ai-factory:MediumVoltageMotorControlCenterShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A medium-voltage motor control center has at least one alternating-current power inlet for its bus."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A medium-voltage motor control center has at least one alternating-current power outlet to a motor."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:MediumVoltageMotorControlCenter ;
+.
+
+ai-factory:MediumVoltageSwitchgearShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A medium-voltage switchgear has at least one alternating-current power inlet for an incoming feeder."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A medium-voltage switchgear has at least one alternating-current power outlet for an outgoing feeder."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:MediumVoltageSwitchgear ;
+.
+
+ai-factory:MediumVoltageVariableFrequencyDriveShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A medium-voltage variable frequency drive has at least one alternating-current power outlet to its motor."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A medium-voltage variable frequency drive has at least one alternating-current power inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:MediumVoltageVariableFrequencyDrive ;
+.
+
+ai-factory:NVLinkGenerationPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-NVLinkGeneration ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:NVLinkGenerationProperty ;
+.
+
+ai-factory:NVLinkSwitchTrayShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "An NVLink switch tray has NVLink ports that join it to the rack interconnect."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:DataPort ;
+                    sh:property
+                        [
+                            sh:class ai-factory:Signal-NVLink ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An NVLink switch tray takes direct-current power from the rack busbar."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:NVLinkSwitchTray ;
+.
+
+ai-factory:NetworkAdapterFunctionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-NetworkAdapterFunction ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:NetworkAdapterFunctionProperty ;
+.
+
+ai-factory:NetworkAdapterShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A network adapter plugs into an expansion slot of its host through a host connector."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:CardHostConnector ;
+                    sh:property
+                        [
+                            sh:class ai-factory:Signal-PCIe ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A network adapter has at least one electrical network port, usually a pluggable cage."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:DataPort ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-Signal ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:NetworkAdapter ;
+.
+
+ai-factory:NetworkPlaneFunctionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-NetworkPlaneFunction ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:NetworkPlaneFunctionProperty ;
+.
+
+ai-factory:NetworkProtocolPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-NetworkProtocol ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:NetworkProtocolProperty ;
+.
+
+ai-factory:NetworkSwitchShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A network switch has a copper Ethernet management port."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:ManagementPort ;
+                    sh:property
+                        [
+                            sh:class s223:Signal-WiredEthernet ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A network switch takes power at one or more power inlets."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:NetworkSwitch ;
+.
+
+ai-factory:OpticalReachClassPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-OpticalReachClass ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:OpticalReachClassProperty ;
+.
+
+ai-factory:OpticalTransceiverShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "An optical transceiver has at least one fiber port for optical connectors."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:FiberPort ;
+                    sh:property
+                        [
+                            sh:class s223:Infrared-Signal ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An optical transceiver has a pluggable plug that inserts into a pluggable cage."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PluggablePlug ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-Signal ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:OpticalTransceiver ;
+.
+
+ai-factory:OverloadCapacityShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:DimensionlessRatio ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:PERCENT
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:OverloadCapacity ;
+.
+
+ai-factory:PCIeGenerationPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-PCIeGeneration ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:PCIeGenerationProperty ;
+.
+
+ai-factory:PanelboardShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A panelboard has at least one power outlet for a branch circuit."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A panelboard has at least one power inlet for its feeder."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:Panelboard ;
+.
+
+ai-factory:PatchPanelShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A patch panel has connector ports on which cables meet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 2 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:DataPort ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:PatchPanel ;
+.
+
+ai-factory:PluggableCableAssemblyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A pluggable cable assembly has a pluggable plug at each end."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 2 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PluggablePlug ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-Signal ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:PluggableCableAssembly ;
+.
+
+ai-factory:PluggableFormFactorPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-PluggableFormFactor ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:PluggableFormFactorProperty ;
+.
+
+ai-factory:PortDataRateShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:GigaBIT-PER-SEC
+                unit:TeraBIT-PER-SEC
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:DataRate ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:PortDataRate ;
+.
+
+ai-factory:PortSplitCountShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:NUM
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Count ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:PortSplitCount ;
+.
+
+ai-factory:PowerConnectorPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-PowerConnector ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:PowerConnectorProperty ;
+.
+
+ai-factory:PowerShelfShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A power shelf has a direct-current power outlet to the rack busbar."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A power shelf has at least one power inlet for the rack feed."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:PowerShelf ;
+.
+
+ai-factory:PowerSupplyUnitShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A power supply unit has at least one power inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A power supply unit has at least one direct-current power outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:PowerSupplyUnit ;
+.
+
+ai-factory:PressureDropShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:KiloPA
+                unit:BAR
+                unit:PSI
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Pressure ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:PressureDrop ;
+.
+
+ai-factory:PressurizationUnitShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A pressurization unit has at least one outlet that feeds the loop it keeps pressurized."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A pressurization unit has at least one inlet for make-up water."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:PressurizationUnit ;
+.
+
+ai-factory:PumpShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A pump has at least one liquid outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A pump has at least one liquid inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:Pump ;
+.
+
+ai-factory:QuickDisconnectCouplingShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A quick-disconnect coupling has a mating end, recorded as a connection point that carries the coupling type and gender."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class s223:BidirectionalConnectionPoint ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:QuickDisconnectCoupling ;
+.
+
+ai-factory:RackBusbarShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A rack busbar has at least one direct-current power inlet from a power shelf or power rack."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A rack busbar has at least one direct-current power outlet where a tray clips on."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:RackBusbar ;
+.
+
+ai-factory:RackLoadCapacityShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:KiloGM
+                unit:LB
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Mass ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:RackLoadCapacity ;
+.
+
+ai-factory:RackMountingStandardPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-RackMountingStandard ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:RackMountingStandardProperty ;
+.
+
+ai-factory:RackPDUShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A rack power distribution unit has at least one alternating-current receptacle."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A rack power distribution unit has an alternating-current power inlet for its feed, with a neutral when its outlets take line-to-neutral voltage."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:RackPDU ;
+.
+
+ai-factory:RackScaleSystemShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A rack-scale system takes facility power at one or more power inlets."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:RackScaleSystem ;
+.
+
+ai-factory:RemotePowerPanelShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A remote power panel has at least one power inlet for its upstream feeder."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A remote power panel has at least one power outlet for a branch circuit."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:RemotePowerPanel ;
+.
+
+ai-factory:ServerFunctionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-ServerFunction ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:ServerFunctionProperty ;
+.
+
+ai-factory:ServerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A server takes power at one or more power inlets."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A server has a copper Ethernet management port to its management controller."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:ManagementPort ;
+                    sh:property
+                        [
+                            sh:class s223:Signal-WiredEthernet ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:Server ;
+.
+
+ai-factory:ShortCircuitCurrentRatingShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:A
+                unit:KiloA
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:ElectricCurrent ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:ShortCircuitCurrentRating ;
+.
+
+ai-factory:SolidStateTransformerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A solid-state transformer has a medium-voltage alternating-current power inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A solid-state transformer has at least one direct-current power outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:SolidStateTransformer ;
+.
+
+ai-factory:SwitchChassisFormPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-SwitchChassisForm ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:SwitchChassisFormProperty ;
+.
+
+ai-factory:SwitchManagementModePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-SwitchManagementMode ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:SwitchManagementModeProperty ;
+.
+
+ai-factory:SwitchgearConstructionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-SwitchgearConstruction ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:SwitchgearConstructionProperty ;
+.
+
+ai-factory:SwitchgearInsulationPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-SwitchgearInsulation ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:SwitchgearInsulationProperty ;
+.
+
+ai-factory:ThermalEnergyStorageTankShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A thermal energy storage tank has at least one water outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A thermal energy storage tank has at least one water inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:ThermalEnergyStorageTank ;
+.
+
+ai-factory:TransferSwitchShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A transfer switch has at least one alternating-current power outlet to its load."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A transfer switch has at least two alternating-current power inlets, one for each source."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 2 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:TransferSwitch ;
+.
+
+ai-factory:TransferTimeShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:MilliSEC
+                unit:SEC
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Time ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:TransferTime ;
+.
+
+ai-factory:TransferTransitionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-TransferTransition ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:TransferTransitionProperty ;
+.
+
+ai-factory:TransformerConstructionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-TransformerConstruction ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:TransformerConstructionProperty ;
+.
+
+ai-factory:TransformerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A transformer has an alternating-current power outlet on its secondary side."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property 
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ,
+                        [
+                            sh:hasValue s223:Role-Secondary ;
+                            sh:path s223:hasRole ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A transformer has an alternating-current power inlet on its primary side."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property 
+                        [
+                            sh:hasValue s223:Role-Primary ;
+                            sh:path s223:hasRole ;
+                        ] ,
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:Transformer ;
+.
+
+ai-factory:UPSShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "An uninterruptible power supply has a direct-current port to its battery."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:BidirectionalPowerPort ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-DC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An uninterruptible power supply has at least one alternating-current power outlet to its load."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerOutlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "An uninterruptible power supply has at least one alternating-current power inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:PowerInlet ;
+                    sh:property
+                        [
+                            sh:class s223:Electricity-AC ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:UPS ;
+.
+
+ai-factory:ValveFunctionPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-ValveFunction ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:ValveFunctionProperty ;
+.
+
+ai-factory:ValveShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:message "A valve has at least one liquid inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:Valve ;
+.
+
+ai-factory:WaterCooledChillerShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A water-cooled chiller has at least one condenser water outlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidOutlet ;
+                    sh:property 
+                        [
+                            sh:hasValue s223:Role-Condenser ;
+                            sh:path s223:hasRole ;
+                        ] ,
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A water-cooled chiller has at least one condenser water inlet."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:LiquidInlet ;
+                    sh:property 
+                        [
+                            sh:hasValue s223:Role-Condenser ;
+                            sh:path s223:hasRole ;
+                        ] ,
+                        [
+                            sh:class s223:Fluid-Water ;
+                            sh:path s223:hasMedium ;
+                        ] ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:WaterCooledChiller ;
+.
+
+ai-factory:WidthShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                unit:MilliM
+                unit:M
+                unit:IN
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Width ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:Width ;
+.
+
+<https://w3id.org/ai-factory/shapes>
+    a owl:Ontology ;
+    rdfs:label "AI Factory Ontology structure shapes"@en ;
+    owl:imports <https://w3id.org/ai-factory> ;
+.

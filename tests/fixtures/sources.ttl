@@ -1,0 +1,138 @@
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX ai-factory-org: <https://w3id.org/ai-factory/org/>
+PREFIX ai-factory-source: <https://w3id.org/ai-factory/source/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rec: <https://w3id.org/rec#>
+
+ai-factory-org:example-compute
+    a rec:Organization ;
+    rdfs:label "Example Compute Inc."@en ;
+.
+
+ai-factory-org:example-networks
+    a rec:Organization ;
+    rdfs:label "Example Networks Ltd."@en ;
+.
+
+ai-factory-org:example-optics
+    a rec:Organization ;
+    rdfs:label "Example Optics GmbH"@en ;
+.
+
+ai-factory-org:example-power
+    a rec:Organization ;
+    rdfs:label "Example Power Systems"@en ;
+.
+
+ai-factory-org:example-thermal
+    a rec:Organization ;
+    rdfs:label "Example Thermal Co."@en ;
+.
+
+ai-factory-source:example-ats-1600-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example ATS-1600 transfer switch datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-busway-800-catalogue
+    a ai-factory:Source ;
+    rdfs:label "Example BW-800 busway catalogue"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-cdu-l2l-500-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example CDU L2L-500 datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-cdu-l2l-500-manual
+    a ai-factory:Source ;
+    rdfs:label "Example CDU L2L-500 user manual"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-genset-2000-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example 2000 kW generator set datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-gpu-server-8g-manual
+    a ai-factory:Source ;
+    rdfs:label "Example GPU server 8G user manual"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-ib-switch-64-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example 64-port InfiniBand switch datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-ib-switch-64-manual
+    a ai-factory:Source ;
+    rdfs:label "Example 64-port InfiniBand switch user manual"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-lv-board-4000-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example LV-4000 low-voltage switchboard datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-mgmt-switch-48-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example 48-port management switch datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-nic-x800-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example X800 network adapter datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-osfp-800-sr8-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example OSFP 800G SR8 transceiver datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-rack-nvl-manual
+    a ai-factory:Source ;
+    rdfs:label "Example NVL rack user manual"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-rack-pdu-c19-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example PDU-C19 rack PDU datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-reference-architecture-ethernet-page
+    a ai-factory:Source ;
+    rdfs:label "Example HGX B300 Ethernet reference architecture web page"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-reference-architecture-ib
+    a ai-factory:Source ;
+    rdfs:label "Example HGX B300 InfiniBand reference architecture"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-ups-500-datasheet
+    a ai-factory:Source ;
+    rdfs:label "Example UPS-500 datasheet"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.
+
+ai-factory-source:example-validated-cables-page
+    a ai-factory:Source ;
+    rdfs:label "Example validated cables web page"@en ;
+    ai-factory:sha256 "0000000000000000000000000000000000000000000000000000000000000000" ;
+.

@@ -1,0 +1,16 @@
+# C5. Which items do the documents of a model not state, and which documents were checked? Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?record ?quantityKind ?propertyClass ?connectionPointClass ?checked WHERE {
+  ?record a ai-factory:NotStatedRecord ; ai-factory:aboutModel ?model ; ai-factory:checkedSource ?checked .
+  OPTIONAL { ?record ai-factory:aboutQuantityKind ?quantityKind }
+  OPTIONAL { ?record ai-factory:aboutPropertyClass ?propertyClass }
+  OPTIONAL { ?record ai-factory:aboutConnectionPointClass ?connectionPointClass }
+}

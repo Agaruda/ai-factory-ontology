@@ -1,0 +1,17 @@
+# N2. Which protocols, generations and per-port data rates do the ports of a switch support? Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?port ?protocol ?generation ?rate WHERE {
+  ?model a/rdfs:subClassOf* ai-factory:NetworkSwitch ; s223:hasConnectionPoint ?port .
+  ?port a ai-factory:PluggableCage .
+  OPTIONAL { ?port s223:hasProperty ?p . ?p a ai-factory:NetworkProtocolProperty ; s223:hasValue ?protocol }
+  OPTIONAL { ?port s223:hasProperty ?g . ?g a ai-factory:InfiniBandGenerationProperty ; s223:hasValue ?generation }
+  OPTIONAL { ?port s223:hasProperty ?r . ?r a ai-factory:PortDataRate ; s223:hasValue ?rate }
+}

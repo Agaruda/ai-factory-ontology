@@ -1,0 +1,83 @@
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX ai-factory-model: <https://w3id.org/ai-factory/model/>
+PREFIX ai-factory-org: <https://w3id.org/ai-factory/org/>
+PREFIX ai-factory-source: <https://w3id.org/ai-factory/source/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rec: <https://w3id.org/rec#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX unit: <http://qudt.org/vocab/unit/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+ai-factory-model:example-genset-2000.fuel
+    a ai-factory:FuelInlet ;
+    s223:hasMedium ai-factory:Fluid-DieselFuel ;
+    s223:isConnectionPointOf ai-factory-model:example-genset-2000 ;
+.
+
+ai-factory-model:example-genset-2000.output
+    a ai-factory:PowerOutlet ;
+    s223:hasMedium ai-factory:AC-3Ph-60Hz ;
+    s223:hasProperty ai-factory-model:example-genset-2000.output.voltage ;
+    s223:isConnectionPointOf ai-factory-model:example-genset-2000 ;
+.
+
+ai-factory-model:example-genset-2000.output.voltage
+    a ai-factory:LineToLineVoltage ;
+    s223:hasAspect s223:Aspect-Rated ;
+    s223:hasValue 13.8 ;
+    qudt:hasQuantityKind quantitykind:Voltage ;
+    qudt:hasUnit unit:KiloV ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-genset-2000-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-genset-2000.power-standby
+    a s223:QuantifiableProperty ;
+    s223:hasAspect
+        s223:Aspect-Rated ,
+        ai-factory:GeneratorSetDutyRating-Standby ;
+    s223:hasValue 2000.0 ;
+    qudt:hasQuantityKind quantitykind:ActivePower ;
+    qudt:hasUnit unit:KiloW ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-genset-2000-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-genset-2000
+    a
+        ai-factory:GeneratorSet ,
+        ai-factory:ProductModel ;
+    rdfs:label "Example 2000 kW generator set"@en ;
+    s223:hasConnectionPoint
+        ai-factory-model:example-genset-2000.fuel ,
+        ai-factory-model:example-genset-2000.output ;
+    s223:hasProperty ai-factory-model:example-genset-2000.power-standby ;
+    rec:manufacturedBy ai-factory-org:example-power ;
+    rec:modelNumber "GS-2000" ;
+.

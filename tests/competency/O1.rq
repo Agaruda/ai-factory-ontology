@@ -1,0 +1,17 @@
+# O1. What form factor, protocols and data rate does a transceiver or cable plug have, and what supply voltage does it need? Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?plug ?formFactor ?protocol ?rate ?voltage WHERE {
+  ?model s223:hasConnectionPoint ?plug . ?plug a ai-factory:PluggablePlug .
+  OPTIONAL { ?plug s223:hasProperty ?f . ?f a ai-factory:PluggableFormFactorProperty ; s223:hasValue ?formFactor }
+  OPTIONAL { ?plug s223:hasProperty ?p . ?p a ai-factory:NetworkProtocolProperty ; s223:hasValue ?protocol }
+  OPTIONAL { ?plug s223:hasProperty ?r . ?r a ai-factory:PortDataRate ; s223:hasValue ?rate }
+  OPTIONAL { ?plug s223:hasProperty ?v . ?v a ai-factory:DCVoltage ; s223:hasAspect ai-factory:Aspect-Required ; s223:hasValue ?voltage }
+}

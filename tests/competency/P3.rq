@@ -1,0 +1,15 @@
+# P3. Which frequencies does a device accept or deliver? A medium that lists one frequency means that frequency only. Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?point ?frequency WHERE {
+  ?model s223:hasConnectionPoint ?point . ?point s223:hasMedium ?medium .
+  { ?point a/rdfs:subClassOf* ai-factory:PowerInlet } UNION { ?point a/rdfs:subClassOf* ai-factory:PowerOutlet }
+  ?medium s223:hasFrequency ?frequency .
+}

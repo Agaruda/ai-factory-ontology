@@ -1,0 +1,21 @@
+# K2. What supply temperature range, flow and cooling capacity can a CDU or chiller deliver per unit? Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?point ?minimum ?maximum ?flow ?capacity WHERE {
+  ?model s223:hasConnectionPoint ?point . ?point a ai-factory:LiquidOutlet ; s223:hasRole s223:Role-Supply .
+  FILTER NOT EXISTS { ?point s223:hasRole s223:Role-Primary }
+  OPTIONAL { ?point s223:hasProperty ?lo . ?lo qudt:hasQuantityKind quantitykind:Temperature ;
+                 s223:hasAspect s223:Aspect-Minimum ; s223:hasValue ?minimum }
+  OPTIONAL { ?point s223:hasProperty ?hi . ?hi qudt:hasQuantityKind quantitykind:Temperature ;
+                 s223:hasAspect s223:Aspect-Maximum ; s223:hasValue ?maximum }
+  OPTIONAL { ?point s223:hasProperty ?f . ?f qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+                 s223:hasAspect s223:Aspect-Maximum ; s223:hasValue ?flow }
+  OPTIONAL { ?model s223:hasProperty ?c . ?c a ai-factory:CoolingCapacity ; s223:hasValue ?capacity }
+}

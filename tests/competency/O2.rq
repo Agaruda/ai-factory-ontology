@@ -1,0 +1,18 @@
+# O2. What form factor and protocols does a switch cage accept, and what supply voltage does it provide, or is that not stated? Bind ?model to the product model.
+PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX brick: <https://brickschema.org/schema/Brick#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?cage ?formFactor ?protocol ?voltage ?notStated WHERE {
+  ?model s223:hasConnectionPoint ?cage . ?cage a ai-factory:PluggableCage .
+  OPTIONAL { ?cage s223:hasProperty ?f . ?f a ai-factory:PluggableFormFactorProperty ; s223:hasValue ?formFactor }
+  OPTIONAL { ?cage s223:hasProperty ?p . ?p a ai-factory:NetworkProtocolProperty ; s223:hasValue ?protocol }
+  OPTIONAL { ?cage s223:hasProperty ?v . ?v a ai-factory:DCVoltage ; s223:hasValue ?voltage }
+  OPTIONAL { ?notStated a ai-factory:NotStatedRecord ; ai-factory:aboutModel ?model ;
+                 ai-factory:aboutConnectionPointClass ai-factory:PluggableCage ; ai-factory:aboutPropertyClass ai-factory:DCVoltage }
+}
