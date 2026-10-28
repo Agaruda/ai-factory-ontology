@@ -956,6 +956,17 @@ ai-factory:DPUShape
     sh:targetClass ai-factory:DPU ;
 .
 
+ai-factory:DataConnectorPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-DataConnector ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:DataConnectorProperty ;
+.
+
 ai-factory:DepthShape
     a sh:NodeShape ;
     sh:property 
@@ -1039,6 +1050,17 @@ ai-factory:DryCoolerShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:DryCooler ;
+.
+
+ai-factory:EarthingSystemPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-EarthingSystem ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:EarthingSystemProperty ;
 .
 
 ai-factory:EthernetRatePropertyShape
@@ -1492,6 +1514,17 @@ ai-factory:LaneCountShape
     sh:targetClass ai-factory:LaneCount ;
 .
 
+ai-factory:LaneModulationPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-LaneModulation ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:LaneModulationProperty ;
+.
+
 ai-factory:LineToLineVoltageShape
     a sh:NodeShape ;
     sh:property 
@@ -1789,6 +1822,17 @@ ai-factory:LowVoltageSwitchboardShape
     sh:targetClass ai-factory:LowVoltageSwitchboard ;
 .
 
+ai-factory:ManagementProtocolPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-ManagementProtocol ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:ManagementProtocolProperty ;
+.
+
 ai-factory:MediumVoltageMotorControlCenterShape
     a sh:NodeShape ;
     sh:property 
@@ -2044,6 +2088,23 @@ ai-factory:NetworkSwitchShape
     sh:targetClass ai-factory:NetworkSwitch ;
 .
 
+ai-factory:OpticalPowerLevelShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:Log10Ratio ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:DeciB-MilliW
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:OpticalPowerLevel ;
+.
+
 ai-factory:OpticalReachClassPropertyShape
     a sh:NodeShape ;
     sh:property
@@ -2161,6 +2222,17 @@ ai-factory:PatchPanelShape
     sh:targetClass ai-factory:PatchPanel ;
 .
 
+ai-factory:PipeJointPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-PipeJoint ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:PipeJointProperty ;
+.
+
 ai-factory:PluggableCableAssemblyShape
     a sh:NodeShape ;
     sh:property
@@ -2268,6 +2340,17 @@ ai-factory:PowerShelfShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:PowerShelf ;
+.
+
+ai-factory:PowerSupplyEfficiencyGradePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:PowerSupplyEfficiencyGradeProperty ;
 .
 
 ai-factory:PowerSupplyUnitShape
@@ -2515,6 +2598,24 @@ ai-factory:RackScaleSystemShape
     sh:targetClass ai-factory:RackScaleSystem ;
 .
 
+ai-factory:RackSpaceShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                ai-factory:Unit-RackUnit
+                ai-factory:Unit-OpenRackUnit
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Height ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:RackSpace ;
+.
+
 ai-factory:RemotePowerPanelShape
     a sh:NodeShape ;
     sh:property 
@@ -2539,6 +2640,32 @@ ai-factory:RemotePowerPanelShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:RemotePowerPanel ;
+.
+
+ai-factory:RiserCardShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A riser card plugs into an expansion slot of its motherboard."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:CardHostConnector ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A riser card provides at least one expansion slot."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:ExpansionSlot ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:RiserCard ;
 .
 
 ai-factory:ServerFunctionPropertyShape
@@ -2635,6 +2762,17 @@ ai-factory:SolidStateTransformerShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:SolidStateTransformer ;
+.
+
+ai-factory:SupportedGPUPlatformPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-GPUPlatform ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:SupportedGPUPlatformProperty ;
 .
 
 ai-factory:SwitchChassisFormPropertyShape
@@ -2758,6 +2896,7 @@ ai-factory:TransferTimeShape
     sh:property 
         [
             sh:in (
+                unit:MicroSEC
                 unit:MilliSEC
                 unit:SEC
             ) ;

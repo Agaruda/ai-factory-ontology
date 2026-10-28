@@ -90,6 +90,29 @@ The domain inventory (543 terms over compute and network, cooling and power, rea
 | X5 | Quantities | 223 properties with `s223:hasValue` and a QUDT unit; ranges as a minimum and a maximum property with the matching aspects. | R2 |
 | X6 | Reference architectures | A `ReferenceArchitecture` individual carries its `gpuPlatform` (a `GPUPlatform` enumeration value) and `computeFabric` (a `NetworkProtocol` value), and links with `hasReferenceRole` to `ReferenceRole` individuals, each naming a `roleClass` and, where the class alone is too broad, a `roleFunction` (for example an Ethernet switch for out-of-band management). Every architecture and role carries provenance. A product states its platform with a `GPUPlatformProperty`. | R5, R4 |
 
+## Decisions on the gaps found while modeling vendor datasheets (2026-10-28)
+
+Turning real datasheets into product data showed terms the schema could not express. Each is decided by the rules above.
+
+| # | Gap | Decision | Rule |
+|---|---|---|---|
+| G1 | Height in rack units | Units `Unit-RackUnit` (EIA-310, 44.45 mm) and `Unit-OpenRackUnit` (Open Rack OpenU, 48 mm), defined in QUDT's pattern because QUDT has neither. A new property class `RackSpace` holds mounting space, apart from `Height`: a 48U rack's 48U is the space it offers, not its outer height. | R2, R7 |
+| G2 | Optical power in dBm | Property class `OpticalPowerLevel` with QUDT's `unit:DeciB-MilliW` and quantity kind `Log10Ratio` (a level relative to one milliwatt); QUDT gives that unit no quantity kind, and its other dBm unit is acoustic. A link budget compares launch power with receiver sensitivity. | R2, R9 |
+| G3 | Gigabaud, terabytes per second, megatransfers per second | Units `Unit-GigaBAUD` and `Unit-MegaTRANSFER-PER-SEC` (quantity kind `DigitRate`) and `Unit-TeraBYTE-PER-SEC` (`DataRate`), in QUDT's pattern. No new property classes: such values carry their quantity kind. | R2 |
+| G4 | Transfer times in microseconds; transfers inside a UPS | `TransferTime` also takes `unit:MicroSEC`; the transfer transition enumeration also covers the bypass of an uninterruptible power supply. | R2, R7 |
+| G5 | Management and field protocols (Modbus, SNMP ...) | A new enumeration `ManagementProtocol` (Modbus RTU and TCP, BACnet/IP and MS/TP, SNMP, Redfish, IPMI, DNP3, OPC UA, IEC 61850), apart from `NetworkProtocol`, which names link protocols. EIA-232 and EIA-422 signal media beside 223's EIA-485. A management system has to speak the protocol of the device it monitors. | R3, R4, R9 |
+| G6 | Copper data connectors (RJ45, USB) | A new enumeration `DataConnector` (RJ45, USB Type-A, Type-C and Micro-B, DE-9) for copper data and serial ports. Video outputs are left out: no check compares them. | R4, R9 |
+| G7 | Pipe joints (grooved, flanged) | A new enumeration `PipeJoint` (grooved, flanged, threaded, sanitary clamp) for liquid connection points that are pipe ends; `CouplingType` stays for quick-disconnect couplings. | R3, R4 |
+| G8 | Add-in card outlines | The OCP NIC 3.0 tall small form factor and the M.2 2242, 2280 and 22110 modules join `AddInCardFormFactor`. | R4 |
+| G9 | Power supply efficiency grades | A new enumeration `PowerSupplyEfficiencyGrade` with the six 80 PLUS levels; the input power a supply draws for its load depends on it. | R4, R9 |
+| G10 | Lane modulation (NRZ, PAM4) | A new enumeration `LaneModulation`; a host port and a module must use the same modulation on their electrical lanes. | R4, R9 |
+| G11 | Earthing system of an AC supply | A new enumeration `EarthingSystem` (IEC 60364: TN-S, TN-C, TN-C-S, TT, IT) for power connection points; a load or protection scheme may require one arrangement. | R4, R9 |
+| G12 | The GPU platform cooling or power equipment is designed for | A new property class `SupportedGPUPlatformProperty`, apart from `GPUPlatformProperty`, which says what a server or rack-scale system is built on. | R7 |
+| G13 | Motherboards, server chassis, riser cards | Component classes `Motherboard`, `ServerChassis` and `RiserCard`, used when the part has its own model number; a riser card has a card host connector and at least one expansion slot. | R3, R6 |
+| G14 | Coolant sold as a product | `CoolantProduct`, a class of its own beside the equipment classes because a coolant has no connection points; `coolantMedium` names a glycol constituent for a concentrate or a glycol solution for a ready-mixed coolant. Generic `PropyleneGlycolSolution` and `EthyleneGlycolSolution` media, whose concentration is a quantity of the connection point (decision C3); the 25 percent propylene glycol medium becomes a subclass of the first. Coolant chemistry stays out (C9). | R2, R6, R9 |
+
+Scope decisions by the project lead (2026-10-28): standards conformance and certifications, warranty and software are out of scope; standards that decide whether two products fit together enter as enumeration values (card outlines, 80 PLUS levels). Other reported items that no compatibility check compares are left out under R9: enclosure and ingress ratings, air filter and motor efficiency grades, seismic and corrosion classes, monitoring and service features, and server memory and storage slots.
+
 Out of scope for now (2026-10-27): IMEX, coolant chemistry, genset governor, automatic voltage regulator and exciter.
 
 The patterns are written out with examples in `CONVENTIONS.md`.

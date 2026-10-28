@@ -8,6 +8,8 @@ Role-Condenser on chillers (decision C2), Role-Supply / Role-Return for directio
 more than one loop. See docs/MODELING.md, decisions C1 to C10.
 """
 
+from rdflib.namespace import OWL
+
 from .namespaces import AIF, BRICK, QK, S223, UNIT
 
 WATER = S223["Fluid-Water"]  # covers chilled water, glycol solutions and the 25 percent PG medium
@@ -392,6 +394,16 @@ ENUMERATIONS = {
             "AirVent": {"label": "Air vent", "definition": "Lets trapped air out of a high point of a liquid loop by itself."},
         },
     },
+    "PipeJoint": {
+        "label": "Pipe joint",
+        "definition": "The ways a pipe end of a liquid connection point is joined to the piping, where it is not a quick-disconnect coupling.",
+        "values": {
+            "Grooved": {"label": "Grooved", "definition": "A clamp coupling grips grooves rolled or cut into the two pipe ends."},
+            "Flanged": {"label": "Flanged", "definition": "Two flanges are bolted together with a gasket between them."},
+            "Threaded": {"label": "Threaded", "definition": "A threaded pipe end screws into a threaded fitting, such as one with NPT or BSP threads."},
+            "SanitaryClamp": {"label": "Sanitary clamp", "definition": "Two ferrules are held together over a gasket by a hinged clamp, also called a tri-clamp joint."},
+        },
+    },
 }
 
 # ---------------------------------------------------------------------------------------------
@@ -453,5 +465,33 @@ PROPERTIES = {
         "parent": S223.QuantifiableProperty,
         "quantity_kind": QK.Pressure,
         "units": [UNIT.KiloPA, UNIT.BAR, UNIT.PSI, UNIT.M_H2O, UNIT.FT_H2O],
+    },
+    "PipeJointProperty": {
+        "label": "Pipe joint property",
+        "definition": "An enumerated property naming how a liquid connection point that is a pipe end joins the piping.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "PipeJoint",
+    },
+}
+
+# ---------------------------------------------------------------------------------------------
+# Coolant sold as a product (decision G14): not equipment, so it has no connection points; it names the
+# medium it is. Its chemistry stays out of scope (decision C9).
+
+CORE_CLASSES = {
+    "CoolantProduct": {
+        "label": "Coolant product",
+        "definition": "A heat transfer liquid sold under its own product name, either as a glycol concentrate to be mixed with water or ready mixed.",
+        "parents": [OWL.Thing],
+    },
+}
+
+RELATIONS = {
+    "coolantMedium": {
+        "type": OWL.ObjectProperty,
+        "label": "coolant medium",
+        "definition": "The medium a coolant product is as sold: a glycol constituent for a concentrate, or a glycol solution for a ready-mixed coolant.",
+        "domain": AIF.CoolantProduct,
+        "range": S223["Substance-Medium"],
     },
 }

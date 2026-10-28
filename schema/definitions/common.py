@@ -149,10 +149,42 @@ MEDIA = {
             (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-ThreePhase"]),
         ],
     },
+    "Signal-EIA232": {
+        "label": "EIA-232 signal",
+        "definition": "Electrical signalling of the EIA-232 (RS-232) serial interface, a single-ended point-to-point link.",
+        "parent": S223["Electricity-Signal"],
+    },
+    "Signal-EIA422": {
+        "label": "EIA-422 signal",
+        "definition": "Electrical signalling of the EIA-422 (RS-422) serial interface, a differential link from one transmitter to several receivers.",
+        "parent": S223["Electricity-Signal"],
+    },
+    "PropyleneGlycolSolution": {
+        "label": "Propylene glycol solution",
+        "definition": "A water solution of propylene glycol whose concentration is given separately as a quantity of the connection point.",
+        "parent": S223["Water-GlycolSolution"],
+        "composed_of": [
+            {"label": "Unspecified", "of_constituent": AIF["Constituent-PropyleneGlycol"],
+             "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
+            {"label": "Unspecified", "of_constituent": S223["Constituent-H2O"],
+             "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
+        ],
+    },
+    "EthyleneGlycolSolution": {
+        "label": "Ethylene glycol solution",
+        "definition": "A water solution of ethylene glycol whose concentration is given separately as a quantity of the connection point.",
+        "parent": S223["Water-GlycolSolution"],
+        "composed_of": [
+            {"label": "Unspecified", "of_constituent": AIF["Constituent-EthyleneGlycol"],
+             "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
+            {"label": "Unspecified", "of_constituent": S223["Constituent-H2O"],
+             "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
+        ],
+    },
     "PropyleneGlycolSolution-25Percent": {
         "label": "25 percent propylene glycol solution",
         "definition": "A water solution with 25 percent propylene glycol by volume, the usual coolant of direct-to-chip liquid cooling loops.",
-        "parent": S223["Water-GlycolSolution"],
+        "parent": AIF["PropyleneGlycolSolution"],
         "composed_of": [
             {"label": "Propylene glycol concentration", "value": "25.0", "of_constituent": AIF["Constituent-PropyleneGlycol"],
              "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
@@ -309,6 +341,33 @@ ENUMERATIONS = {
             "Immersion": {"label": "Immersion", "definition": "The equipment sits in a dielectric liquid that removes its heat by direct contact."},
         },
     },
+    "ManagementProtocol": {
+        "label": "Management protocol",
+        "definition": "The protocols by which building, power and IT management systems monitor and control a device over its data or serial port.",
+        "values": {
+            "ModbusRTU": {"label": "Modbus RTU", "definition": "Modbus messages in binary form over a serial line such as EIA-485."},
+            "ModbusTCP": {"label": "Modbus TCP", "definition": "Modbus messages carried over TCP/IP on an Ethernet network."},
+            "BACnetIP": {"label": "BACnet/IP", "definition": "The BACnet building automation protocol of ASHRAE Standard 135 carried over IP networks."},
+            "BACnetMSTP": {"label": "BACnet MS/TP", "definition": "The BACnet building automation protocol carried over an EIA-485 serial line with master-slave token passing."},
+            "SNMP": {"label": "SNMP", "definition": "The Simple Network Management Protocol for monitoring and managing networked devices."},
+            "Redfish": {"label": "Redfish", "definition": "The DMTF Redfish interface, a RESTful protocol for managing servers and other data center hardware."},
+            "IPMI": {"label": "IPMI", "definition": "The Intelligent Platform Management Interface for out-of-band monitoring and control of servers through their management controller."},
+            "DNP3": {"label": "DNP3", "definition": "The Distributed Network Protocol used between control centers and field devices of electric power systems."},
+            "OPCUA": {"label": "OPC UA", "definition": "The OPC Unified Architecture protocol of IEC 62541 for industrial data exchange."},
+            "IEC61850": {"label": "IEC 61850", "definition": "The IEC 61850 protocols for communication with protection and control devices in substations and switchgear."},
+        },
+    },
+    "DataConnector": {
+        "label": "Data connector",
+        "definition": "The connector types of copper data and serial ports.",
+        "values": {
+            "RJ45": {"label": "RJ45", "definition": "The eight-position modular jack used for twisted-pair Ethernet and for some serial console ports."},
+            "USB-A": {"label": "USB Type-A", "definition": "The rectangular USB Type-A receptacle of a USB host."},
+            "USB-C": {"label": "USB Type-C", "definition": "The reversible USB Type-C receptacle."},
+            "USB-MicroB": {"label": "USB Micro-B", "definition": "The small USB Micro-B receptacle, often used for console ports."},
+            "DE-9": {"label": "DE-9", "definition": "The nine-pin D-subminiature connector of EIA-232 serial ports."},
+        },
+    },
     "LiquidCoolingWaterClass": {
         "label": "Liquid cooling water class",
         "definition": "The ASHRAE TC 9.9 classes of facility water supply temperature for liquid-cooled IT equipment.",
@@ -458,5 +517,66 @@ PROPERTIES = {
         "definition": "An enumerated property naming the ASHRAE water class a liquid-cooled device is designed for.",
         "parent": S223.EnumerableProperty,
         "enumeration": "LiquidCoolingWaterClass",
+    },
+    "RackSpace": {
+        "label": "Rack space",
+        "definition": "The vertical mounting space a device occupies in a rack, or that a rack provides for devices, counted in rack units.",
+        "parent": S223.QuantifiableProperty,
+        "quantity_kind": QK.Height,
+        "units": [AIF["Unit-RackUnit"], AIF["Unit-OpenRackUnit"]],
+    },
+    "ManagementProtocolProperty": {
+        "label": "Management protocol property",
+        "definition": "An enumerated property naming a management or monitoring protocol a data or serial port supports.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "ManagementProtocol",
+    },
+    "DataConnectorProperty": {
+        "label": "Data connector property",
+        "definition": "An enumerated property naming the connector of a copper data or serial port.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "DataConnector",
+    },
+}
+
+# ---------------------------------------------------------------------------------------------
+# Units missing from QUDT, defined in QUDT's pattern (qudt:Unit with quantity kinds and a conversion
+# multiplier to the SI base unit). Each is written ai-factory:Unit-<name>.
+
+UNITS = {
+    "RackUnit": {
+        "label": "Rack unit",
+        "definition": "The rack unit of EIA-310, 1.75 inches or 44.45 millimeters of vertical mounting space in a rack.",
+        "symbol": "U",
+        "quantity_kinds": [QK.Length, QK.Height],
+        "multiplier": "0.04445",
+    },
+    "OpenRackUnit": {
+        "label": "Open rack unit",
+        "definition": "The OpenU of the Open Compute Project Open Rack, 48 millimeters of vertical mounting space.",
+        "symbol": "OU",
+        "quantity_kinds": [QK.Length, QK.Height],
+        "multiplier": "0.048",
+    },
+    "GigaBAUD": {
+        "label": "Gigabaud",
+        "definition": "One billion symbols per second on a signalling lane.",
+        "symbol": "GBd",
+        "quantity_kinds": [QK.DigitRate],
+        "multiplier": "1000000000",
+    },
+    "TeraBYTE-PER-SEC": {
+        "label": "Terabyte per second",
+        "definition": "One trillion bytes per second.",
+        "symbol": "TB/s",
+        "quantity_kinds": [QK.DataRate, QK.ByteRate],
+        "multiplier": "8000000000000",
+    },
+    "MegaTRANSFER-PER-SEC": {
+        "label": "Megatransfer per second",
+        "definition": "One million data transfers per second on a memory or bus interface, the rate in which memory speeds are given.",
+        "symbol": "MT/s",
+        "quantity_kinds": [QK.DigitRate],
+        "multiplier": "1000000",
     },
 }

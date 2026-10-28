@@ -149,7 +149,8 @@ class Builder:
         g = self.schema
         g.add((node, RDF.type, S223.QuantifiableProperty))
         g.add((node, RDFS.label, Literal(spec["label"], lang="en")))
-        g.add((node, S223.hasValue, Literal(spec["value"], datatype=XSD.decimal)))
+        if "value" in spec:  # 223 leaves the amount out of a generic mix (label "Unspecified")
+            g.add((node, S223.hasValue, Literal(spec["value"], datatype=XSD.decimal)))
         for key, predicate in (("of_constituent", S223.ofConstituent), ("quantity_kind", QUDT.hasQuantityKind),
                                ("unit", QUDT.hasUnit)):
             self.references.append((where, spec[key]))
@@ -175,6 +176,23 @@ class Builder:
     def add_media(self, media: dict, module: str) -> None:
         for name, entry in media.items():
             self.add_member(AIF[name], entry["parent"], entry, f"{module}.{name}")
+
+    def add_units(self, units: dict, module: str) -> None:
+        """Units QUDT lacks, written in QUDT's pattern so unit-aware tools can convert them."""
+        for name, entry in units.items():
+            where = f"{module}.Unit-{name}"
+            if not MEMBER_NAME.match(name):
+                raise DefinitionError(f"{where}: unit names use letters, digits, '.', '+' and '-'")
+            check_text(where, entry)
+            iri = AIF[f"Unit-{name}"]
+            self.define(iri, where)
+            self.schema.add((iri, RDF.type, QUDT.Unit))
+            self.describe(iri, entry)
+            self.schema.add((iri, QUDT.symbol, Literal(entry["symbol"])))
+            self.schema.add((iri, QUDT.conversionMultiplier, Literal(entry["multiplier"], datatype=XSD.decimal)))
+            for kind in entry["quantity_kinds"]:
+                self.references.append((where, kind))
+                self.schema.add((iri, QUDT.hasQuantityKind, kind))
 
     # -- properties ----------------------------------------------------------------------------
 
@@ -303,7 +321,7 @@ class Builder:
                                  ("COMPONENTS", None), ("SYSTEMS", None), ("CONNECTION_POINTS", self.add_simple_classes),
                                  ("PROPERTIES", self.add_property_classes), ("RELATIONS", self.add_relations),
                                  ("CORE_ENUMERATIONS", self.add_enumerations), ("ENUMERATIONS", self.add_enumerations),
-                                 ("MEDIA", self.add_media)):
+                                 ("MEDIA", self.add_media), ("UNITS", self.add_units)):
                 value = getattr(module, attr, None)
                 if value is None:
                     continue

@@ -230,6 +230,27 @@ COMPONENTS = {
              "message": "An interconnect cartridge has blind-mate connectors that mate with the trays of the rack."},
         ],
     },
+    "Motherboard": {
+        "label": "Motherboard",
+        "definition": "The main circuit board of a server or tray, carrying its processor sockets, memory slots and expansion slots, when it is named as a part with its own model number.",
+        "parents": [BRICK.ICT_Hardware, S223.Equipment],
+    },
+    "ServerChassis": {
+        "label": "Server chassis",
+        "definition": "The enclosure of a server with its fans and its drive and power supply bays, when it is named as a part with its own model number to which a motherboard and processors are added.",
+        "parents": [BRICK.ICT_Hardware, S223.Equipment],
+    },
+    "RiserCard": {
+        "label": "Riser card",
+        "definition": "A circuit board that plugs into an expansion slot of a motherboard and provides one or more expansion slots in another position or orientation.",
+        "parents": [BRICK.ICT_Hardware, S223.Equipment],
+        "connection_points": [
+            {"class": AIF.CardHostConnector,
+             "message": "A riser card plugs into an expansion slot of its motherboard."},
+            {"class": AIF.ExpansionSlot,
+             "message": "A riser card provides at least one expansion slot."},
+        ],
+    },
 }
 
 # ---------------------------------------------------------------------------------------------
@@ -294,6 +315,10 @@ ENUMERATIONS = {
             "OCP3-SFF": {"label": "Open Compute Project network interface card 3.0, small form factor", "definition": "The small card outline of the Open Compute Project network interface card (OCP NIC) 3.0 specification, inserted from the outside of a server."},
             "OCP3-LFF": {"label": "Open Compute Project network interface card 3.0, large form factor", "definition": "The large card outline of the Open Compute Project network interface card (OCP NIC) 3.0 specification."},
             "Mezzanine": {"label": "Mezzanine card", "definition": "A card that plugs into a board-specific mezzanine connector of a compute board instead of a standard slot."},
+            "OCP3-TSFF": {"label": "Open Compute Project network interface card 3.0, tall small form factor", "definition": "The taller variant of the small card outline of the Open Compute Project network interface card (OCP NIC) 3.0 specification, with room for a larger heat sink."},
+            "M.2-2242": {"label": "M.2 2242", "definition": "An M.2 module 22 millimeters wide and 42 millimeters long."},
+            "M.2-2280": {"label": "M.2 2280", "definition": "An M.2 module 22 millimeters wide and 80 millimeters long."},
+            "M.2-22110": {"label": "M.2 22110", "definition": "An M.2 module 22 millimeters wide and 110 millimeters long."},
         },
     },
     "PCIeGeneration": {
@@ -436,6 +461,14 @@ ENUMERATIONS = {
             "EIA-310": {"label": "EIA-310 19-inch", "definition": "The Electronic Industries Alliance EIA-310 standard for 19-inch wide mounting in rack units of 44.45 millimeters."},
             "ORv3": {"label": "Open Rack V3", "definition": "The Open Compute Project Open Rack version 3 standard, with 21-inch wide equipment bays and a rear power busbar."},
             "MGX": {"label": "MGX rack", "definition": "The NVIDIA MGX rack specification published through the Open Compute Project, based on Open Rack V3 and adapted to also hold 19-inch equipment."},
+        },
+    },
+    "LaneModulation": {
+        "label": "Lane modulation",
+        "definition": "The ways the signal on one electrical or optical lane of a data link encodes its bits.",
+        "values": {
+            "NRZ": {"label": "NRZ", "definition": "Non-return-to-zero signalling with two amplitude levels, carrying one bit per symbol."},
+            "PAM4": {"label": "PAM4", "definition": "Four-level pulse amplitude modulation, carrying two bits per symbol."},
         },
     },
 }
@@ -586,5 +619,24 @@ PROPERTIES = {
         "parent": S223.QuantifiableProperty,
         "quantity_kind": QK.Mass,
         "units": [UNIT.KiloGM, UNIT.LB],
+    },
+    "SupportedGPUPlatformProperty": {
+        "label": "Supported GPU platform property",
+        "definition": "An enumerated property naming a GPU platform that the vendor states a product not built on it is designed to serve, such as a coolant distribution unit sized for a rack-scale system.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "GPUPlatform",
+    },
+    "LaneModulationProperty": {
+        "label": "Lane modulation property",
+        "definition": "An enumerated property naming the modulation of the electrical or optical lanes of a data port.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "LaneModulation",
+    },
+    "OpticalPowerLevel": {
+        "label": "Optical power level",
+        "definition": "The optical power a transmitter launches or a receiver accepts, given as a level relative to one milliwatt.",
+        "parent": S223.QuantifiableProperty,
+        "quantity_kind": QK.Log10Ratio,
+        "units": [UNIT["DeciB-MilliW"]],
     },
 }
