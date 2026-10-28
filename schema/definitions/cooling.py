@@ -6,6 +6,10 @@ lines, s223:BidirectionalConnectionPoint where fluid moves both ways). Which loo
 belongs to is a 223 role: Role-Primary / Role-Secondary on CDUs (decision C1), Role-Evaporator /
 Role-Condenser on chillers (decision C2), Role-Supply / Role-Return for direction where a device has
 more than one loop. See docs/MODELING.md, decisions C1 to C10.
+
+Refrigerants are 223's refrigerant media, with the missing ones added below in 223's pattern (decision G17):
+a refrigerant line that leaves a product takes its refrigerant as the medium of its connection point, and a
+circuit sealed inside a product is stated with RefrigerantProperty on the product model.
 """
 
 from rdflib.namespace import OWL
@@ -466,11 +470,33 @@ PROPERTIES = {
         "quantity_kind": QK.Pressure,
         "units": [UNIT.KiloPA, UNIT.BAR, UNIT.PSI, UNIT.M_H2O, UNIT.FT_H2O],
     },
+    "RefrigerantProperty": {
+        "label": "Refrigerant property",
+        "definition": "An enumerated property naming the refrigerant in a circuit sealed inside a product, such as a packaged chiller, where no connection point carries it.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": REFRIGERANT,
+    },
     "PipeJointProperty": {
         "label": "Pipe joint property",
         "definition": "An enumerated property naming how a liquid connection point that is a pipe end joins the piping.",
         "parent": S223.EnumerableProperty,
         "enumeration": "PipeJoint",
+    },
+}
+
+# ---------------------------------------------------------------------------------------------
+# Refrigerants missing from 223's refrigerant media, in 223's pattern (decision G17).
+
+MEDIA = {
+    "Refrigerant-R-454B": {
+        "label": "Refrigerant R-454B",
+        "definition": "The refrigerant R-454B, a blend of R-32 and R-1234yf with a lower global warming potential than R-410A, which it replaces in new air conditioning equipment.",
+        "parent": REFRIGERANT,
+    },
+    "Refrigerant-R-1233zd": {
+        "label": "Refrigerant R-1233zd",
+        "definition": "The refrigerant R-1233zd(E), a low-pressure refrigerant with a very low global warming potential, used mainly in centrifugal chillers.",
+        "parent": REFRIGERANT,
     },
 }
 

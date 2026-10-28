@@ -1,5 +1,7 @@
 PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1140,6 +1142,109 @@ ai-factory:FanShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:Fan ;
+.
+
+ai-factory:FeatureStatementBodyShape
+    a sh:NodeShape ;
+    sh:message "A feature statement has exactly one textual body whose rdf:value is one English text."@en ;
+    sh:or (
+        
+        [
+            sh:not
+                [
+                    sh:hasValue oa:describing ;
+                    sh:path oa:motivatedBy ;
+                ] ;
+        ]
+        
+        [
+            sh:property
+                [
+                    sh:class oa:TextualBody ;
+                    sh:maxCount 1 ;
+                    sh:minCount 1 ;
+                    sh:node
+                        [
+                            sh:property
+                                [
+                                    sh:datatype rdf:langString ;
+                                    sh:languageIn (
+                                        "en"
+                                    ) ;
+                                    sh:maxCount 1 ;
+                                    sh:minCount 1 ;
+                                    sh:path rdf:value ;
+                                ] ;
+                        ] ;
+                    sh:path oa:hasBody ;
+                ] ;
+        ]
+    ) ;
+    sh:targetClass oa:Annotation ;
+.
+
+ai-factory:FeatureStatementProvenanceShape
+    a sh:NodeShape ;
+    sh:message "A feature statement cites where it comes from with prov:wasDerivedFrom: a specific resource with a source document and a selector."@en ;
+    sh:or (
+        
+        [
+            sh:not
+                [
+                    sh:hasValue oa:describing ;
+                    sh:path oa:motivatedBy ;
+                ] ;
+        ]
+        
+        [
+            sh:property
+                [
+                    sh:class oa:SpecificResource ;
+                    sh:minCount 1 ;
+                    sh:node
+                        [
+                            sh:property 
+                                [
+                                    sh:minCount 1 ;
+                                    sh:path oa:hasSelector ;
+                                ] ,
+                                [
+                                    sh:class ai-factory:Source ;
+                                    sh:minCount 1 ;
+                                    sh:path oa:hasSource ;
+                                ] ;
+                        ] ;
+                    sh:path prov:wasDerivedFrom ;
+                ] ;
+        ]
+    ) ;
+    sh:targetClass oa:Annotation ;
+.
+
+ai-factory:FeatureStatementTargetShape
+    a sh:NodeShape ;
+    sh:message "A feature statement targets exactly one product model."@en ;
+    sh:or (
+        
+        [
+            sh:not
+                [
+                    sh:hasValue oa:describing ;
+                    sh:path oa:motivatedBy ;
+                ] ;
+        ]
+        
+        [
+            sh:property
+                [
+                    sh:class ai-factory:ProductModel ;
+                    sh:maxCount 1 ;
+                    sh:minCount 1 ;
+                    sh:path oa:hasTarget ;
+                ] ;
+        ]
+    ) ;
+    sh:targetClass oa:Annotation ;
 .
 
 ai-factory:FiberCableShape
@@ -2614,6 +2719,17 @@ ai-factory:RackSpaceShape
             sh:path qudt:hasQuantityKind ;
         ] ;
     sh:targetClass ai-factory:RackSpace ;
+.
+
+ai-factory:RefrigerantPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue s223:Constituent-Refrigerant ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:RefrigerantProperty ;
 .
 
 ai-factory:RemotePowerPanelShape

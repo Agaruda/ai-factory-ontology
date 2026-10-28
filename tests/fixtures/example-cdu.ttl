@@ -14,6 +14,28 @@ PREFIX s223: <http://data.ashrae.org/standard223#>
 PREFIX unit: <http://qudt.org/vocab/unit/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
+ai-factory-model:example-cdu-l2l-500.feature-1
+    a oa:Annotation ;
+    oa:hasBody
+        [
+            a oa:TextualBody ;
+            rdf:value "Each of its two circulation pumps can be replaced while the other keeps the unit running."@en ;
+        ] ;
+    oa:hasTarget ai-factory-model:example-cdu-l2l-500 ;
+    oa:motivatedBy oa:describing ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=1" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+.
+
 ai-factory-model:example-cdu-l2l-500.not-stated.pressure-drop
     a ai-factory:NotStatedRecord ;
     ai-factory:aboutConnectionPointClass ai-factory:LiquidOutlet ;

@@ -2,7 +2,7 @@
 
 Equipment classes join a Brick class (what it is) and a 223 class (so it can have connection points), as
 docs/MODELING.md describes. Connection points, AC media, voltage property classes and the power connector
-enumeration come from common.py; redundancy (N+1, "4 to make 3") uses core.py's RedundancyGroup (decision P1).
+enumeration come from common.py; redundancy (N+1, "4 to make 3") uses core.py's RedundancyGroup (decisions P1 and G15).
 A battery energy storage system assembled from several products is not a class here: it is a
 brick:Battery_Energy_Storage_System, which Brick defines as a system (decision P5).
 

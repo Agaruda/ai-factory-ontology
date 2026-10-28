@@ -1,10 +1,13 @@
-"""Cross-cutting terms: product models, provenance helpers, not-stated records, qualification and redundancy.
+"""Cross-cutting terms: product models, provenance helpers, not-stated records, qualification, redundancy and
+the shapes for feature statements.
 
 Each entry: local name -> label, definition (one sentence, our own words), and the parents or
-property details the generator needs. See docs/MODELING.md, patterns X1 to X5.
+property details the generator needs. See docs/MODELING.md, patterns X1 to X7.
 """
 
-from rdflib.namespace import OWL, XSD
+from rdflib import BNode, Literal
+from rdflib.collection import Collection
+from rdflib.namespace import OWL, PROV, RDF, SH, XSD
 
 from .namespaces import AIF, OA, S223
 
@@ -42,7 +45,7 @@ CORE_CLASSES = {
     },
     "RedundancyGroup": {
         "label": "Redundancy group",
-        "definition": "A set of identical units inside a product of which only some are needed to carry the full load, the rest being spares.",
+        "definition": "A set of like units inside a product, such as its pumps, power supplies or fans, described by the redundancy scheme they follow or by how many are fitted and how many must work to carry the full load.",
         "parents": [OWL.Thing],
     },
 }
@@ -152,6 +155,19 @@ RELATIONS = {
         "domain": AIF.RedundancyGroup,
         "range": AIF.ProductModel,
     },
+    "memberClass": {
+        "type": OWL.ObjectProperty,
+        "label": "member class",
+        "definition": "The equipment or component class of the units in a redundancy group, given when the units have no product model of their own.",
+        "domain": AIF.RedundancyGroup,
+    },
+    "redundancyScheme": {
+        "type": OWL.ObjectProperty,
+        "label": "redundancy scheme",
+        "definition": "The redundancy scheme, such as N+1 or 2N, that the units of a redundancy group follow.",
+        "domain": AIF.RedundancyGroup,
+        "range": AIF["EnumerationKind-RedundancyScheme"],
+    },
     "installedCount": {
         "type": OWL.DatatypeProperty,
         "label": "installed count",
@@ -229,6 +245,18 @@ CORE_ENUMERATIONS = {
             "EndorsedDesign": {"label": "Endorsed design", "definition": "A facility or rack design reviewed and endorsed by a platform owner."},
         },
     },
+    "RedundancyScheme": {
+        "label": "Redundancy scheme",
+        "definition": "The ways a set of like units is sized against the number N of units that the full load needs.",
+        "values": {
+            "N": {"label": "N", "definition": "Exactly as many units as the full load needs and no spare, also written N+0."},
+            "N+1": {"label": "N+1", "definition": "One spare unit beyond the N units that the full load needs."},
+            "N+2": {"label": "N+2", "definition": "Two spare units beyond the N units that the full load needs."},
+            "N+N": {"label": "N+N", "definition": "N spare units beyond the N units that the full load needs, so that the load is still carried when half of the units fail."},
+            "2N": {"label": "2N", "definition": "Two complete sets of the N units that the full load needs, each able to carry the full load on its own, such as two independent power paths."},
+            "2N+1": {"label": "2N+1", "definition": "Two complete sets of the N units that the full load needs, as in 2N, and one further spare unit."},
+        },
+    },
 }
 
 # Members we add to 223's existing aspect enumeration (s223:EnumerationKind-Aspect).
@@ -237,3 +265,57 @@ ASPECTS = {
     "Recommended": {"label": "Recommended", "definition": "The vendor states the value as advice rather than as a requirement."},
     "Operating": {"label": "Operating", "definition": "The value bounds the normal operating range, as opposed to a limit the device tolerates without operating normally."},
 }
+
+
+# ---------------------------------------------------------------------------------------------
+# Shapes for feature statements (docs/CONVENTIONS.md section 9, docs/MODELING.md pattern X7). A feature
+# statement is a W3C Web Annotation with the describing motivation. SHACL Core has no target for annotations
+# with a given motivation, so each shape targets every annotation and holds when the annotation is either not
+# describing or meets the check.
+
+FEATURE_STATEMENT_SHAPES = {
+    "FeatureStatementTargetShape": "A feature statement targets exactly one product model.",
+    "FeatureStatementBodyShape": "A feature statement has exactly one textual body whose rdf:value is one English text.",
+    "FeatureStatementProvenanceShape": "A feature statement cites where it comes from with prov:wasDerivedFrom: a specific resource with a source document and a selector.",
+}
+
+
+def _node(g, *pairs) -> BNode:
+    node = BNode()
+    for predicate, obj in pairs:
+        g.add((node, predicate, obj))
+    return node
+
+
+def _feature_statement_check(g, name: str) -> BNode:
+    one = (SH.minCount, Literal(1)), (SH.maxCount, Literal(1))
+    if name == "FeatureStatementTargetShape":
+        check = _node(g, (SH.path, OA.hasTarget), *one, (SH["class"], AIF.ProductModel))
+    elif name == "FeatureStatementBodyShape":
+        languages = BNode()
+        Collection(g, languages, [Literal("en")])
+        value = _node(g, (SH.path, RDF.value), *one, (SH.datatype, RDF.langString), (SH.languageIn, languages))
+        check = _node(g, (SH.path, OA.hasBody), *one, (SH["class"], OA.TextualBody),
+                      (SH.node, _node(g, (SH.property, value))))
+    else:
+        source = _node(g, (SH.path, OA.hasSource), (SH.minCount, Literal(1)), (SH["class"], AIF.Source))
+        selector = _node(g, (SH.path, OA.hasSelector), (SH.minCount, Literal(1)))
+        check = _node(g, (SH.path, PROV.wasDerivedFrom), (SH.minCount, Literal(1)), (SH["class"], OA.SpecificResource),
+                      (SH.node, _node(g, (SH.property, source), (SH.property, selector))))
+    return _node(g, (SH.property, check))
+
+
+def add_shapes(builder, module: str) -> None:
+    g = builder.shapes
+    for term in (OA.Annotation, OA.motivatedBy, OA.describing, OA.hasTarget, OA.hasBody, OA.TextualBody,
+                 OA.SpecificResource, OA.hasSource, OA.hasSelector, PROV.wasDerivedFrom, AIF.ProductModel, AIF.Source):
+        builder.references.append((f"{module}.FEATURE_STATEMENT_SHAPES", term))
+    for name, message in FEATURE_STATEMENT_SHAPES.items():
+        shape = AIF[name]
+        not_describing = _node(g, (SH["not"], _node(g, (SH.path, OA.motivatedBy), (SH.hasValue, OA.describing))))
+        alternatives = BNode()
+        Collection(g, alternatives, [not_describing, _feature_statement_check(g, name)])
+        g.add((shape, RDF.type, SH.NodeShape))
+        g.add((shape, SH.targetClass, OA.Annotation))
+        g.add((shape, SH["or"], alternatives))
+        g.add((shape, SH.message, Literal(message, lang="en")))

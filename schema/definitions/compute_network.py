@@ -281,6 +281,7 @@ ENUMERATIONS = {
             "HGX-H200": {"label": "HGX H200", "definition": "The NVIDIA HGX baseboard platform with eight H200 GPUs."},
             "HGX-B200": {"label": "HGX B200", "definition": "The NVIDIA HGX baseboard platform with eight B200 GPUs."},
             "HGX-B300": {"label": "HGX B300", "definition": "The NVIDIA HGX baseboard platform with eight B300 GPUs."},
+            "GB200-NVL4": {"label": "GB200 NVL4", "definition": "The NVIDIA platform joining four Blackwell GPUs and two Grace CPUs over NVLink on one board."},
             "GB200-NVL72": {"label": "GB200 NVL72", "definition": "The NVIDIA rack-scale platform joining 72 Blackwell GPUs and 36 Grace CPUs in one NVLink domain."},
             "GB300-NVL72": {"label": "GB300 NVL72", "definition": "The NVIDIA rack-scale platform joining 72 Blackwell Ultra GPUs and 36 Grace CPUs in one NVLink domain."},
             "VeraRubin-NVL72": {"label": "Vera Rubin NVL72", "definition": "The NVIDIA rack-scale platform built on Vera CPUs and Rubin GPUs in one NVLink domain."},

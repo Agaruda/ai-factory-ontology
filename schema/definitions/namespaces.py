@@ -17,7 +17,7 @@ QK = Namespace("http://qudt.org/vocab/quantitykind/")
 OA = Namespace("http://www.w3.org/ns/oa#")
 
 ONTOLOGY_IRI = "https://w3id.org/ai-factory"
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 
 PREFIXES = {
     "ai-factory": AIF,

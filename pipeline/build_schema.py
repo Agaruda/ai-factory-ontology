@@ -131,12 +131,13 @@ class Builder:
 
     # -- enumerations and media (223 pattern: each member is a class and an instance of itself) -----
 
-    def add_member(self, iri: URIRef, parent: URIRef, entry: dict, where: str) -> None:
+    def add_member(self, iri: URIRef, parents: list[URIRef], entry: dict, where: str) -> None:
         check_text(where, entry)
         self.define(iri, where)
         for t in (S223.Class, iri, SH.NodeShape):
             self.schema.add((iri, RDF.type, t))
-        self.subclass(iri, parent, where)
+        for parent in parents:
+            self.subclass(iri, parent, where)
         self.describe(iri, entry)
         for predicate, obj in entry.get("triples", []):
             self.schema.add((iri, predicate, obj))
@@ -162,20 +163,38 @@ class Builder:
             if not CLASS_NAME.match(kind_name):
                 raise DefinitionError(f"{where}: enumeration kinds are UpperCamelCase")
             kind = AIF[f"EnumerationKind-{kind_name}"]
-            self.add_member(kind, entry.get("parent", S223.EnumerationKind), entry, where)
+            self.add_member(kind, [entry.get("parent", S223.EnumerationKind)], entry, where)
             for value_name, value in entry["values"].items():
                 if not MEMBER_NAME.match(value_name):
                     raise DefinitionError(f"{where}.{value_name}: member names use letters, digits, '.', '+' and '-'")
-                self.add_member(AIF[f"{kind_name}-{value_name}"], kind, value, f"{where}.{value_name}")
+                # A value may sit under a broader value of the same kind (223 nests its members the same way).
+                parent = AIF[f"{kind_name}-{value['parent_value']}"] if "parent_value" in value else kind
+                self.add_member(AIF[f"{kind_name}-{value_name}"], [parent], value, f"{where}.{value_name}")
 
     def add_extension_members(self, kind: URIRef, prefix: str, members: dict, module: str) -> None:
         """Members we add to an enumeration kind that 223 defines (for example aspects)."""
         for name, entry in members.items():
-            self.add_member(AIF[f"{prefix}-{name}"], kind, entry, f"{module}.{prefix}-{name}")
+            self.add_member(AIF[f"{prefix}-{name}"], [kind], entry, f"{module}.{prefix}-{name}")
 
     def add_media(self, media: dict, module: str) -> None:
         for name, entry in media.items():
-            self.add_member(AIF[name], entry["parent"], entry, f"{module}.{name}")
+            parents = entry["parents"] if "parents" in entry else [entry["parent"]]
+            self.add_member(AIF[name], parents, entry, f"{module}.{name}")
+
+    def add_quantity_kinds(self, kinds: dict, module: str) -> None:
+        """Quantity kinds QUDT lacks, written in QUDT's pattern. Each is written ai-factory:QuantityKind-<name>."""
+        for name, entry in kinds.items():
+            where = f"{module}.QuantityKind-{name}"
+            if not CLASS_NAME.match(name):
+                raise DefinitionError(f"{where}: quantity kind names are UpperCamelCase")
+            check_text(where, entry)
+            iri = AIF[f"QuantityKind-{name}"]
+            self.define(iri, where)
+            self.schema.add((iri, RDF.type, QUDT.QuantityKind))
+            self.describe(iri, entry)
+            for unit in entry["applicable_units"]:
+                self.references.append((where, unit))
+                self.schema.add((iri, QUDT.applicableUnit, unit))
 
     def add_units(self, units: dict, module: str) -> None:
         """Units QUDT lacks, written in QUDT's pattern so unit-aware tools can convert them."""
@@ -218,7 +237,10 @@ class Builder:
                 if units:
                     self.in_constraint(shape, QUDT.hasUnit, units)
             if "enumeration" in entry:
-                kind = AIF[f"EnumerationKind-{entry['enumeration']}"]
+                # Our kinds are named by local name; a kind from 223 (such as its refrigerant media) by its IRI.
+                kind = entry["enumeration"]
+                if not isinstance(kind, URIRef):
+                    kind = AIF[f"EnumerationKind-{kind}"]
                 self.references.append((where, kind))
                 self.value_constraint(shape, S223.hasEnumerationKind, kind)
 
@@ -321,7 +343,8 @@ class Builder:
                                  ("COMPONENTS", None), ("SYSTEMS", None), ("CONNECTION_POINTS", self.add_simple_classes),
                                  ("PROPERTIES", self.add_property_classes), ("RELATIONS", self.add_relations),
                                  ("CORE_ENUMERATIONS", self.add_enumerations), ("ENUMERATIONS", self.add_enumerations),
-                                 ("MEDIA", self.add_media), ("UNITS", self.add_units)):
+                                 ("MEDIA", self.add_media), ("QUANTITY_KINDS", self.add_quantity_kinds),
+                                 ("UNITS", self.add_units)):
                 value = getattr(module, attr, None)
                 if value is None:
                     continue
