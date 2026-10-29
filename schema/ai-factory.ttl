@@ -20,7 +20,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     owl:imports
         <http://data.ashrae.org/standard223/1.0/model/all> ,
         <https://brickschema.org/schema/1.4/Brick> ;
-    owl:versionInfo "0.1.0" ;
+    owl:versionInfo "0.4.0" ;
 .
 
 ai-factory:ActiveRearDoorHeatExchanger
@@ -470,6 +470,16 @@ ai-factory:CoolantManifold
     skos:definition "A header that splits one coolant line into many branch connections, or gathers many branches back into one line, for the trays and devices of a rack or a row."@en ;
 .
 
+ai-factory:CoolantProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Coolant property"@en ;
+    rdfs:comment "An enumerated property of a liquid connection point naming one coolant the point takes, such as a 25 percent propylene glycol solution or water; a point that takes several coolants has one such property for each, and its medium is the most specific medium all of them are or are a kind of."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property of a liquid connection point naming one coolant the point takes, such as a 25 percent propylene glycol solution or water; a point that takes several coolants has one such property for each, and its medium is the most specific medium all of them are or are a kind of."@en ;
+.
+
 ai-factory:CoolingCapacity
     a
         s223:Class ,
@@ -574,6 +584,16 @@ ai-factory:DPU
     skos:definition "A network adapter with its own general-purpose processor cores and memory that runs networking, storage or security software apart from the host processors, and that is managed through its own management port."@en ;
 .
 
+ai-factory:DataConnectorProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Data connector property"@en ;
+    rdfs:comment "An enumerated property naming the connector of a copper data or serial port."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property naming the connector of a copper data or serial port."@en ;
+.
+
 ai-factory:Depth
     a
         s223:Class ,
@@ -594,6 +614,16 @@ ai-factory:DisconnectSwitch
         s223:Equipment ,
         brick:Disconnect_Switch ;
     skos:definition "A manually operated switch that opens a circuit to isolate equipment for maintenance with a visible or lockable break, without being designed to interrupt fault current."@en ;
+.
+
+ai-factory:EarthingSystemProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Earthing system property"@en ;
+    rdfs:comment "An enumerated property naming the earthing arrangement of the AC supply that a power connection point delivers or requires."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property naming the earthing arrangement of the AC supply that a power connection point delivers or requires."@en ;
 .
 
 ai-factory:ElectricityMeter
@@ -992,6 +1022,16 @@ ai-factory:LaneCount
     skos:definition "The number of electrical or optical lanes that a host connector, expansion slot, port or plug uses."@en ;
 .
 
+ai-factory:LaneModulationProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Lane modulation property"@en ;
+    rdfs:comment "An enumerated property naming the modulation of the electrical or optical lanes of a data port."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property naming the modulation of the electrical or optical lanes of a data port."@en ;
+.
+
 ai-factory:LeakDetector
     a
         s223:Class ,
@@ -1148,6 +1188,16 @@ ai-factory:ManagementPort
     skos:definition "A data port reserved for out-of-band management of a device, typically a copper Ethernet port to its management controller."@en ;
 .
 
+ai-factory:ManagementProtocolProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Management protocol property"@en ;
+    rdfs:comment "An enumerated property naming a management or monitoring protocol a data or serial port supports."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property naming a management or monitoring protocol a data or serial port supports."@en ;
+.
+
 ai-factory:MediumVoltageMotorControlCenter
     a
         s223:Class ,
@@ -1182,6 +1232,18 @@ ai-factory:MediumVoltageVariableFrequencyDrive
         s223:VariableFrequencyDrive ,
         brick:Variable_Frequency_Drive ;
     skos:definition "A power converter, built to a standard such as IEC 61800-4, that turns fixed-frequency alternating current above 1 kV into variable-frequency output to control the speed of a large motor such as a chiller compressor."@en ;
+.
+
+ai-factory:Motherboard
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Motherboard"@en ;
+    rdfs:comment "The main circuit board of a server or tray, carrying its processor sockets, memory slots and expansion slots, when it is named as a part with its own model number."@en ;
+    rdfs:subClassOf
+        s223:Equipment ,
+        brick:ICT_Hardware ;
+    skos:definition "The main circuit board of a server or tray, carrying its processor sockets, memory slots and expansion slots, when it is named as a part with its own model number."@en ;
 .
 
 ai-factory:NVLinkGenerationProperty
@@ -1244,6 +1306,16 @@ ai-factory:NetworkProtocolProperty
     rdfs:comment "An enumerated property naming a protocol a data port or cable carries."@en ;
     rdfs:subClassOf s223:EnumerableProperty ;
     skos:definition "An enumerated property naming a protocol a data port or cable carries."@en ;
+.
+
+ai-factory:OpticalPowerLevel
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Optical power level"@en ;
+    rdfs:comment "The optical power a transmitter launches or a receiver accepts, given as a level relative to one milliwatt."@en ;
+    rdfs:subClassOf s223:QuantifiableProperty ;
+    skos:definition "The optical power a transmitter launches or a receiver accepts, given as a level relative to one milliwatt."@en ;
 .
 
 ai-factory:OpticalReachClassProperty
@@ -1320,6 +1392,16 @@ ai-factory:PatchPanel
         s223:Equipment ,
         brick:Data_Network_Equipment ;
     skos:definition "A rack-mounted panel of fixed connector ports where structured cabling runs are cross-connected to equipment cables."@en ;
+.
+
+ai-factory:PipeJointProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Pipe joint property"@en ;
+    rdfs:comment "An enumerated property naming how a liquid connection point that is a pipe end joins the piping."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property naming how a liquid connection point that is a pipe end joins the piping."@en ;
 .
 
 ai-factory:PluggableCableAssembly
@@ -1426,6 +1508,16 @@ ai-factory:PowerShelf
         s223:ElectricEnergyConverter ,
         brick:Electrical_Equipment ;
     skos:definition "A rack-mounted shelf of hot-swappable power supply units that converts the rack's alternating-current or high-voltage direct-current feed into the low-voltage direct current that the rack busbar carries to compute and switch trays."@en ;
+.
+
+ai-factory:PowerSupplyEfficiencyGradeProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Power supply efficiency grade property"@en ;
+    rdfs:comment "An enumerated property naming the 80 PLUS level a power supply is certified to."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property naming the 80 PLUS level a power supply is certified to."@en ;
 .
 
 ai-factory:PowerSupplyUnit
@@ -1553,6 +1645,26 @@ ai-factory:RackScaleSystem
     skos:definition "A rack sold as one integrated product together with its compute or switch trays, power shelves, busbar and any coolant manifolds, so that it is installed and connected to facility power, cooling and networks as one unit."@en ;
 .
 
+ai-factory:RackSpace
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Rack space"@en ;
+    rdfs:comment "The vertical mounting space a device occupies in a rack, or that a rack provides for devices, counted in rack units."@en ;
+    rdfs:subClassOf s223:QuantifiableProperty ;
+    skos:definition "The vertical mounting space a device occupies in a rack, or that a rack provides for devices, counted in rack units."@en ;
+.
+
+ai-factory:RefrigerantProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Refrigerant property"@en ;
+    rdfs:comment "An enumerated property naming the refrigerant in a circuit sealed inside a product, such as a packaged chiller, where no connection point carries it."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property naming the refrigerant in a circuit sealed inside a product, such as a packaged chiller, where no connection point carries it."@en ;
+.
+
 ai-factory:RemotePowerPanel
     a
         s223:Class ,
@@ -1565,6 +1677,18 @@ ai-factory:RemotePowerPanel
     skos:definition "A floor-standing cabinet in the data hall that holds one or more panelboards without a transformer and breaks an upstream feeder out into branch circuits or power whips for nearby racks."@en ;
 .
 
+ai-factory:RiserCard
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Riser card"@en ;
+    rdfs:comment "A circuit board that plugs into an expansion slot of a motherboard and provides one or more expansion slots in another position or orientation."@en ;
+    rdfs:subClassOf
+        s223:Equipment ,
+        brick:ICT_Hardware ;
+    skos:definition "A circuit board that plugs into an expansion slot of a motherboard and provides one or more expansion slots in another position or orientation."@en ;
+.
+
 ai-factory:ScalableUnit
     a
         s223:Class ,
@@ -1575,6 +1699,18 @@ ai-factory:ScalableUnit
         s223:System ,
         brick:Collection ;
     skos:definition "A repeatable building block of a cluster design, made of a fixed number of graphics processing unit (GPU) servers or rack-scale systems with the leaf switches and cables that connect them, so that a cluster grows one unit at a time."@en ;
+.
+
+ai-factory:ServerChassis
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Server chassis"@en ;
+    rdfs:comment "The enclosure of a server with its fans and its drive and power supply bays, when it is named as a part with its own model number to which a motherboard and processors are added."@en ;
+    rdfs:subClassOf
+        s223:Equipment ,
+        brick:ICT_Hardware ;
+    skos:definition "The enclosure of a server with its fans and its drive and power supply bays, when it is named as a part with its own model number to which a motherboard and processors are added."@en ;
 .
 
 ai-factory:ServerFunctionProperty
@@ -1629,6 +1765,16 @@ ai-factory:Superchip
     rdfs:comment "A graphics processing unit (GPU) module that joins a central processing unit and one or more GPUs through a coherent chip-to-chip link on one board, used in the compute trays of rack-scale systems."@en ;
     rdfs:subClassOf ai-factory:GPUModule ;
     skos:definition "A graphics processing unit (GPU) module that joins a central processing unit and one or more GPUs through a coherent chip-to-chip link on one board, used in the compute trays of rack-scale systems."@en ;
+.
+
+ai-factory:SupportedGPUPlatformProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Supported GPU platform property"@en ;
+    rdfs:comment "An enumerated property naming a GPU platform that the vendor states a product not built on it is designed to serve, such as a coolant distribution unit sized for a rack-scale system."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property naming a GPU platform that the vendor states a product not built on it is designed to serve, such as a coolant distribution unit sized for a rack-scale system."@en ;
 .
 
 ai-factory:SwitchChassisFormProperty
@@ -1698,9 +1844,9 @@ ai-factory:TransferTransitionProperty
         s223:Class ,
         owl:Class ;
     rdfs:label "Transfer transition property"@en ;
-    rdfs:comment "An enumerated property naming a transition a transfer switch supports."@en ;
+    rdfs:comment "An enumerated property naming a transition a transfer switch or the bypass of an uninterruptible power supply supports."@en ;
     rdfs:subClassOf s223:EnumerableProperty ;
-    skos:definition "An enumerated property naming a transition a transfer switch supports."@en ;
+    skos:definition "An enumerated property naming a transition a transfer switch or the bypass of an uninterruptible power supply supports."@en ;
 .
 
 ai-factory:Transformer
@@ -1735,6 +1881,62 @@ ai-factory:UPS
         s223:ElectricEnergyConverter ,
         brick:Electrical_Equipment ;
     skos:definition "A power conditioning unit that feeds its load from the incoming alternating-current supply in normal operation and from a battery or other energy store without interruption when that supply fails."@en ;
+.
+
+ai-factory:Unit-GigaBAUD
+    a qudt:Unit ;
+    rdfs:label "Gigabaud"@en ;
+    qudt:conversionMultiplier 1000000000.0 ;
+    qudt:hasQuantityKind quantitykind:DigitRate ;
+    qudt:symbol "GBd" ;
+    rdfs:comment "One billion symbols per second on a signalling lane."@en ;
+    skos:definition "One billion symbols per second on a signalling lane."@en ;
+.
+
+ai-factory:Unit-MegaTRANSFER-PER-SEC
+    a qudt:Unit ;
+    rdfs:label "Megatransfer per second"@en ;
+    qudt:conversionMultiplier 1000000.0 ;
+    qudt:hasQuantityKind quantitykind:DigitRate ;
+    qudt:symbol "MT/s" ;
+    rdfs:comment "One million data transfers per second on a memory or bus interface, the rate in which memory speeds are given."@en ;
+    skos:definition "One million data transfers per second on a memory or bus interface, the rate in which memory speeds are given."@en ;
+.
+
+ai-factory:Unit-OpenRackUnit
+    a qudt:Unit ;
+    rdfs:label "Open rack unit"@en ;
+    qudt:conversionMultiplier 0.048 ;
+    qudt:hasQuantityKind
+        quantitykind:Height ,
+        quantitykind:Length ;
+    qudt:symbol "OU" ;
+    rdfs:comment "The OpenU of the Open Compute Project Open Rack, 48 millimeters of vertical mounting space."@en ;
+    skos:definition "The OpenU of the Open Compute Project Open Rack, 48 millimeters of vertical mounting space."@en ;
+.
+
+ai-factory:Unit-RackUnit
+    a qudt:Unit ;
+    rdfs:label "Rack unit"@en ;
+    qudt:conversionMultiplier 0.04445 ;
+    qudt:hasQuantityKind
+        quantitykind:Height ,
+        quantitykind:Length ;
+    qudt:symbol "U" ;
+    rdfs:comment "The rack unit of EIA-310, 1.75 inches or 44.45 millimeters of vertical mounting space in a rack."@en ;
+    skos:definition "The rack unit of EIA-310, 1.75 inches or 44.45 millimeters of vertical mounting space in a rack."@en ;
+.
+
+ai-factory:Unit-TeraBYTE-PER-SEC
+    a qudt:Unit ;
+    rdfs:label "Terabyte per second"@en ;
+    qudt:conversionMultiplier 8000000000000.0 ;
+    qudt:hasQuantityKind
+        quantitykind:ByteRate ,
+        quantitykind:DataRate ;
+    qudt:symbol "TB/s" ;
+    rdfs:comment "One trillion bytes per second."@en ;
+    skos:definition "One trillion bytes per second."@en ;
 .
 
 ai-factory:Valve
@@ -1847,6 +2049,15 @@ ai-factory:condition
     skos:definition "The circumstances under which a value holds, such as a coolant temperature or an altitude, written in our own words."@en ;
 .
 
+ai-factory:coolantMedium
+    a owl:ObjectProperty ;
+    rdfs:label "coolant medium"@en ;
+    rdfs:comment "The medium a coolant product is as sold: a glycol constituent for a concentrate, or a glycol solution for a ready-mixed coolant."@en ;
+    rdfs:domain ai-factory:CoolantProduct ;
+    rdfs:range s223:Substance-Medium ;
+    skos:definition "The medium a coolant product is as sold: a glycol constituent for a concentrate, or a glycol solution for a ready-mixed coolant."@en ;
+.
+
 ai-factory:firmwareVersion
     a owl:DatatypeProperty ;
     rdfs:label "firmware version"@en ;
@@ -1900,6 +2111,14 @@ ai-factory:installedCount
     skos:definition "How many units of a redundancy group are fitted."@en ;
 .
 
+ai-factory:memberClass
+    a owl:ObjectProperty ;
+    rdfs:label "member class"@en ;
+    rdfs:comment "The equipment or component class of the units in a redundancy group, given when the units have no product model of their own."@en ;
+    rdfs:domain ai-factory:RedundancyGroup ;
+    skos:definition "The equipment or component class of the units in a redundancy group, given when the units have no product model of their own."@en ;
+.
+
 ai-factory:memberModel
     a owl:ObjectProperty ;
     rdfs:label "member model"@en ;
@@ -1941,6 +2160,15 @@ ai-factory:reasoning
     rdfs:comment "How a derived value was obtained from the statements it rests on, written in our own words."@en ;
     rdfs:range xsd:string ;
     skos:definition "How a derived value was obtained from the statements it rests on, written in our own words."@en ;
+.
+
+ai-factory:redundancyScheme
+    a owl:ObjectProperty ;
+    rdfs:label "redundancy scheme"@en ;
+    rdfs:comment "The redundancy scheme, such as N+1 or 2N, that the units of a redundancy group follow."@en ;
+    rdfs:domain ai-factory:RedundancyGroup ;
+    rdfs:range ai-factory:EnumerationKind-RedundancyScheme ;
+    skos:definition "The redundancy scheme, such as N+1 or 2N, that the units of a redundancy group follow."@en ;
 .
 
 ai-factory:requiredCount
@@ -1995,7 +2223,7 @@ ai-factory:AC-1Ph-50Hz
     s223:hasFrequency s223:Frequency-50Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-SinglePhase ;
     rdfs:comment "Single-phase alternating current at 50 Hz, with the voltage given separately as a property of the connection point."@en ;
-    rdfs:subClassOf s223:Electricity-AC ;
+    rdfs:subClassOf ai-factory:AC-1Ph ;
     skos:definition "Single-phase alternating current at 50 Hz, with the voltage given separately as a property of the connection point."@en ;
 .
 
@@ -2010,7 +2238,7 @@ ai-factory:AC-1Ph-50Hz-60Hz
         s223:Frequency-60Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-SinglePhase ;
     rdfs:comment "Single-phase alternating current that a connection point accepts or delivers at either 50 Hz or 60 Hz."@en ;
-    rdfs:subClassOf s223:Electricity-AC ;
+    rdfs:subClassOf ai-factory:AC-1Ph ;
     skos:definition "Single-phase alternating current that a connection point accepts or delivers at either 50 Hz or 60 Hz."@en ;
 .
 
@@ -2023,7 +2251,7 @@ ai-factory:AC-1Ph-60Hz
     s223:hasFrequency s223:Frequency-60Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-SinglePhase ;
     rdfs:comment "Single-phase alternating current at 60 Hz, with the voltage given separately as a property of the connection point."@en ;
-    rdfs:subClassOf s223:Electricity-AC ;
+    rdfs:subClassOf ai-factory:AC-1Ph ;
     skos:definition "Single-phase alternating current at 60 Hz, with the voltage given separately as a property of the connection point."@en ;
 .
 
@@ -2036,7 +2264,9 @@ ai-factory:AC-3PhN-50Hz
     s223:hasFrequency s223:Frequency-50Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-ThreePhase ;
     rdfs:comment "Three-phase alternating current at 50 Hz in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available."@en ;
-    rdfs:subClassOf ai-factory:AC-3Ph-50Hz ;
+    rdfs:subClassOf
+        ai-factory:AC-3Ph-50Hz ,
+        ai-factory:AC-3PhN ;
     skos:definition "Three-phase alternating current at 50 Hz in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available."@en ;
 .
 
@@ -2051,7 +2281,9 @@ ai-factory:AC-3PhN-50Hz-60Hz
         s223:Frequency-60Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-ThreePhase ;
     rdfs:comment "Three-phase alternating current at either 50 Hz or 60 Hz in which a neutral conductor is also connected."@en ;
-    rdfs:subClassOf ai-factory:AC-3Ph-50Hz-60Hz ;
+    rdfs:subClassOf
+        ai-factory:AC-3Ph-50Hz-60Hz ,
+        ai-factory:AC-3PhN ;
     skos:definition "Three-phase alternating current at either 50 Hz or 60 Hz in which a neutral conductor is also connected."@en ;
 .
 
@@ -2064,8 +2296,43 @@ ai-factory:AC-3PhN-60Hz
     s223:hasFrequency s223:Frequency-60Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-ThreePhase ;
     rdfs:comment "Three-phase alternating current at 60 Hz in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available."@en ;
-    rdfs:subClassOf ai-factory:AC-3Ph-60Hz ;
+    rdfs:subClassOf
+        ai-factory:AC-3Ph-60Hz ,
+        ai-factory:AC-3PhN ;
     skos:definition "Three-phase alternating current at 60 Hz in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available."@en ;
+.
+
+ai-factory:AddInCardFormFactor-M.2-22110
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:AddInCardFormFactor-M.2-22110 ;
+    rdfs:label "M.2 22110"@en ;
+    rdfs:comment "An M.2 module 22 millimeters wide and 110 millimeters long."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-AddInCardFormFactor ;
+    skos:definition "An M.2 module 22 millimeters wide and 110 millimeters long."@en ;
+.
+
+ai-factory:AddInCardFormFactor-M.2-2242
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:AddInCardFormFactor-M.2-2242 ;
+    rdfs:label "M.2 2242"@en ;
+    rdfs:comment "An M.2 module 22 millimeters wide and 42 millimeters long."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-AddInCardFormFactor ;
+    skos:definition "An M.2 module 22 millimeters wide and 42 millimeters long."@en ;
+.
+
+ai-factory:AddInCardFormFactor-M.2-2280
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:AddInCardFormFactor-M.2-2280 ;
+    rdfs:label "M.2 2280"@en ;
+    rdfs:comment "An M.2 module 22 millimeters wide and 80 millimeters long."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-AddInCardFormFactor ;
+    skos:definition "An M.2 module 22 millimeters wide and 80 millimeters long."@en ;
 .
 
 ai-factory:AddInCardFormFactor-Mezzanine
@@ -2099,6 +2366,17 @@ ai-factory:AddInCardFormFactor-OCP3-SFF
     rdfs:comment "The small card outline of the Open Compute Project network interface card (OCP NIC) 3.0 specification, inserted from the outside of a server."@en ;
     rdfs:subClassOf ai-factory:EnumerationKind-AddInCardFormFactor ;
     skos:definition "The small card outline of the Open Compute Project network interface card (OCP NIC) 3.0 specification, inserted from the outside of a server."@en ;
+.
+
+ai-factory:AddInCardFormFactor-OCP3-TSFF
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:AddInCardFormFactor-OCP3-TSFF ;
+    rdfs:label "Open Compute Project network interface card 3.0, tall small form factor"@en ;
+    rdfs:comment "The taller variant of the small card outline of the Open Compute Project network interface card (OCP NIC) 3.0 specification, with room for a larger heat sink."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-AddInCardFormFactor ;
+    skos:definition "The taller variant of the small card outline of the Open Compute Project network interface card (OCP NIC) 3.0 specification, with room for a larger heat sink."@en ;
 .
 
 ai-factory:AddInCardFormFactor-PCIe-FHFL
@@ -2431,15 +2709,12 @@ ai-factory:CircuitBreakerType-Vacuum
     skos:definition "A breaker, usually for medium voltage, whose contacts open inside sealed vacuum interrupters."@en ;
 .
 
-ai-factory:Constituent-EthyleneGlycol
-    a
-        s223:Class ,
-        sh:NodeShape ,
-        ai-factory:Constituent-EthyleneGlycol ;
-    rdfs:label "Ethylene glycol"@en ;
-    rdfs:comment "Ethylene glycol as a constituent of a coolant mixture."@en ;
-    rdfs:subClassOf s223:Constituent-Glycol ;
-    skos:definition "Ethylene glycol as a constituent of a coolant mixture."@en ;
+ai-factory:CoolantProduct
+    a owl:Class ;
+    rdfs:label "Coolant product"@en ;
+    rdfs:comment "A heat transfer liquid sold under its own product name, either as a glycol concentrate to be mixed with water or ready mixed."@en ;
+    rdfs:subClassOf owl:Thing ;
+    skos:definition "A heat transfer liquid sold under its own product name, either as a glycol concentrate to be mixed with water or ready mixed."@en ;
 .
 
 ai-factory:CoolingMethod-AirCooled
@@ -2750,6 +3025,61 @@ ai-factory:CouplingType-StaubliSCG12
     skos:definition "The Staubli SCG series coupling with a 12 mm nominal diameter."@en ;
 .
 
+ai-factory:DataConnector-DE-9
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:DataConnector-DE-9 ;
+    rdfs:label "DE-9"@en ;
+    rdfs:comment "The nine-pin D-subminiature connector of EIA-232 serial ports."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-DataConnector ;
+    skos:definition "The nine-pin D-subminiature connector of EIA-232 serial ports."@en ;
+.
+
+ai-factory:DataConnector-RJ45
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:DataConnector-RJ45 ;
+    rdfs:label "RJ45"@en ;
+    rdfs:comment "The eight-position modular jack used for twisted-pair Ethernet and for some serial console ports."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-DataConnector ;
+    skos:definition "The eight-position modular jack used for twisted-pair Ethernet and for some serial console ports."@en ;
+.
+
+ai-factory:DataConnector-USB-A
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:DataConnector-USB-A ;
+    rdfs:label "USB Type-A"@en ;
+    rdfs:comment "The rectangular USB Type-A receptacle of a USB host."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-DataConnector ;
+    skos:definition "The rectangular USB Type-A receptacle of a USB host."@en ;
+.
+
+ai-factory:DataConnector-USB-C
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:DataConnector-USB-C ;
+    rdfs:label "USB Type-C"@en ;
+    rdfs:comment "The reversible USB Type-C receptacle."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-DataConnector ;
+    skos:definition "The reversible USB Type-C receptacle."@en ;
+.
+
+ai-factory:DataConnector-USB-MicroB
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:DataConnector-USB-MicroB ;
+    rdfs:label "USB Micro-B"@en ;
+    rdfs:comment "The small USB Micro-B receptacle, often used for console ports."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-DataConnector ;
+    skos:definition "The small USB Micro-B receptacle, often used for console ports."@en ;
+.
+
 ai-factory:DryCooler
     a
         s223:Class ,
@@ -2760,6 +3090,61 @@ ai-factory:DryCooler
         s223:Equipment ,
         brick:Dry_Cooler ;
     skos:definition "An outdoor unit that cools a closed water or glycol loop with finned coils and fans, without evaporating any water."@en ;
+.
+
+ai-factory:EarthingSystem-IT
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EarthingSystem-IT ;
+    rdfs:label "IT"@en ;
+    rdfs:comment "The source is isolated from earth or earthed through a high impedance, and the exposed metal parts are earthed."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-EarthingSystem ;
+    skos:definition "The source is isolated from earth or earthed through a high impedance, and the exposed metal parts are earthed."@en ;
+.
+
+ai-factory:EarthingSystem-TN-C
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EarthingSystem-TN-C ;
+    rdfs:label "TN-C"@en ;
+    rdfs:comment "The source is earthed and one combined neutral and protective conductor runs throughout."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-EarthingSystem ;
+    skos:definition "The source is earthed and one combined neutral and protective conductor runs throughout."@en ;
+.
+
+ai-factory:EarthingSystem-TN-C-S
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EarthingSystem-TN-C-S ;
+    rdfs:label "TN-C-S"@en ;
+    rdfs:comment "The source is earthed and a combined neutral and protective conductor is split into separate ones part way along."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-EarthingSystem ;
+    skos:definition "The source is earthed and a combined neutral and protective conductor is split into separate ones part way along."@en ;
+.
+
+ai-factory:EarthingSystem-TN-S
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EarthingSystem-TN-S ;
+    rdfs:label "TN-S"@en ;
+    rdfs:comment "The source is earthed and separate neutral and protective conductors run throughout."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-EarthingSystem ;
+    skos:definition "The source is earthed and separate neutral and protective conductors run throughout."@en ;
+.
+
+ai-factory:EarthingSystem-TT
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EarthingSystem-TT ;
+    rdfs:label "TT"@en ;
+    rdfs:comment "The source is earthed and the exposed metal parts are earthed through a separate electrode of the installation."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-EarthingSystem ;
+    skos:definition "The source is earthed and the exposed metal parts are earthed through a separate electrode of the installation."@en ;
 .
 
 ai-factory:EthernetRate-1.6TbE
@@ -2870,6 +3255,32 @@ ai-factory:EthernetRate-800GbE
     rdfs:comment "Ethernet at 800 gigabits per second."@en ;
     rdfs:subClassOf ai-factory:EnumerationKind-EthernetRate ;
     skos:definition "Ethernet at 800 gigabits per second."@en ;
+.
+
+ai-factory:EthyleneGlycolSolution
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EthyleneGlycolSolution ;
+    rdfs:label "Ethylene glycol solution"@en ;
+    s223:composedOf 
+        [
+            a s223:QuantifiableProperty ;
+            rdfs:label "Unspecified"@en ;
+            s223:ofConstituent s223:Constituent-H2O ;
+            qudt:hasQuantityKind quantitykind:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ;
+        ] ,
+        [
+            a s223:QuantifiableProperty ;
+            rdfs:label "Unspecified"@en ;
+            s223:ofConstituent ai-factory:Constituent-EthyleneGlycol ;
+            qudt:hasQuantityKind quantitykind:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ;
+        ] ;
+    rdfs:comment "A water solution of ethylene glycol whose concentration is given separately as a quantity of the connection point."@en ;
+    rdfs:subClassOf s223:Water-GlycolSolution ;
+    skos:definition "A water solution of ethylene glycol whose concentration is given separately as a quantity of the connection point."@en ;
 .
 
 ai-factory:FabricTier-Core
@@ -3127,6 +3538,17 @@ ai-factory:FuelCellType-SOFC
     rdfs:comment "A high-temperature fuel cell with a ceramic electrolyte that can run on natural gas."@en ;
     rdfs:subClassOf ai-factory:EnumerationKind-FuelCellType ;
     skos:definition "A high-temperature fuel cell with a ceramic electrolyte that can run on natural gas."@en ;
+.
+
+ai-factory:GPUPlatform-GB200-NVL4
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:GPUPlatform-GB200-NVL4 ;
+    rdfs:label "GB200 NVL4"@en ;
+    rdfs:comment "The NVIDIA platform joining four Blackwell GPUs and two Grace CPUs over NVLink on one board."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-GPUPlatform ;
+    skos:definition "The NVIDIA platform joining four Blackwell GPUs and two Grace CPUs over NVLink on one board."@en ;
 .
 
 ai-factory:GPUPlatform-GB200-NVL72
@@ -3405,6 +3827,17 @@ ai-factory:InfiniBandGeneration-NDR200
     skos:definition "InfiniBand NDR signalling on a two-lane port, 200 Gb/s."@en ;
 .
 
+ai-factory:InfiniBandGeneration-SDR
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:InfiniBandGeneration-SDR ;
+    rdfs:label "SDR"@en ;
+    rdfs:comment "InfiniBand Single Data Rate, the first generation, 10 Gb/s on a four-lane port."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-InfiniBandGeneration ;
+    skos:definition "InfiniBand Single Data Rate, the first generation, 10 Gb/s on a four-lane port."@en ;
+.
+
 ai-factory:InfiniBandGeneration-XDR
     a
         s223:Class ,
@@ -3414,6 +3847,28 @@ ai-factory:InfiniBandGeneration-XDR
     rdfs:comment "InfiniBand eXtended Data Rate, 800 Gb/s on a four-lane port."@en ;
     rdfs:subClassOf ai-factory:EnumerationKind-InfiniBandGeneration ;
     skos:definition "InfiniBand eXtended Data Rate, 800 Gb/s on a four-lane port."@en ;
+.
+
+ai-factory:LaneModulation-NRZ
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:LaneModulation-NRZ ;
+    rdfs:label "NRZ"@en ;
+    rdfs:comment "Non-return-to-zero signalling with two amplitude levels, carrying one bit per symbol."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-LaneModulation ;
+    skos:definition "Non-return-to-zero signalling with two amplitude levels, carrying one bit per symbol."@en ;
+.
+
+ai-factory:LaneModulation-PAM4
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:LaneModulation-PAM4 ;
+    rdfs:label "PAM4"@en ;
+    rdfs:comment "Four-level pulse amplitude modulation, carrying two bits per symbol."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-LaneModulation ;
+    skos:definition "Four-level pulse amplitude modulation, carrying two bits per symbol."@en ;
 .
 
 <https://w3id.org/ai-factory#LiquidCoolingWaterClass-W+>
@@ -3480,6 +3935,116 @@ ai-factory:LiquidCoolingWaterClass-W45
     rdfs:comment "Facility water supplied at up to 45 degrees Celsius."@en ;
     rdfs:subClassOf ai-factory:EnumerationKind-LiquidCoolingWaterClass ;
     skos:definition "Facility water supplied at up to 45 degrees Celsius."@en ;
+.
+
+ai-factory:ManagementProtocol-BACnetIP
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-BACnetIP ;
+    rdfs:label "BACnet/IP"@en ;
+    rdfs:comment "The BACnet building automation protocol of ASHRAE Standard 135 carried over IP networks."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The BACnet building automation protocol of ASHRAE Standard 135 carried over IP networks."@en ;
+.
+
+ai-factory:ManagementProtocol-BACnetMSTP
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-BACnetMSTP ;
+    rdfs:label "BACnet MS/TP"@en ;
+    rdfs:comment "The BACnet building automation protocol carried over an EIA-485 serial line with master-slave token passing."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The BACnet building automation protocol carried over an EIA-485 serial line with master-slave token passing."@en ;
+.
+
+ai-factory:ManagementProtocol-DNP3
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-DNP3 ;
+    rdfs:label "DNP3"@en ;
+    rdfs:comment "The Distributed Network Protocol used between control centers and field devices of electric power systems."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The Distributed Network Protocol used between control centers and field devices of electric power systems."@en ;
+.
+
+ai-factory:ManagementProtocol-IEC61850
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-IEC61850 ;
+    rdfs:label "IEC 61850"@en ;
+    rdfs:comment "The IEC 61850 protocols for communication with protection and control devices in substations and switchgear."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The IEC 61850 protocols for communication with protection and control devices in substations and switchgear."@en ;
+.
+
+ai-factory:ManagementProtocol-IPMI
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-IPMI ;
+    rdfs:label "IPMI"@en ;
+    rdfs:comment "The Intelligent Platform Management Interface for out-of-band monitoring and control of servers through their management controller."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The Intelligent Platform Management Interface for out-of-band monitoring and control of servers through their management controller."@en ;
+.
+
+ai-factory:ManagementProtocol-ModbusRTU
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-ModbusRTU ;
+    rdfs:label "Modbus RTU"@en ;
+    rdfs:comment "Modbus messages in binary form over a serial line such as EIA-485."@en ;
+    rdfs:subClassOf ai-factory:ManagementProtocol-Modbus ;
+    skos:definition "Modbus messages in binary form over a serial line such as EIA-485."@en ;
+.
+
+ai-factory:ManagementProtocol-ModbusTCP
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-ModbusTCP ;
+    rdfs:label "Modbus TCP"@en ;
+    rdfs:comment "Modbus messages carried over TCP/IP on an Ethernet network."@en ;
+    rdfs:subClassOf ai-factory:ManagementProtocol-Modbus ;
+    skos:definition "Modbus messages carried over TCP/IP on an Ethernet network."@en ;
+.
+
+ai-factory:ManagementProtocol-OPCUA
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-OPCUA ;
+    rdfs:label "OPC UA"@en ;
+    rdfs:comment "The OPC Unified Architecture protocol of IEC 62541 for industrial data exchange."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The OPC Unified Architecture protocol of IEC 62541 for industrial data exchange."@en ;
+.
+
+ai-factory:ManagementProtocol-Redfish
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-Redfish ;
+    rdfs:label "Redfish"@en ;
+    rdfs:comment "The DMTF Redfish interface, a RESTful protocol for managing servers and other data center hardware."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The DMTF Redfish interface, a RESTful protocol for managing servers and other data center hardware."@en ;
+.
+
+ai-factory:ManagementProtocol-SNMP
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-SNMP ;
+    rdfs:label "SNMP"@en ;
+    rdfs:comment "The Simple Network Management Protocol for monitoring and managing networked devices."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The Simple Network Management Protocol for monitoring and managing networked devices."@en ;
 .
 
 ai-factory:NVLinkGeneration-NVLink4
@@ -3769,6 +4334,50 @@ ai-factory:PCIeGeneration-Gen6
     skos:definition "PCI Express 6.0, at 64 gigatransfers per second per lane."@en ;
 .
 
+ai-factory:PipeJoint-Flanged
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PipeJoint-Flanged ;
+    rdfs:label "Flanged"@en ;
+    rdfs:comment "Two flanges are bolted together with a gasket between them."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PipeJoint ;
+    skos:definition "Two flanges are bolted together with a gasket between them."@en ;
+.
+
+ai-factory:PipeJoint-Grooved
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PipeJoint-Grooved ;
+    rdfs:label "Grooved"@en ;
+    rdfs:comment "A clamp coupling grips grooves rolled or cut into the two pipe ends."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PipeJoint ;
+    skos:definition "A clamp coupling grips grooves rolled or cut into the two pipe ends."@en ;
+.
+
+ai-factory:PipeJoint-SanitaryClamp
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PipeJoint-SanitaryClamp ;
+    rdfs:label "Sanitary clamp"@en ;
+    rdfs:comment "Two ferrules are held together over a gasket by a hinged clamp, also called a tri-clamp joint."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PipeJoint ;
+    skos:definition "Two ferrules are held together over a gasket by a hinged clamp, also called a tri-clamp joint."@en ;
+.
+
+ai-factory:PipeJoint-Threaded
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PipeJoint-Threaded ;
+    rdfs:label "Threaded"@en ;
+    rdfs:comment "A threaded pipe end screws into a threaded fitting, such as one with NPT or BSP threads."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PipeJoint ;
+    skos:definition "A threaded pipe end screws into a threaded fitting, such as one with NPT or BSP threads."@en ;
+.
+
 ai-factory:PluggableFormFactor-OSFP
     a
         s223:Class ,
@@ -3798,7 +4407,7 @@ ai-factory:PluggableFormFactor-OSFP-RHS
         <https://w3id.org/ai-factory#PluggableFormFactor-QSFP+> ;
     rdfs:label "QSFP+"@en ;
     rdfs:comment "Quad small form-factor pluggable with four lanes up to 10 Gb/s each."@en ;
-    rdfs:subClassOf ai-factory:EnumerationKind-PluggableFormFactor ;
+    rdfs:subClassOf ai-factory:PluggableFormFactor-QSFP ;
     skos:definition "Quad small form-factor pluggable with four lanes up to 10 Gb/s each."@en ;
 .
 
@@ -3820,7 +4429,7 @@ ai-factory:PluggableFormFactor-QSFP112
         ai-factory:PluggableFormFactor-QSFP112 ;
     rdfs:label "QSFP112"@en ;
     rdfs:comment "Quad small form-factor pluggable with four lanes up to 100 Gb/s each."@en ;
-    rdfs:subClassOf ai-factory:EnumerationKind-PluggableFormFactor ;
+    rdfs:subClassOf ai-factory:PluggableFormFactor-QSFP ;
     skos:definition "Quad small form-factor pluggable with four lanes up to 100 Gb/s each."@en ;
 .
 
@@ -3831,7 +4440,7 @@ ai-factory:PluggableFormFactor-QSFP28
         ai-factory:PluggableFormFactor-QSFP28 ;
     rdfs:label "QSFP28"@en ;
     rdfs:comment "Quad small form-factor pluggable with four lanes up to 25 Gb/s each."@en ;
-    rdfs:subClassOf ai-factory:EnumerationKind-PluggableFormFactor ;
+    rdfs:subClassOf ai-factory:PluggableFormFactor-QSFP ;
     skos:definition "Quad small form-factor pluggable with four lanes up to 25 Gb/s each."@en ;
 .
 
@@ -3842,7 +4451,7 @@ ai-factory:PluggableFormFactor-QSFP56
         ai-factory:PluggableFormFactor-QSFP56 ;
     rdfs:label "QSFP56"@en ;
     rdfs:comment "Quad small form-factor pluggable with four lanes up to 50 Gb/s each."@en ;
-    rdfs:subClassOf ai-factory:EnumerationKind-PluggableFormFactor ;
+    rdfs:subClassOf ai-factory:PluggableFormFactor-QSFP ;
     skos:definition "Quad small form-factor pluggable with four lanes up to 50 Gb/s each."@en ;
 .
 
@@ -4022,6 +4631,72 @@ ai-factory:PowerConnector-RackBusbarClip
     skos:definition "A blind-mate clip that connects a tray or power shelf to a vertical rack busbar."@en ;
 .
 
+ai-factory:PowerSupplyEfficiencyGrade-80PLUS
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PowerSupplyEfficiencyGrade-80PLUS ;
+    rdfs:label "80 PLUS"@en ;
+    rdfs:comment "The base level of the 80 PLUS program."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+    skos:definition "The base level of the 80 PLUS program."@en ;
+.
+
+ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Bronze
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Bronze ;
+    rdfs:label "80 PLUS Bronze"@en ;
+    rdfs:comment "The 80 PLUS Bronze level, above the base level and below Silver."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+    skos:definition "The 80 PLUS Bronze level, above the base level and below Silver."@en ;
+.
+
+ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Gold
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Gold ;
+    rdfs:label "80 PLUS Gold"@en ;
+    rdfs:comment "The 80 PLUS Gold level, above Silver and below Platinum."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+    skos:definition "The 80 PLUS Gold level, above Silver and below Platinum."@en ;
+.
+
+ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Platinum
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Platinum ;
+    rdfs:label "80 PLUS Platinum"@en ;
+    rdfs:comment "The 80 PLUS Platinum level, above Gold and below Titanium."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+    skos:definition "The 80 PLUS Platinum level, above Gold and below Titanium."@en ;
+.
+
+ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Silver
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Silver ;
+    rdfs:label "80 PLUS Silver"@en ;
+    rdfs:comment "The 80 PLUS Silver level, above Bronze and below Gold."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+    skos:definition "The 80 PLUS Silver level, above Bronze and below Gold."@en ;
+.
+
+ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Titanium
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PowerSupplyEfficiencyGrade-80PLUS-Titanium ;
+    rdfs:label "80 PLUS Titanium"@en ;
+    rdfs:comment "The 80 PLUS Titanium level, the highest of the program, which also tests efficiency at a tenth of rated load."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+    skos:definition "The 80 PLUS Titanium level, the highest of the program, which also tests efficiency at a tenth of rated load."@en ;
+.
+
 ai-factory:PropyleneGlycolSolution-25Percent
     a
         s223:Class ,
@@ -4046,7 +4721,7 @@ ai-factory:PropyleneGlycolSolution-25Percent
             qudt:hasUnit unit:PERCENT ;
         ] ;
     rdfs:comment "A water solution with 25 percent propylene glycol by volume, the usual coolant of direct-to-chip liquid cooling loops."@en ;
-    rdfs:subClassOf s223:Water-GlycolSolution ;
+    rdfs:subClassOf ai-factory:PropyleneGlycolSolution ;
     skos:definition "A water solution with 25 percent propylene glycol by volume, the usual coolant of direct-to-chip liquid cooling loops."@en ;
 .
 
@@ -4138,6 +4813,94 @@ ai-factory:RackMountingStandard-ORv3
     skos:definition "The Open Compute Project Open Rack version 3 standard, with 21-inch wide equipment bays and a rear power busbar."@en ;
 .
 
+ai-factory:RedundancyScheme-2N
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:RedundancyScheme-2N ;
+    rdfs:label "2N"@en ;
+    rdfs:comment "Two complete sets of the N units that the full load needs, each able to carry the full load on its own, such as two independent power paths."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-RedundancyScheme ;
+    skos:definition "Two complete sets of the N units that the full load needs, each able to carry the full load on its own, such as two independent power paths."@en ;
+.
+
+<https://w3id.org/ai-factory#RedundancyScheme-2N+1>
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        <https://w3id.org/ai-factory#RedundancyScheme-2N+1> ;
+    rdfs:label "2N+1"@en ;
+    rdfs:comment "Two complete sets of the N units that the full load needs, as in 2N, and one further spare unit."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-RedundancyScheme ;
+    skos:definition "Two complete sets of the N units that the full load needs, as in 2N, and one further spare unit."@en ;
+.
+
+ai-factory:RedundancyScheme-N
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:RedundancyScheme-N ;
+    rdfs:label "N"@en ;
+    rdfs:comment "Exactly as many units as the full load needs and no spare, also written N+0."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-RedundancyScheme ;
+    skos:definition "Exactly as many units as the full load needs and no spare, also written N+0."@en ;
+.
+
+<https://w3id.org/ai-factory#RedundancyScheme-N+1>
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        <https://w3id.org/ai-factory#RedundancyScheme-N+1> ;
+    rdfs:label "N+1"@en ;
+    rdfs:comment "One spare unit beyond the N units that the full load needs."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-RedundancyScheme ;
+    skos:definition "One spare unit beyond the N units that the full load needs."@en ;
+.
+
+<https://w3id.org/ai-factory#RedundancyScheme-N+2>
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        <https://w3id.org/ai-factory#RedundancyScheme-N+2> ;
+    rdfs:label "N+2"@en ;
+    rdfs:comment "Two spare units beyond the N units that the full load needs."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-RedundancyScheme ;
+    skos:definition "Two spare units beyond the N units that the full load needs."@en ;
+.
+
+<https://w3id.org/ai-factory#RedundancyScheme-N+N>
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        <https://w3id.org/ai-factory#RedundancyScheme-N+N> ;
+    rdfs:label "N+N"@en ;
+    rdfs:comment "N spare units beyond the N units that the full load needs, so that the load is still carried when half of the units fail."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-RedundancyScheme ;
+    skos:definition "N spare units beyond the N units that the full load needs, so that the load is still carried when half of the units fail."@en ;
+.
+
+ai-factory:Refrigerant-R-1233zd
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:Refrigerant-R-1233zd ;
+    rdfs:label "Refrigerant R-1233zd"@en ;
+    rdfs:comment "The refrigerant R-1233zd(E), a low-pressure refrigerant with a very low global warming potential, used mainly in centrifugal chillers."@en ;
+    rdfs:subClassOf s223:Constituent-Refrigerant ;
+    skos:definition "The refrigerant R-1233zd(E), a low-pressure refrigerant with a very low global warming potential, used mainly in centrifugal chillers."@en ;
+.
+
+ai-factory:Refrigerant-R-454B
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:Refrigerant-R-454B ;
+    rdfs:label "Refrigerant R-454B"@en ;
+    rdfs:comment "The refrigerant R-454B, a blend of R-32 and R-1234yf with a lower global warming potential than R-410A, which it replaces in new air conditioning equipment."@en ;
+    rdfs:subClassOf s223:Constituent-Refrigerant ;
+    skos:definition "The refrigerant R-454B, a blend of R-32 and R-1234yf with a lower global warming potential than R-410A, which it replaces in new air conditioning equipment."@en ;
+.
+
 ai-factory:Server
     a
         s223:Class ,
@@ -4203,6 +4966,28 @@ ai-factory:ServerFunction-Storage
     rdfs:comment "Serves files, objects or blocks from its own drives to other nodes over the network."@en ;
     rdfs:subClassOf ai-factory:EnumerationKind-ServerFunction ;
     skos:definition "Serves files, objects or blocks from its own drives to other nodes over the network."@en ;
+.
+
+ai-factory:Signal-EIA232
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:Signal-EIA232 ;
+    rdfs:label "EIA-232 signal"@en ;
+    rdfs:comment "Electrical signalling of the EIA-232 (RS-232) serial interface, a single-ended point-to-point link."@en ;
+    rdfs:subClassOf s223:Electricity-Signal ;
+    skos:definition "Electrical signalling of the EIA-232 (RS-232) serial interface, a single-ended point-to-point link."@en ;
+.
+
+ai-factory:Signal-EIA422
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:Signal-EIA422 ;
+    rdfs:label "EIA-422 signal"@en ;
+    rdfs:comment "Electrical signalling of the EIA-422 (RS-422) serial interface, a differential link from one transmitter to several receivers."@en ;
+    rdfs:subClassOf s223:Electricity-Signal ;
+    skos:definition "Electrical signalling of the EIA-422 (RS-422) serial interface, a differential link from one transmitter to several receivers."@en ;
 .
 
 ai-factory:Signal-FiberInfiniBand
@@ -4436,6 +5221,26 @@ ai-factory:TransformerConstruction-VPI
     skos:definition "Dry-type windings impregnated with varnish under vacuum and pressure and cooled by air."@en ;
 .
 
+ai-factory:Unit-Cv
+    a qudt:Unit ;
+    rdfs:label "Cv flow coefficient"@en ;
+    qudt:conversionMultiplier 0.000000759805421 ;
+    qudt:hasQuantityKind ai-factory:QuantityKind-FlowCoefficient ;
+    qudt:symbol "Cv" ;
+    rdfs:comment "The US customary flow coefficient unit, one US gallon per minute of water at 60 degrees Fahrenheit passing at a pressure drop of one pound-force per square inch."@en ;
+    skos:definition "The US customary flow coefficient unit, one US gallon per minute of water at 60 degrees Fahrenheit passing at a pressure drop of one pound-force per square inch."@en ;
+.
+
+ai-factory:Unit-Kv
+    a qudt:Unit ;
+    rdfs:label "Kv flow coefficient"@en ;
+    qudt:conversionMultiplier 0.000000878410461 ;
+    qudt:hasQuantityKind ai-factory:QuantityKind-FlowCoefficient ;
+    qudt:symbol "Kv" ;
+    rdfs:comment "The metric flow coefficient unit, one cubic meter per hour of water passing at a pressure drop of one bar."@en ;
+    skos:definition "The metric flow coefficient unit, one cubic meter per hour of water passing at a pressure drop of one bar."@en ;
+.
+
 ai-factory:ValveFunction-AirVent
     a
         s223:Class ,
@@ -4522,7 +5327,7 @@ ai-factory:AC-3Ph-50Hz
     s223:hasFrequency s223:Frequency-50Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-ThreePhase ;
     rdfs:comment "Three-phase alternating current at 50 Hz, with the voltage given separately as a property of the connection point."@en ;
-    rdfs:subClassOf s223:Electricity-AC ;
+    rdfs:subClassOf ai-factory:AC-3Ph ;
     skos:definition "Three-phase alternating current at 50 Hz, with the voltage given separately as a property of the connection point."@en ;
 .
 
@@ -4537,7 +5342,7 @@ ai-factory:AC-3Ph-50Hz-60Hz
         s223:Frequency-60Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-ThreePhase ;
     rdfs:comment "Three-phase alternating current that a connection point accepts or delivers at either 50 Hz or 60 Hz."@en ;
-    rdfs:subClassOf s223:Electricity-AC ;
+    rdfs:subClassOf ai-factory:AC-3Ph ;
     skos:definition "Three-phase alternating current that a connection point accepts or delivers at either 50 Hz or 60 Hz."@en ;
 .
 
@@ -4550,7 +5355,7 @@ ai-factory:AC-3Ph-60Hz
     s223:hasFrequency s223:Frequency-60Hz ;
     s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-ThreePhase ;
     rdfs:comment "Three-phase alternating current at 60 Hz, with the voltage given separately as a property of the connection point."@en ;
-    rdfs:subClassOf s223:Electricity-AC ;
+    rdfs:subClassOf ai-factory:AC-3Ph ;
     skos:definition "Three-phase alternating current at 60 Hz, with the voltage given separately as a property of the connection point."@en ;
 .
 
@@ -4566,15 +5371,15 @@ ai-factory:Chiller
     skos:definition "A machine that cools a water or glycol loop with a refrigeration cycle and rejects the heat to air or to a condenser water loop."@en ;
 .
 
-ai-factory:Constituent-PropyleneGlycol
+ai-factory:Constituent-EthyleneGlycol
     a
         s223:Class ,
         sh:NodeShape ,
-        ai-factory:Constituent-PropyleneGlycol ;
-    rdfs:label "Propylene glycol"@en ;
-    rdfs:comment "Propylene glycol as a constituent of a coolant mixture."@en ;
+        ai-factory:Constituent-EthyleneGlycol ;
+    rdfs:label "Ethylene glycol"@en ;
+    rdfs:comment "Ethylene glycol as a constituent of a coolant mixture."@en ;
     rdfs:subClassOf s223:Constituent-Glycol ;
-    skos:definition "Propylene glycol as a constituent of a coolant mixture."@en ;
+    skos:definition "Ethylene glycol as a constituent of a coolant mixture."@en ;
 .
 
 ai-factory:CoolantDistributionUnit
@@ -4611,6 +5416,42 @@ ai-factory:NetworkCable
         s223:Equipment ,
         brick:Data_Network_Equipment ;
     skos:definition "A cable product sold under one part number that carries data between the ports of network equipment."@en ;
+.
+
+ai-factory:PropyleneGlycolSolution
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PropyleneGlycolSolution ;
+    rdfs:label "Propylene glycol solution"@en ;
+    s223:composedOf 
+        [
+            a s223:QuantifiableProperty ;
+            rdfs:label "Unspecified"@en ;
+            s223:ofConstituent s223:Constituent-H2O ;
+            qudt:hasQuantityKind quantitykind:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ;
+        ] ,
+        [
+            a s223:QuantifiableProperty ;
+            rdfs:label "Unspecified"@en ;
+            s223:ofConstituent ai-factory:Constituent-PropyleneGlycol ;
+            qudt:hasQuantityKind quantitykind:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ;
+        ] ;
+    rdfs:comment "A water solution of propylene glycol whose concentration is given separately as a quantity of the connection point."@en ;
+    rdfs:subClassOf s223:Water-GlycolSolution ;
+    skos:definition "A water solution of propylene glycol whose concentration is given separately as a quantity of the connection point."@en ;
+.
+
+ai-factory:QuantityKind-FlowCoefficient
+    a qudt:QuantityKind ;
+    rdfs:label "Flow coefficient"@en ;
+    qudt:applicableUnit
+        ai-factory:Unit-Cv ,
+        ai-factory:Unit-Kv ;
+    rdfs:comment "The flow of water that passes through a valve or coupling at a pressure drop of one unit across it, a measure of how freely the device lets liquid through."@en ;
+    skos:definition "The flow of water that passes through a valve or coupling at a pressure drop of one unit across it, a measure of how freely the device lets liquid through."@en ;
 .
 
 ai-factory:RearDoorHeatExchanger
@@ -4653,6 +5494,17 @@ ai-factory:CDUModule
         s223:Equipment ,
         brick:HVAC_Equipment ;
     skos:definition "A field-replaceable section of a modular coolant distribution unit that is built and serviced as one assembly."@en ;
+.
+
+ai-factory:Constituent-PropyleneGlycol
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:Constituent-PropyleneGlycol ;
+    rdfs:label "Propylene glycol"@en ;
+    rdfs:comment "Propylene glycol as a constituent of a coolant mixture."@en ;
+    rdfs:subClassOf s223:Constituent-Glycol ;
+    skos:definition "Propylene glycol as a constituent of a coolant mixture."@en ;
 .
 
 ai-factory:EnumerationKind-BreakerContinuousRating
@@ -4721,6 +5573,17 @@ ai-factory:EnumerationKind-ImmersionPhase
     skos:definition "Whether the dielectric liquid of an immersion tank stays liquid or boils as it takes heat."@en ;
 .
 
+ai-factory:EnumerationKind-LaneModulation
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-LaneModulation ;
+    rdfs:label "Lane modulation"@en ;
+    rdfs:comment "The ways the signal on one electrical or optical lane of a data link encodes its bits."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The ways the signal on one electrical or optical lane of a data link encodes its bits."@en ;
+.
+
 ai-factory:EnumerationKind-NetworkAdapterFunction
     a
         s223:Class ,
@@ -4766,6 +5629,17 @@ ai-factory:LiquidCooledAirCooler
     skos:definition "Equipment that cools air passing over a coil fed by a facility or technology water loop, so that the heat taken from the air leaves in the liquid."@en ;
 .
 
+ai-factory:ManagementProtocol-Modbus
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:ManagementProtocol-Modbus ;
+    rdfs:label "Modbus"@en ;
+    rdfs:comment "The Modbus messaging protocol over a serial line or a TCP/IP network; as a value it says that the variant is not stated."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-ManagementProtocol ;
+    skos:definition "The Modbus messaging protocol over a serial line or a TCP/IP network; as a value it says that the variant is not stated."@en ;
+.
+
 ai-factory:NetworkSwitch
     a
         s223:Class ,
@@ -4800,6 +5674,32 @@ ai-factory:ReferenceRole
     rdfs:comment "One kind of equipment a reference architecture includes, such as its compute network switches or its management servers."@en ;
     rdfs:subClassOf owl:Thing ;
     skos:definition "One kind of equipment a reference architecture includes, such as its compute network switches or its management servers."@en ;
+.
+
+ai-factory:AC-1Ph
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:AC-1Ph ;
+    rdfs:label "Single-phase AC"@en ;
+    s223:hasFrequency s223:Numerical-Frequency ;
+    s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-SinglePhase ;
+    rdfs:comment "Single-phase alternating current whose frequency is not stated, with the voltage given separately as a property of the connection point."@en ;
+    rdfs:subClassOf s223:Electricity-AC ;
+    skos:definition "Single-phase alternating current whose frequency is not stated, with the voltage given separately as a property of the connection point."@en ;
+.
+
+ai-factory:AC-3PhN
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:AC-3PhN ;
+    rdfs:label "Three-phase AC with neutral"@en ;
+    s223:hasFrequency s223:Numerical-Frequency ;
+    s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-ThreePhase ;
+    rdfs:comment "Three-phase alternating current whose frequency is not stated, in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available."@en ;
+    rdfs:subClassOf ai-factory:AC-3Ph ;
+    skos:definition "Three-phase alternating current whose frequency is not stated, in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available."@en ;
 .
 
 ai-factory:DataPort
@@ -4948,9 +5848,9 @@ ai-factory:EnumerationKind-TransferTransition
         sh:NodeShape ,
         ai-factory:EnumerationKind-TransferTransition ;
     rdfs:label "Transfer transition"@en ;
-    rdfs:comment "How a transfer switch moves its load from one source to the other."@en ;
+    rdfs:comment "How a transfer switch, or the bypass of an uninterruptible power supply, moves its load from one source to the other."@en ;
     rdfs:subClassOf s223:EnumerationKind ;
-    skos:definition "How a transfer switch moves its load from one source to the other."@en ;
+    skos:definition "How a transfer switch, or the bypass of an uninterruptible power supply, moves its load from one source to the other."@en ;
 .
 
 ai-factory:Qualification
@@ -4961,12 +5861,17 @@ ai-factory:Qualification
     skos:definition "A statement by a vendor or platform owner that a product, or a combination of products, has been tested or certified to work together."@en ;
 .
 
-ai-factory:RedundancyGroup
-    a owl:Class ;
-    rdfs:label "Redundancy group"@en ;
-    rdfs:comment "A set of identical units inside a product of which only some are needed to carry the full load, the rest being spares."@en ;
-    rdfs:subClassOf owl:Thing ;
-    skos:definition "A set of identical units inside a product of which only some are needed to carry the full load, the rest being spares."@en ;
+ai-factory:AC-3Ph
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:AC-3Ph ;
+    rdfs:label "Three-phase AC"@en ;
+    s223:hasFrequency s223:Numerical-Frequency ;
+    s223:hasNumberOfElectricalPhases s223:NumberOfElectricalPhases-ThreePhase ;
+    rdfs:comment "Three-phase alternating current whose frequency is not stated, with the voltage given separately as a property of the connection point."@en ;
+    rdfs:subClassOf s223:Electricity-AC ;
+    skos:definition "Three-phase alternating current whose frequency is not stated, with the voltage given separately as a property of the connection point."@en ;
 .
 
 ai-factory:EnumerationKind-CoolingMethod
@@ -5024,6 +5929,17 @@ ai-factory:EnumerationKind-PCIeGeneration
     skos:definition "The PCI Express (PCIe) revisions, each with its own transfer rate per lane."@en ;
 .
 
+ai-factory:EnumerationKind-PipeJoint
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-PipeJoint ;
+    rdfs:label "Pipe joint"@en ;
+    rdfs:comment "The ways a pipe end of a liquid connection point is joined to the piping, where it is not a quick-disconnect coupling."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The ways a pipe end of a liquid connection point is joined to the piping, where it is not a quick-disconnect coupling."@en ;
+.
+
 ai-factory:EnumerationKind-TransformerConstruction
     a
         s223:Class ,
@@ -5035,12 +5951,45 @@ ai-factory:EnumerationKind-TransformerConstruction
     skos:definition "The ways a power transformer insulates and cools its windings."@en ;
 .
 
+ai-factory:PluggableFormFactor-QSFP
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:PluggableFormFactor-QSFP ;
+    rdfs:label "QSFP"@en ;
+    rdfs:comment "Quad small form-factor pluggable with four electrical lanes, of any generation; as a value it says that the generation is not stated."@en ;
+    rdfs:subClassOf ai-factory:EnumerationKind-PluggableFormFactor ;
+    skos:definition "Quad small form-factor pluggable with four electrical lanes, of any generation; as a value it says that the generation is not stated."@en ;
+.
+
 ai-factory:ProductModel
     a owl:Class ;
     rdfs:label "Product model"@en ;
     rdfs:comment "A vendor product as sold under one model or part number, standing for the specification that every unit of that model shares."@en ;
     rdfs:subClassOf owl:Thing ;
     skos:definition "A vendor product as sold under one model or part number, standing for the specification that every unit of that model shares."@en ;
+.
+
+ai-factory:EnumerationKind-DataConnector
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-DataConnector ;
+    rdfs:label "Data connector"@en ;
+    rdfs:comment "The connector types of copper data and serial ports."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The connector types of copper data and serial ports."@en ;
+.
+
+ai-factory:EnumerationKind-EarthingSystem
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-EarthingSystem ;
+    rdfs:label "Earthing system"@en ;
+    rdfs:comment "The earthing arrangements of IEC 60364 for low-voltage AC supplies, which say how the source and the exposed metal parts are connected to earth."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The earthing arrangements of IEC 60364 for low-voltage AC supplies, which say how the source and the exposed metal parts are connected to earth."@en ;
 .
 
 ai-factory:EnumerationKind-ServerFunction
@@ -5054,15 +6003,12 @@ ai-factory:EnumerationKind-ServerFunction
     skos:definition "The main job a server is built or deployed for."@en ;
 .
 
-ai-factory:EnumerationKind-AddInCardFormFactor
-    a
-        s223:Class ,
-        sh:NodeShape ,
-        ai-factory:EnumerationKind-AddInCardFormFactor ;
-    rdfs:label "Add-in card form factor"@en ;
-    rdfs:comment "The mechanical outlines of add-in cards and of the expansion slots that accept them."@en ;
-    rdfs:subClassOf s223:EnumerationKind ;
-    skos:definition "The mechanical outlines of add-in cards and of the expansion slots that accept them."@en ;
+ai-factory:RedundancyGroup
+    a owl:Class ;
+    rdfs:label "Redundancy group"@en ;
+    rdfs:comment "A set of like units inside a product, such as its pumps, power supplies or fans, described by the redundancy scheme they follow or by how many are fitted and how many must work to carry the full load."@en ;
+    rdfs:subClassOf owl:Thing ;
+    skos:definition "A set of like units inside a product, such as its pumps, power supplies or fans, described by the redundancy scheme they follow or by how many are fitted and how many must work to carry the full load."@en ;
 .
 
 ai-factory:EnumerationKind-CircuitBreakerType
@@ -5109,6 +6055,17 @@ ai-factory:EnumerationKind-NetworkPlaneFunction
     skos:definition "The class of traffic that a network plane, or a switch or port serving it, carries in a cluster."@en ;
 .
 
+ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+    rdfs:label "Power supply efficiency grade"@en ;
+    rdfs:comment "The levels of the 80 PLUS program, which certifies the efficiency of power supplies at set fractions of their rated load."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The levels of the 80 PLUS program, which certifies the efficiency of power supplies at set fractions of their rated load."@en ;
+.
+
 ai-factory:EnumerationKind-QualificationScope
     a
         s223:Class ,
@@ -5131,17 +6088,6 @@ ai-factory:EnumerationKind-BatteryChemistry
     skos:definition "The electrochemical cell technologies of rechargeable batteries."@en ;
 .
 
-ai-factory:EnumerationKind-InfiniBandGeneration
-    a
-        s223:Class ,
-        sh:NodeShape ,
-        ai-factory:EnumerationKind-InfiniBandGeneration ;
-    rdfs:label "InfiniBand generation"@en ;
-    rdfs:comment "The InfiniBand signalling generations, each with its own per-lane rate."@en ;
-    rdfs:subClassOf s223:EnumerationKind ;
-    skos:definition "The InfiniBand signalling generations, each with its own per-lane rate."@en ;
-.
-
 ai-factory:EnumerationKind-OpticalReachClass
     a
         s223:Class ,
@@ -5151,6 +6097,17 @@ ai-factory:EnumerationKind-OpticalReachClass
     rdfs:comment "The codes that the physical layer names of the IEEE 802.3 Ethernet standard and the optical multi-source agreements use for an optical interface, combining reach, fiber type and number of optical lanes, which have to match at both ends of a link."@en ;
     rdfs:subClassOf s223:EnumerationKind ;
     skos:definition "The codes that the physical layer names of the IEEE 802.3 Ethernet standard and the optical multi-source agreements use for an optical interface, combining reach, fiber type and number of optical lanes, which have to match at both ends of a link."@en ;
+.
+
+ai-factory:EnumerationKind-RedundancyScheme
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-RedundancyScheme ;
+    rdfs:label "Redundancy scheme"@en ;
+    rdfs:comment "The ways a set of like units is sized against the number N of units that the full load needs."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The ways a set of like units is sized against the number N of units that the full load needs."@en ;
 .
 
 ai-factory:EnumerationKind-ValveFunction
@@ -5164,26 +6121,15 @@ ai-factory:EnumerationKind-ValveFunction
     skos:definition "What a valve in a liquid loop is used for."@en ;
 .
 
-ai-factory:EnumerationKind-GPUPlatform
+ai-factory:EnumerationKind-InfiniBandGeneration
     a
         s223:Class ,
         sh:NodeShape ,
-        ai-factory:EnumerationKind-GPUPlatform ;
-    rdfs:label "GPU platform"@en ;
-    rdfs:comment "NVIDIA GPU platforms that servers and rack-scale systems from several vendors are built on."@en ;
+        ai-factory:EnumerationKind-InfiniBandGeneration ;
+    rdfs:label "InfiniBand generation"@en ;
+    rdfs:comment "The InfiniBand signalling generations, each with its own per-lane rate."@en ;
     rdfs:subClassOf s223:EnumerationKind ;
-    skos:definition "NVIDIA GPU platforms that servers and rack-scale systems from several vendors are built on."@en ;
-.
-
-ai-factory:EnumerationKind-EthernetRate
-    a
-        s223:Class ,
-        sh:NodeShape ,
-        ai-factory:EnumerationKind-EthernetRate ;
-    rdfs:label "Ethernet rate"@en ;
-    rdfs:comment "The data rates of Ethernet under the Institute of Electrical and Electronics Engineers (IEEE) 802.3 standard that a port, adapter or cable supports."@en ;
-    rdfs:subClassOf s223:EnumerationKind ;
-    skos:definition "The data rates of Ethernet under the Institute of Electrical and Electronics Engineers (IEEE) 802.3 standard that a port, adapter or cable supports."@en ;
+    skos:definition "The InfiniBand signalling generations, each with its own per-lane rate."@en ;
 .
 
 ai-factory:EnumerationKind-PluggableFormFactor
@@ -5195,6 +6141,50 @@ ai-factory:EnumerationKind-PluggableFormFactor
     rdfs:comment "The mechanical and electrical formats of pluggable cages, transceivers and cable plugs."@en ;
     rdfs:subClassOf s223:EnumerationKind ;
     skos:definition "The mechanical and electrical formats of pluggable cages, transceivers and cable plugs."@en ;
+.
+
+ai-factory:EnumerationKind-GPUPlatform
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-GPUPlatform ;
+    rdfs:label "GPU platform"@en ;
+    rdfs:comment "NVIDIA GPU platforms that servers and rack-scale systems from several vendors are built on."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "NVIDIA GPU platforms that servers and rack-scale systems from several vendors are built on."@en ;
+.
+
+ai-factory:EnumerationKind-ManagementProtocol
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-ManagementProtocol ;
+    rdfs:label "Management protocol"@en ;
+    rdfs:comment "The protocols by which building, power and IT management systems monitor and control a device over its data or serial port."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The protocols by which building, power and IT management systems monitor and control a device over its data or serial port."@en ;
+.
+
+ai-factory:EnumerationKind-AddInCardFormFactor
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-AddInCardFormFactor ;
+    rdfs:label "Add-in card form factor"@en ;
+    rdfs:comment "The mechanical outlines of add-in cards and of the expansion slots that accept them."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The mechanical outlines of add-in cards and of the expansion slots that accept them."@en ;
+.
+
+ai-factory:EnumerationKind-EthernetRate
+    a
+        s223:Class ,
+        sh:NodeShape ,
+        ai-factory:EnumerationKind-EthernetRate ;
+    rdfs:label "Ethernet rate"@en ;
+    rdfs:comment "The data rates of Ethernet under the Institute of Electrical and Electronics Engineers (IEEE) 802.3 standard that a port, adapter or cable supports."@en ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    skos:definition "The data rates of Ethernet under the Institute of Electrical and Electronics Engineers (IEEE) 802.3 standard that a port, adapter or cable supports."@en ;
 .
 
 ai-factory:EnumerationKind-PowerConnector

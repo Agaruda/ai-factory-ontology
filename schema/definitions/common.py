@@ -93,10 +93,37 @@ MEDIA = {
         "definition": "Electrical signalling of PCI Express, the expansion bus between a host and add-in cards such as network adapters.",
         "parent": S223["Electricity-Signal"],
     },
+    "AC-1Ph": {
+        "label": "Single-phase AC",
+        "definition": "Single-phase alternating current whose frequency is not stated, with the voltage given separately as a property of the connection point.",
+        "parent": S223["Electricity-AC"],
+        "triples": [
+            (S223.hasFrequency, S223["Numerical-Frequency"]),  # 223's generic frequency, as on s223:Electricity-AC
+            (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-SinglePhase"]),
+        ],
+    },
+    "AC-3Ph": {
+        "label": "Three-phase AC",
+        "definition": "Three-phase alternating current whose frequency is not stated, with the voltage given separately as a property of the connection point.",
+        "parent": S223["Electricity-AC"],
+        "triples": [
+            (S223.hasFrequency, S223["Numerical-Frequency"]),
+            (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-ThreePhase"]),
+        ],
+    },
+    "AC-3PhN": {
+        "label": "Three-phase AC with neutral",
+        "definition": "Three-phase alternating current whose frequency is not stated, in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available.",
+        "parent": AIF["AC-3Ph"],
+        "triples": [
+            (S223.hasFrequency, S223["Numerical-Frequency"]),
+            (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-ThreePhase"]),
+        ],
+    },
     "AC-1Ph-50Hz": {
         "label": "Single-phase AC at 50 Hz",
         "definition": "Single-phase alternating current at 50 Hz, with the voltage given separately as a property of the connection point.",
-        "parent": S223["Electricity-AC"],
+        "parent": AIF["AC-1Ph"],
         "triples": [
             (S223.hasFrequency, S223["Frequency-50Hz"]),
             (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-SinglePhase"]),
@@ -105,7 +132,7 @@ MEDIA = {
     "AC-1Ph-60Hz": {
         "label": "Single-phase AC at 60 Hz",
         "definition": "Single-phase alternating current at 60 Hz, with the voltage given separately as a property of the connection point.",
-        "parent": S223["Electricity-AC"],
+        "parent": AIF["AC-1Ph"],
         "triples": [
             (S223.hasFrequency, S223["Frequency-60Hz"]),
             (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-SinglePhase"]),
@@ -114,7 +141,7 @@ MEDIA = {
     "AC-1Ph-50Hz-60Hz": {
         "label": "Single-phase AC at 50 or 60 Hz",
         "definition": "Single-phase alternating current that a connection point accepts or delivers at either 50 Hz or 60 Hz.",
-        "parent": S223["Electricity-AC"],
+        "parent": AIF["AC-1Ph"],
         "triples": [
             (S223.hasFrequency, S223["Frequency-50Hz"]),
             (S223.hasFrequency, S223["Frequency-60Hz"]),
@@ -124,7 +151,7 @@ MEDIA = {
     "AC-3Ph-50Hz": {
         "label": "Three-phase AC at 50 Hz",
         "definition": "Three-phase alternating current at 50 Hz, with the voltage given separately as a property of the connection point.",
-        "parent": S223["Electricity-AC"],
+        "parent": AIF["AC-3Ph"],
         "triples": [
             (S223.hasFrequency, S223["Frequency-50Hz"]),
             (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-ThreePhase"]),
@@ -133,7 +160,7 @@ MEDIA = {
     "AC-3Ph-60Hz": {
         "label": "Three-phase AC at 60 Hz",
         "definition": "Three-phase alternating current at 60 Hz, with the voltage given separately as a property of the connection point.",
-        "parent": S223["Electricity-AC"],
+        "parent": AIF["AC-3Ph"],
         "triples": [
             (S223.hasFrequency, S223["Frequency-60Hz"]),
             (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-ThreePhase"]),
@@ -142,17 +169,49 @@ MEDIA = {
     "AC-3Ph-50Hz-60Hz": {
         "label": "Three-phase AC at 50 or 60 Hz",
         "definition": "Three-phase alternating current that a connection point accepts or delivers at either 50 Hz or 60 Hz.",
-        "parent": S223["Electricity-AC"],
+        "parent": AIF["AC-3Ph"],
         "triples": [
             (S223.hasFrequency, S223["Frequency-50Hz"]),
             (S223.hasFrequency, S223["Frequency-60Hz"]),
             (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-ThreePhase"]),
         ],
     },
+    "Signal-EIA232": {
+        "label": "EIA-232 signal",
+        "definition": "Electrical signalling of the EIA-232 (RS-232) serial interface, a single-ended point-to-point link.",
+        "parent": S223["Electricity-Signal"],
+    },
+    "Signal-EIA422": {
+        "label": "EIA-422 signal",
+        "definition": "Electrical signalling of the EIA-422 (RS-422) serial interface, a differential link from one transmitter to several receivers.",
+        "parent": S223["Electricity-Signal"],
+    },
+    "PropyleneGlycolSolution": {
+        "label": "Propylene glycol solution",
+        "definition": "A water solution of propylene glycol whose concentration is given separately as a quantity of the connection point.",
+        "parent": S223["Water-GlycolSolution"],
+        "composed_of": [
+            {"label": "Unspecified", "of_constituent": AIF["Constituent-PropyleneGlycol"],
+             "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
+            {"label": "Unspecified", "of_constituent": S223["Constituent-H2O"],
+             "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
+        ],
+    },
+    "EthyleneGlycolSolution": {
+        "label": "Ethylene glycol solution",
+        "definition": "A water solution of ethylene glycol whose concentration is given separately as a quantity of the connection point.",
+        "parent": S223["Water-GlycolSolution"],
+        "composed_of": [
+            {"label": "Unspecified", "of_constituent": AIF["Constituent-EthyleneGlycol"],
+             "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
+            {"label": "Unspecified", "of_constituent": S223["Constituent-H2O"],
+             "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
+        ],
+    },
     "PropyleneGlycolSolution-25Percent": {
         "label": "25 percent propylene glycol solution",
         "definition": "A water solution with 25 percent propylene glycol by volume, the usual coolant of direct-to-chip liquid cooling loops.",
-        "parent": S223["Water-GlycolSolution"],
+        "parent": AIF["PropyleneGlycolSolution"],
         "composed_of": [
             {"label": "Propylene glycol concentration", "value": "25.0", "of_constituent": AIF["Constituent-PropyleneGlycol"],
              "quantity_kind": QK.VolumeFraction, "unit": UNIT.PERCENT},
@@ -193,7 +252,7 @@ MEDIA = {
     "AC-3PhN-50Hz": {
         "label": "Three-phase AC with neutral at 50 Hz",
         "definition": "Three-phase alternating current at 50 Hz in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available.",
-        "parent": AIF["AC-3Ph-50Hz"],
+        "parents": [AIF["AC-3Ph-50Hz"], AIF["AC-3PhN"]],
         "triples": [
             (S223.hasFrequency, S223["Frequency-50Hz"]),
             (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-ThreePhase"]),
@@ -202,7 +261,7 @@ MEDIA = {
     "AC-3PhN-60Hz": {
         "label": "Three-phase AC with neutral at 60 Hz",
         "definition": "Three-phase alternating current at 60 Hz in which a neutral conductor is also connected, so both line-to-line and line-to-neutral voltages are available.",
-        "parent": AIF["AC-3Ph-60Hz"],
+        "parents": [AIF["AC-3Ph-60Hz"], AIF["AC-3PhN"]],
         "triples": [
             (S223.hasFrequency, S223["Frequency-60Hz"]),
             (S223.hasNumberOfElectricalPhases, S223["NumberOfElectricalPhases-ThreePhase"]),
@@ -211,7 +270,7 @@ MEDIA = {
     "AC-3PhN-50Hz-60Hz": {
         "label": "Three-phase AC with neutral at 50 or 60 Hz",
         "definition": "Three-phase alternating current at either 50 Hz or 60 Hz in which a neutral conductor is also connected.",
-        "parent": AIF["AC-3Ph-50Hz-60Hz"],
+        "parents": [AIF["AC-3Ph-50Hz-60Hz"], AIF["AC-3PhN"]],
         "triples": [
             (S223.hasFrequency, S223["Frequency-50Hz"]),
             (S223.hasFrequency, S223["Frequency-60Hz"]),
@@ -237,6 +296,7 @@ ENUMERATIONS = {
         "label": "InfiniBand generation",
         "definition": "The InfiniBand signalling generations, each with its own per-lane rate.",
         "values": {
+            "SDR": {"label": "SDR", "definition": "InfiniBand Single Data Rate, the first generation, 10 Gb/s on a four-lane port."},
             "FDR": {"label": "FDR", "definition": "InfiniBand Fourteen Data Rate, 56 Gb/s on a four-lane port."},
             "EDR": {"label": "EDR", "definition": "InfiniBand Enhanced Data Rate, 100 Gb/s on a four-lane port."},
             "HDR": {"label": "HDR", "definition": "InfiniBand High Data Rate, 200 Gb/s on a four-lane port."},
@@ -252,12 +312,13 @@ ENUMERATIONS = {
         "values": {
             "SFP": {"label": "SFP", "definition": "Small form-factor pluggable with one electrical lane up to about 1 Gb/s."},
             "SFP+": {"label": "SFP+", "definition": "Small form-factor pluggable with one electrical lane up to 10 Gb/s."},
-            "QSFP+": {"label": "QSFP+", "definition": "Quad small form-factor pluggable with four lanes up to 10 Gb/s each."},
+            "QSFP": {"label": "QSFP", "definition": "Quad small form-factor pluggable with four electrical lanes, of any generation; as a value it says that the generation is not stated."},
+            "QSFP+": {"label": "QSFP+", "definition": "Quad small form-factor pluggable with four lanes up to 10 Gb/s each.", "parent_value": "QSFP"},
             "SFP28": {"label": "SFP28", "definition": "Small form-factor pluggable with one electrical lane up to 25 Gb/s."},
             "SFP56": {"label": "SFP56", "definition": "Small form-factor pluggable with one electrical lane up to 50 Gb/s."},
-            "QSFP28": {"label": "QSFP28", "definition": "Quad small form-factor pluggable with four lanes up to 25 Gb/s each."},
-            "QSFP56": {"label": "QSFP56", "definition": "Quad small form-factor pluggable with four lanes up to 50 Gb/s each."},
-            "QSFP112": {"label": "QSFP112", "definition": "Quad small form-factor pluggable with four lanes up to 100 Gb/s each."},
+            "QSFP28": {"label": "QSFP28", "definition": "Quad small form-factor pluggable with four lanes up to 25 Gb/s each.", "parent_value": "QSFP"},
+            "QSFP56": {"label": "QSFP56", "definition": "Quad small form-factor pluggable with four lanes up to 50 Gb/s each.", "parent_value": "QSFP"},
+            "QSFP112": {"label": "QSFP112", "definition": "Quad small form-factor pluggable with four lanes up to 100 Gb/s each.", "parent_value": "QSFP"},
             "QSFP-DD": {"label": "QSFP-DD", "definition": "Double-density quad small form-factor pluggable with eight electrical lanes."},
             "OSFP": {"label": "OSFP", "definition": "Octal small form-factor pluggable with eight lanes and an integrated finned heat sink on the module."},
             "OSFP-RHS": {"label": "OSFP-RHS", "definition": "Flat-top octal small form-factor pluggable whose heat is removed by a heat sink riding on the cage."},
@@ -307,6 +368,34 @@ ENUMERATIONS = {
             "LiquidCooled": {"label": "Liquid cooled", "definition": "Most or all heat leaves the equipment in a liquid loop through cold plates, with little or none left to the air."},
             "LiquidAssistedAirCooled": {"label": "Liquid-assisted air cooled", "definition": "Heat is moved by liquid inside the equipment to a radiator, from which fans carry it away in the air."},
             "Immersion": {"label": "Immersion", "definition": "The equipment sits in a dielectric liquid that removes its heat by direct contact."},
+        },
+    },
+    "ManagementProtocol": {
+        "label": "Management protocol",
+        "definition": "The protocols by which building, power and IT management systems monitor and control a device over its data or serial port.",
+        "values": {
+            "Modbus": {"label": "Modbus", "definition": "The Modbus messaging protocol over a serial line or a TCP/IP network; as a value it says that the variant is not stated."},
+            "ModbusRTU": {"label": "Modbus RTU", "definition": "Modbus messages in binary form over a serial line such as EIA-485.", "parent_value": "Modbus"},
+            "ModbusTCP": {"label": "Modbus TCP", "definition": "Modbus messages carried over TCP/IP on an Ethernet network.", "parent_value": "Modbus"},
+            "BACnetIP": {"label": "BACnet/IP", "definition": "The BACnet building automation protocol of ASHRAE Standard 135 carried over IP networks."},
+            "BACnetMSTP": {"label": "BACnet MS/TP", "definition": "The BACnet building automation protocol carried over an EIA-485 serial line with master-slave token passing."},
+            "SNMP": {"label": "SNMP", "definition": "The Simple Network Management Protocol for monitoring and managing networked devices."},
+            "Redfish": {"label": "Redfish", "definition": "The DMTF Redfish interface, a RESTful protocol for managing servers and other data center hardware."},
+            "IPMI": {"label": "IPMI", "definition": "The Intelligent Platform Management Interface for out-of-band monitoring and control of servers through their management controller."},
+            "DNP3": {"label": "DNP3", "definition": "The Distributed Network Protocol used between control centers and field devices of electric power systems."},
+            "OPCUA": {"label": "OPC UA", "definition": "The OPC Unified Architecture protocol of IEC 62541 for industrial data exchange."},
+            "IEC61850": {"label": "IEC 61850", "definition": "The IEC 61850 protocols for communication with protection and control devices in substations and switchgear."},
+        },
+    },
+    "DataConnector": {
+        "label": "Data connector",
+        "definition": "The connector types of copper data and serial ports.",
+        "values": {
+            "RJ45": {"label": "RJ45", "definition": "The eight-position modular jack used for twisted-pair Ethernet and for some serial console ports."},
+            "USB-A": {"label": "USB Type-A", "definition": "The rectangular USB Type-A receptacle of a USB host."},
+            "USB-C": {"label": "USB Type-C", "definition": "The reversible USB Type-C receptacle."},
+            "USB-MicroB": {"label": "USB Micro-B", "definition": "The small USB Micro-B receptacle, often used for console ports."},
+            "DE-9": {"label": "DE-9", "definition": "The nine-pin D-subminiature connector of EIA-232 serial ports."},
         },
     },
     "LiquidCoolingWaterClass": {
@@ -458,5 +547,94 @@ PROPERTIES = {
         "definition": "An enumerated property naming the ASHRAE water class a liquid-cooled device is designed for.",
         "parent": S223.EnumerableProperty,
         "enumeration": "LiquidCoolingWaterClass",
+    },
+    "RackSpace": {
+        "label": "Rack space",
+        "definition": "The vertical mounting space a device occupies in a rack, or that a rack provides for devices, counted in rack units.",
+        "parent": S223.QuantifiableProperty,
+        "quantity_kind": QK.Height,
+        "units": [AIF["Unit-RackUnit"], AIF["Unit-OpenRackUnit"]],
+    },
+    "ManagementProtocolProperty": {
+        "label": "Management protocol property",
+        "definition": "An enumerated property naming a management or monitoring protocol a data or serial port supports.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "ManagementProtocol",
+    },
+    "DataConnectorProperty": {
+        "label": "Data connector property",
+        "definition": "An enumerated property naming the connector of a copper data or serial port.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "DataConnector",
+    },
+}
+
+# ---------------------------------------------------------------------------------------------
+# Quantity kinds missing from QUDT, defined in QUDT's pattern (qudt:QuantityKind with its applicable units).
+# Each is written ai-factory:QuantityKind-<name>.
+
+QUANTITY_KINDS = {
+    "FlowCoefficient": {
+        "label": "Flow coefficient",
+        "definition": "The flow of water that passes through a valve or coupling at a pressure drop of one unit across it, a measure of how freely the device lets liquid through.",
+        "applicable_units": [AIF["Unit-Kv"], AIF["Unit-Cv"]],
+    },
+}
+
+# ---------------------------------------------------------------------------------------------
+# Units missing from QUDT, defined in QUDT's pattern (qudt:Unit with quantity kinds and a conversion
+# multiplier to the SI base unit). Each is written ai-factory:Unit-<name>.
+
+UNITS = {
+    "RackUnit": {
+        "label": "Rack unit",
+        "definition": "The rack unit of EIA-310, 1.75 inches or 44.45 millimeters of vertical mounting space in a rack.",
+        "symbol": "U",
+        "quantity_kinds": [QK.Length, QK.Height],
+        "multiplier": "0.04445",
+    },
+    "OpenRackUnit": {
+        "label": "Open rack unit",
+        "definition": "The OpenU of the Open Compute Project Open Rack, 48 millimeters of vertical mounting space.",
+        "symbol": "OU",
+        "quantity_kinds": [QK.Length, QK.Height],
+        "multiplier": "0.048",
+    },
+    "GigaBAUD": {
+        "label": "Gigabaud",
+        "definition": "One billion symbols per second on a signalling lane.",
+        "symbol": "GBd",
+        "quantity_kinds": [QK.DigitRate],
+        "multiplier": "1000000000",
+    },
+    "TeraBYTE-PER-SEC": {
+        "label": "Terabyte per second",
+        "definition": "One trillion bytes per second.",
+        "symbol": "TB/s",
+        "quantity_kinds": [QK.DataRate, QK.ByteRate],
+        "multiplier": "8000000000000",
+    },
+    "MegaTRANSFER-PER-SEC": {
+        "label": "Megatransfer per second",
+        "definition": "One million data transfers per second on a memory or bus interface, the rate in which memory speeds are given.",
+        "symbol": "MT/s",
+        "quantity_kinds": [QK.DigitRate],
+        "multiplier": "1000000",
+    },
+    # Flow coefficients convert to cubic meters per second per square root of pascal: Kv is 1 m3/h at 1 bar,
+    # Cv is 1 US gal/min at 1 psi, so 1 Kv is about 1.156 Cv.
+    "Kv": {
+        "label": "Kv flow coefficient",
+        "definition": "The metric flow coefficient unit, one cubic meter per hour of water passing at a pressure drop of one bar.",
+        "symbol": "Kv",
+        "quantity_kinds": [AIF["QuantityKind-FlowCoefficient"]],
+        "multiplier": "0.000000878410461",
+    },
+    "Cv": {
+        "label": "Cv flow coefficient",
+        "definition": "The US customary flow coefficient unit, one US gallon per minute of water at 60 degrees Fahrenheit passing at a pressure drop of one pound-force per square inch.",
+        "symbol": "Cv",
+        "quantity_kinds": [AIF["QuantityKind-FlowCoefficient"]],
+        "multiplier": "0.000000759805421",
     },
 }

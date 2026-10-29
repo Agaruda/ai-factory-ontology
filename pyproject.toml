@@ -1,6 +1,6 @@
 [project]
 name = "ai-factory-ontology"
-version = "0.1.0"
+version = "0.4.0"
 description = "AI Factory Ontology: an extension of Brick and ASHRAE 223 for AI data centers"
 requires-python = ">=3.12"
 dependencies = [

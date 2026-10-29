@@ -8,7 +8,10 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX oa: <http://www.w3.org/ns/oa#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-SELECT ?point ?medium ?constituent ?concentration WHERE {
+# A point that names its coolants lists each one; otherwise its medium is the coolant.
+SELECT ?point ?medium ?coolant ?constituent ?concentration WHERE {
   ?model s223:hasConnectionPoint ?point . ?point a ai-factory:LiquidInlet ; s223:hasMedium ?medium .
-  OPTIONAL { ?medium s223:composedOf ?c . ?c s223:ofConstituent ?constituent ; s223:hasValue ?concentration }
+  OPTIONAL { ?point s223:hasProperty ?p . ?p a ai-factory:CoolantProperty ; s223:hasValue ?named }
+  BIND(COALESCE(?named, ?medium) AS ?coolant)
+  OPTIONAL { ?coolant s223:composedOf ?c . ?c s223:ofConstituent ?constituent ; s223:hasValue ?concentration }
 }

@@ -26,7 +26,46 @@ ai-factory-model:example-gpu-server-8g.not-stated.heat-load
 ai-factory-model:example-gpu-server-8g.bmc
     a ai-factory:ManagementPort ;
     s223:hasMedium s223:WiredEthernet-1000BASE-T ;
+    s223:hasProperty
+        ai-factory-model:example-gpu-server-8g.bmc.connector ,
+        ai-factory-model:example-gpu-server-8g.bmc.protocol ;
     s223:isConnectionPointOf ai-factory-model:example-gpu-server-8g ;
+.
+
+ai-factory-model:example-gpu-server-8g.bmc.connector
+    a ai-factory:DataConnectorProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-DataConnector ;
+    s223:hasValue ai-factory:DataConnector-RJ45 ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=8" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-gpu-server-8g-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-gpu-server-8g.bmc.protocol
+    a ai-factory:ManagementProtocolProperty ;
+    s223:hasEnumerationKind ai-factory:EnumerationKind-ManagementProtocol ;
+    s223:hasValue ai-factory:ManagementProtocol-Redfish ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=8" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-gpu-server-8g-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
 .
 
 ai-factory-model:example-gpu-server-8g.cooling
@@ -394,6 +433,25 @@ ai-factory-model:example-gpu-server-8g.power-max
     ai-factory:basis ai-factory:Basis-Stated ;
 .
 
+ai-factory-model:example-gpu-server-8g.rack-space
+    a ai-factory:RackSpace ;
+    s223:hasValue 8 ;
+    qudt:hasQuantityKind quantitykind:Height ;
+    qudt:hasUnit ai-factory:Unit-RackUnit ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=5" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-gpu-server-8g-manual ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
 ai-factory-model:example-nic-x800.function
     a ai-factory:NetworkAdapterFunctionProperty ;
     s223:hasEnumerationKind ai-factory:EnumerationKind-NetworkAdapterFunction ;
@@ -549,7 +607,8 @@ ai-factory-model:example-gpu-server-8g
         ai-factory-model:example-gpu-server-8g.cooling ,
         ai-factory-model:example-gpu-server-8g.function ,
         ai-factory-model:example-gpu-server-8g.platform ,
-        ai-factory-model:example-gpu-server-8g.power-max ;
+        ai-factory-model:example-gpu-server-8g.power-max ,
+        ai-factory-model:example-gpu-server-8g.rack-space ;
     prov:wasDerivedFrom
         [
             a oa:SpecificResource ;

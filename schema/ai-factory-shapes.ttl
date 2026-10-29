@@ -1,5 +1,7 @@
 PREFIX ai-factory: <https://w3id.org/ai-factory#>
+PREFIX oa: <http://www.w3.org/ns/oa#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -771,6 +773,53 @@ ai-factory:CoolantManifoldShape
     sh:targetClass ai-factory:CoolantManifold ;
 .
 
+ai-factory:CoolantPropertyShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A coolant property names a coolant medium: water, an aqueous solution or a dielectric liquid."@en ;
+            sh:or (
+                
+                [
+                    sh:class s223:Fluid-Water ;
+                ]
+                
+                [
+                    sh:class ai-factory:Fluid-DielectricLiquid ;
+                ]
+            ) ;
+            sh:path s223:hasValue ;
+        ] ,
+        [
+            sh:hasValue s223:Mix-Fluid ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ,
+        [
+            sh:class s223:ConnectionPoint ;
+            sh:message "A coolant property belongs to a connection point."@en ;
+            sh:minCount 1 ;
+            sh:path
+                [
+                    sh:inversePath s223:hasProperty ;
+                ] ;
+        ] ;
+    sh:sparql
+        [
+            a sh:SPARQLConstraint ;
+            sh:message "The coolant {?value} is neither the medium {?medium} of its connection point nor a narrower medium."@en ;
+            sh:select """
+SELECT $this ?value ?medium WHERE {
+  ?point <http://data.ashrae.org/standard223#hasProperty> $this ;
+         <http://data.ashrae.org/standard223#hasMedium> ?medium .
+  $this <http://data.ashrae.org/standard223#hasValue> ?value .
+  FILTER NOT EXISTS { ?value <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?medium }
+}
+""" ;
+        ] ;
+    sh:targetClass ai-factory:CoolantProperty ;
+.
+
 ai-factory:CoolingCapacityShape
     a sh:NodeShape ;
     sh:property 
@@ -956,6 +1005,17 @@ ai-factory:DPUShape
     sh:targetClass ai-factory:DPU ;
 .
 
+ai-factory:DataConnectorPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-DataConnector ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:DataConnectorProperty ;
+.
+
 ai-factory:DepthShape
     a sh:NodeShape ;
     sh:property 
@@ -1041,6 +1101,17 @@ ai-factory:DryCoolerShape
     sh:targetClass ai-factory:DryCooler ;
 .
 
+ai-factory:EarthingSystemPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-EarthingSystem ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:EarthingSystemProperty ;
+.
+
 ai-factory:EthernetRatePropertyShape
     a sh:NodeShape ;
     sh:property
@@ -1118,6 +1189,109 @@ ai-factory:FanShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:Fan ;
+.
+
+ai-factory:FeatureStatementBodyShape
+    a sh:NodeShape ;
+    sh:message "A feature statement has exactly one textual body whose rdf:value is one English text."@en ;
+    sh:or (
+        
+        [
+            sh:not
+                [
+                    sh:hasValue oa:describing ;
+                    sh:path oa:motivatedBy ;
+                ] ;
+        ]
+        
+        [
+            sh:property
+                [
+                    sh:class oa:TextualBody ;
+                    sh:maxCount 1 ;
+                    sh:minCount 1 ;
+                    sh:node
+                        [
+                            sh:property
+                                [
+                                    sh:datatype rdf:langString ;
+                                    sh:languageIn (
+                                        "en"
+                                    ) ;
+                                    sh:maxCount 1 ;
+                                    sh:minCount 1 ;
+                                    sh:path rdf:value ;
+                                ] ;
+                        ] ;
+                    sh:path oa:hasBody ;
+                ] ;
+        ]
+    ) ;
+    sh:targetClass oa:Annotation ;
+.
+
+ai-factory:FeatureStatementProvenanceShape
+    a sh:NodeShape ;
+    sh:message "A feature statement cites where it comes from with prov:wasDerivedFrom: a specific resource with a source document and a selector."@en ;
+    sh:or (
+        
+        [
+            sh:not
+                [
+                    sh:hasValue oa:describing ;
+                    sh:path oa:motivatedBy ;
+                ] ;
+        ]
+        
+        [
+            sh:property
+                [
+                    sh:class oa:SpecificResource ;
+                    sh:minCount 1 ;
+                    sh:node
+                        [
+                            sh:property 
+                                [
+                                    sh:minCount 1 ;
+                                    sh:path oa:hasSelector ;
+                                ] ,
+                                [
+                                    sh:class ai-factory:Source ;
+                                    sh:minCount 1 ;
+                                    sh:path oa:hasSource ;
+                                ] ;
+                        ] ;
+                    sh:path prov:wasDerivedFrom ;
+                ] ;
+        ]
+    ) ;
+    sh:targetClass oa:Annotation ;
+.
+
+ai-factory:FeatureStatementTargetShape
+    a sh:NodeShape ;
+    sh:message "A feature statement targets exactly one product model."@en ;
+    sh:or (
+        
+        [
+            sh:not
+                [
+                    sh:hasValue oa:describing ;
+                    sh:path oa:motivatedBy ;
+                ] ;
+        ]
+        
+        [
+            sh:property
+                [
+                    sh:class ai-factory:ProductModel ;
+                    sh:maxCount 1 ;
+                    sh:minCount 1 ;
+                    sh:path oa:hasTarget ;
+                ] ;
+        ]
+    ) ;
+    sh:targetClass oa:Annotation ;
 .
 
 ai-factory:FiberCableShape
@@ -1492,6 +1666,17 @@ ai-factory:LaneCountShape
     sh:targetClass ai-factory:LaneCount ;
 .
 
+ai-factory:LaneModulationPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-LaneModulation ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:LaneModulationProperty ;
+.
+
 ai-factory:LineToLineVoltageShape
     a sh:NodeShape ;
     sh:property 
@@ -1789,6 +1974,17 @@ ai-factory:LowVoltageSwitchboardShape
     sh:targetClass ai-factory:LowVoltageSwitchboard ;
 .
 
+ai-factory:ManagementProtocolPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-ManagementProtocol ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:ManagementProtocolProperty ;
+.
+
 ai-factory:MediumVoltageMotorControlCenterShape
     a sh:NodeShape ;
     sh:property 
@@ -2044,6 +2240,23 @@ ai-factory:NetworkSwitchShape
     sh:targetClass ai-factory:NetworkSwitch ;
 .
 
+ai-factory:OpticalPowerLevelShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:hasValue quantitykind:Log10Ratio ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ,
+        [
+            sh:in (
+                unit:DeciB-MilliW
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ;
+    sh:targetClass ai-factory:OpticalPowerLevel ;
+.
+
 ai-factory:OpticalReachClassPropertyShape
     a sh:NodeShape ;
     sh:property
@@ -2161,6 +2374,17 @@ ai-factory:PatchPanelShape
     sh:targetClass ai-factory:PatchPanel ;
 .
 
+ai-factory:PipeJointPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-PipeJoint ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:PipeJointProperty ;
+.
+
 ai-factory:PluggableCableAssemblyShape
     a sh:NodeShape ;
     sh:property
@@ -2268,6 +2492,17 @@ ai-factory:PowerShelfShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:PowerShelf ;
+.
+
+ai-factory:PowerSupplyEfficiencyGradePropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-PowerSupplyEfficiencyGrade ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:PowerSupplyEfficiencyGradeProperty ;
 .
 
 ai-factory:PowerSupplyUnitShape
@@ -2515,6 +2750,35 @@ ai-factory:RackScaleSystemShape
     sh:targetClass ai-factory:RackScaleSystem ;
 .
 
+ai-factory:RackSpaceShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:in (
+                ai-factory:Unit-RackUnit
+                ai-factory:Unit-OpenRackUnit
+            ) ;
+            sh:path qudt:hasUnit ;
+        ] ,
+        [
+            sh:hasValue quantitykind:Height ;
+            sh:maxCount 1 ;
+            sh:path qudt:hasQuantityKind ;
+        ] ;
+    sh:targetClass ai-factory:RackSpace ;
+.
+
+ai-factory:RefrigerantPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue s223:Constituent-Refrigerant ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:RefrigerantProperty ;
+.
+
 ai-factory:RemotePowerPanelShape
     a sh:NodeShape ;
     sh:property 
@@ -2539,6 +2803,32 @@ ai-factory:RemotePowerPanelShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:RemotePowerPanel ;
+.
+
+ai-factory:RiserCardShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A riser card plugs into an expansion slot of its motherboard."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:CardHostConnector ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            sh:message "A riser card provides at least one expansion slot."@en ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape
+                [
+                    sh:class ai-factory:ExpansionSlot ;
+                ] ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass ai-factory:RiserCard ;
 .
 
 ai-factory:ServerFunctionPropertyShape
@@ -2635,6 +2925,17 @@ ai-factory:SolidStateTransformerShape
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass ai-factory:SolidStateTransformer ;
+.
+
+ai-factory:SupportedGPUPlatformPropertyShape
+    a sh:NodeShape ;
+    sh:property
+        [
+            sh:hasValue ai-factory:EnumerationKind-GPUPlatform ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ;
+    sh:targetClass ai-factory:SupportedGPUPlatformProperty ;
 .
 
 ai-factory:SwitchChassisFormPropertyShape
@@ -2758,6 +3059,7 @@ ai-factory:TransferTimeShape
     sh:property 
         [
             sh:in (
+                unit:MicroSEC
                 unit:MilliSEC
                 unit:SEC
             ) ;

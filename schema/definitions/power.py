@@ -2,7 +2,7 @@
 
 Equipment classes join a Brick class (what it is) and a 223 class (so it can have connection points), as
 docs/MODELING.md describes. Connection points, AC media, voltage property classes and the power connector
-enumeration come from common.py; redundancy (N+1, "4 to make 3") uses core.py's RedundancyGroup (decision P1).
+enumeration come from common.py; redundancy (N+1, "4 to make 3") uses core.py's RedundancyGroup (decisions P1 and G15).
 A battery energy storage system assembled from several products is not a class here: it is a
 brick:Battery_Energy_Storage_System, which Brick defines as a system (decision P5).
 
@@ -429,7 +429,7 @@ ENUMERATIONS = {
     },
     "TransferTransition": {
         "label": "Transfer transition",
-        "definition": "How a transfer switch moves its load from one source to the other.",
+        "definition": "How a transfer switch, or the bypass of an uninterruptible power supply, moves its load from one source to the other.",
         "values": {
             "Open": {"label": "Open transition", "definition": "The switch breaks the connection to one source before it makes the connection to the other."},
             "Delayed": {"label": "Delayed transition", "definition": "An open transition that keeps the load disconnected for a set time so that residual motor and transformer voltages decay before reconnection."},
@@ -466,6 +466,29 @@ ENUMERATIONS = {
             "PAFC": {"label": "Phosphoric acid fuel cell", "definition": "A medium-temperature fuel cell with a liquid phosphoric acid electrolyte."},
         },
     },
+    "PowerSupplyEfficiencyGrade": {
+        "label": "Power supply efficiency grade",
+        "definition": "The levels of the 80 PLUS program, which certifies the efficiency of power supplies at set fractions of their rated load.",
+        "values": {
+            "80PLUS": {"label": "80 PLUS", "definition": "The base level of the 80 PLUS program."},
+            "80PLUS-Bronze": {"label": "80 PLUS Bronze", "definition": "The 80 PLUS Bronze level, above the base level and below Silver."},
+            "80PLUS-Silver": {"label": "80 PLUS Silver", "definition": "The 80 PLUS Silver level, above Bronze and below Gold."},
+            "80PLUS-Gold": {"label": "80 PLUS Gold", "definition": "The 80 PLUS Gold level, above Silver and below Platinum."},
+            "80PLUS-Platinum": {"label": "80 PLUS Platinum", "definition": "The 80 PLUS Platinum level, above Gold and below Titanium."},
+            "80PLUS-Titanium": {"label": "80 PLUS Titanium", "definition": "The 80 PLUS Titanium level, the highest of the program, which also tests efficiency at a tenth of rated load."},
+        },
+    },
+    "EarthingSystem": {
+        "label": "Earthing system",
+        "definition": "The earthing arrangements of IEC 60364 for low-voltage AC supplies, which say how the source and the exposed metal parts are connected to earth.",
+        "values": {
+            "TN-S": {"label": "TN-S", "definition": "The source is earthed and separate neutral and protective conductors run throughout."},
+            "TN-C": {"label": "TN-C", "definition": "The source is earthed and one combined neutral and protective conductor runs throughout."},
+            "TN-C-S": {"label": "TN-C-S", "definition": "The source is earthed and a combined neutral and protective conductor is split into separate ones part way along."},
+            "TT": {"label": "TT", "definition": "The source is earthed and the exposed metal parts are earthed through a separate electrode of the installation."},
+            "IT": {"label": "IT", "definition": "The source is isolated from earth or earthed through a high impedance, and the exposed metal parts are earthed."},
+        },
+    },
 }
 
 # ---------------------------------------------------------------------------------------------
@@ -499,7 +522,7 @@ PROPERTIES = {
         "definition": "The time a transfer switch or an uninterruptible power supply takes to move its load from one source to another.",
         "parent": S223.QuantifiableProperty,
         "quantity_kind": QK.Time,
-        "units": [UNIT.MilliSEC, UNIT.SEC],
+        "units": [UNIT.MicroSEC, UNIT.MilliSEC, UNIT.SEC],
     },
     "HoldUpTime": {
         "label": "Hold-up time",
@@ -548,7 +571,7 @@ PROPERTIES = {
     },
     "TransferTransitionProperty": {
         "label": "Transfer transition property",
-        "definition": "An enumerated property naming a transition a transfer switch supports.",
+        "definition": "An enumerated property naming a transition a transfer switch or the bypass of an uninterruptible power supply supports.",
         "parent": S223.EnumerableProperty,
         "enumeration": "TransferTransition",
     },
@@ -569,5 +592,17 @@ PROPERTIES = {
         "definition": "An enumerated property naming the electrolyte technology of a fuel cell power module.",
         "parent": S223.EnumerableProperty,
         "enumeration": "FuelCellType",
+    },
+    "PowerSupplyEfficiencyGradeProperty": {
+        "label": "Power supply efficiency grade property",
+        "definition": "An enumerated property naming the 80 PLUS level a power supply is certified to.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "PowerSupplyEfficiencyGrade",
+    },
+    "EarthingSystemProperty": {
+        "label": "Earthing system property",
+        "definition": "An enumerated property naming the earthing arrangement of the AC supply that a power connection point delivers or requires.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": "EarthingSystem",
     },
 }

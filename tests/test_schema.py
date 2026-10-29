@@ -74,6 +74,73 @@ def test_example_models_satisfy_our_shapes():
     assert problems == []
 
 
+FEATURE_STATEMENT_CASES = """
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix ai-factory-model: <https://w3id.org/ai-factory/model/> .
+@prefix ai-factory-org: <https://w3id.org/ai-factory/org/> .
+
+ai-factory-model:example-unknown.feature-1 a oa:Annotation ;
+    oa:motivatedBy oa:describing ;
+    oa:hasTarget ai-factory-org:example-thermal .
+
+ai-factory-model:example-unknown.note-1 a oa:Annotation ;
+    oa:motivatedBy oa:commenting .
+"""
+
+
+def test_feature_statement_shapes_report_a_malformed_statement():
+    """A describing annotation with no body or provenance, aimed at an organization, fails all three checks;
+    an annotation with another motivation is not checked."""
+    data = Graph().parse(data=FEATURE_STATEMENT_CASES, format="turtle")
+    shapes = Graph().parse(SCHEMA / "ai-factory-shapes.ttl")
+    _, results, _ = pyshacl.validate(data, shacl_graph=shapes, inference="none", advanced=True, allow_warnings=True)
+    failed: dict[str, set[str]] = {}
+    for r in results.subjects(RDF.type, SH.ValidationResult):
+        focus = str(results.value(r, SH.focusNode)).rsplit("/", 1)[-1]
+        failed.setdefault(focus, set()).add(str(results.value(r, SH.sourceShape)).rsplit("#", 1)[-1])
+    assert failed == {"example-unknown.feature-1": {
+        "FeatureStatementTargetShape", "FeatureStatementBodyShape", "FeatureStatementProvenanceShape"}}
+
+
+COOLANT_CASES = """
+@prefix ai-factory: <https://w3id.org/ai-factory#> .
+@prefix ai-factory-model: <https://w3id.org/ai-factory/model/> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+
+ai-factory-model:example-unknown.in a ai-factory:LiquidInlet ;
+    s223:hasMedium s223:Fluid-Water ;
+    s223:hasProperty ai-factory-model:example-unknown.in.coolant , ai-factory-model:example-unknown.in.coolant-2 ,
+        ai-factory-model:example-unknown.in.coolant-3 .
+
+ai-factory-model:example-unknown.in.coolant a ai-factory:CoolantProperty ;
+    s223:hasEnumerationKind s223:Mix-Fluid ; s223:hasValue s223:Water-GlycolSolution .
+
+ai-factory-model:example-unknown.in.coolant-2 a ai-factory:CoolantProperty ;
+    s223:hasEnumerationKind s223:Mix-Fluid ; s223:hasValue ai-factory:Fluid-DielectricLiquid .
+
+ai-factory-model:example-unknown.in.coolant-3 a ai-factory:CoolantProperty ;
+    s223:hasEnumerationKind s223:Mix-Fluid ; s223:hasValue s223:Fluid-Air .
+
+ai-factory-model:example-unknown.loose a ai-factory:CoolantProperty ;
+    s223:hasEnumerationKind s223:Mix-Fluid ; s223:hasValue s223:Fluid-Water .
+"""
+
+
+def test_coolant_shapes_report_coolants_that_do_not_fit_their_point():
+    """A glycol solution on a water point passes; a dielectric liquid on it is not within the point's medium, air is
+    no coolant (and not within it either), and a coolant property on no connection point is reported."""
+    data = Graph().parse(data=COOLANT_CASES, format="turtle").parse(SCHEMA / "ai-factory.ttl").parse(VENDOR / "ashrae-223.ttl")
+    shapes = Graph().parse(SCHEMA / "ai-factory-shapes.ttl")
+    _, results, _ = pyshacl.validate(data, shacl_graph=shapes, inference="none", advanced=True, allow_warnings=True)
+    failed: dict[str, set[str]] = {}
+    for r in results.subjects(RDF.type, SH.ValidationResult):
+        focus = str(results.value(r, SH.focusNode)).rsplit("/", 1)[-1]
+        failed.setdefault(focus, set()).add(str(results.value(r, SH.sourceConstraintComponent)).rsplit("#", 1)[-1])
+    assert failed == {"example-unknown.in.coolant-2": {"SPARQLConstraintComponent"},
+                      "example-unknown.in.coolant-3": {"OrConstraintComponent", "SPARQLConstraintComponent"},
+                      "example-unknown.loose": {"MinCountConstraintComponent"}}
+
+
 @pytest.mark.slow
 @pytest.mark.skipif(not any(FIXTURES.glob("*.ttl")), reason="no example models yet")
 def test_example_models_satisfy_ashrae_223_shapes():

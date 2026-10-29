@@ -48,7 +48,7 @@ Pinned copies are in `schema/vendor/`. Reuse a term from these standards before 
 |---|---|
 | `schema/ai-factory.ttl` | classes, properties, enumeration values |
 | `schema/ai-factory-shapes.ttl` | structure checks: which connection points and values each class needs |
-| `<model-slug>.ttl` (product data) | one product model with its connection points, values, provenance and not-stated records |
+| `<model-slug>.ttl` (product data) | one product model with its connection points, values, provenance, not-stated records and feature statements |
 
 - Turtle files are written by `pipeline/format_ttl.py` (rdflib `longturtle`: sorted subjects, one predicate per line, fixed prefix block, canonical blank-node labels). Do not hand-format; tests reject files that change when reformatted.
 - Prefixes are declared once in `schema/definitions/namespaces.py` and used everywhere; a file uses only declared prefixes.
@@ -69,16 +69,30 @@ An installed unit (a BOM row) is a separate individual of the same class, linked
 
 A component that a product's documents name as fitted (for example a network adapter built into a server) is linked with `brick:hasPart` from the product model to the component's product model.
 
+A part number or ordering code under which the model, or one variant of it, is ordered follows 223's pattern for catalog numbers: an `s223:Property` whose `s223:hasValue` is the code as a string, with `s223:hasAspect s223:Aspect-CatalogNumber`, attached to the model with `s223:hasProperty` and carrying provenance (section 7). For a variant, an `ai-factory:condition` says which variant, in our own words. `rec:modelNumber` stays the model number.
+
+Redundancy of a model's internal units (pumps, power supplies, fans) is an `ai-factory:RedundancyGroup` linked from the model with `ai-factory:hasRedundancyGroup`:
+
+- the units are named by `ai-factory:memberModel`, or by `ai-factory:memberClass` (for example `ai-factory:Pump`) when they have no model of their own; a group that names neither covers the model's units as a whole;
+- a scheme printed as a formula (N, N+1, N+N, 2N ...) is `ai-factory:redundancyScheme` with a `RedundancyScheme` value;
+- printed counts are `ai-factory:requiredCount` and `ai-factory:installedCount`: "4+1" is 4 required of 5 installed;
+- the group carries provenance (section 7);
+- a count of units with their rating ("8 x 33 kW") states no redundancy and is not recorded as a redundancy group.
+
 ## 6. Connection points, media and values
 
 - Connection points follow 223: an `s223:InletConnectionPoint`, `s223:OutletConnectionPoint` or `s223:BidirectionalConnectionPoint` subclass, exactly one medium (`s223:hasMedium`), and a role where one applies (`s223:hasRole s223:Role-Supply`, `s223:Role-Primary` ...).
 - A port that runs more than one protocol takes the closest medium that covers all of them and lists the protocols and rates as enumeration values.
 - Values are 223 properties: an `s223:QuantifiableProperty` with `s223:hasValue`, `qudt:hasUnit` and `qudt:hasQuantityKind`, attached with `s223:hasProperty` to the connection point or equipment it describes.
+- Units come from QUDT. Where QUDT has none, the schema defines one in QUDT's pattern (`qudt:Unit` with its quantity kinds, symbol and conversion multiplier), named `ai-factory:Unit-<name>`: rack unit, open rack unit, gigabaud, terabyte per second, megatransfer per second, and the Kv and Cv flow coefficients. Where QUDT also lacks the quantity kind, the schema defines it the same way, named `ai-factory:QuantityKind-<name>`: `ai-factory:QuantityKind-FlowCoefficient`.
 - What a value means is stated with 223 aspects (`s223:hasAspect`): `s223:Aspect-Rated`, `-Nominal`, `-Maximum`, `-Minimum`, `-HighLimit`, `-LowLimit`, plus ours: `ai-factory:Aspect-Required` (the vendor states it as a need), `ai-factory:Aspect-Recommended`, `ai-factory:Aspect-Operating` (normal operating range, as opposed to a limit range).
 - A range is two properties, one with `s223:Aspect-Minimum` and one with `s223:Aspect-Maximum`, sharing the other aspects.
 - One connection point record may stand for several identical points (the 48 RJ45 ports of a switch, the 12 C19 receptacles of a PDU): an `ai-factory:ConnectionPointCount` property on it gives the number. A record without one stands for one point.
 - A condition printed with a value (for example "at 45 °C coolant") is an `ai-factory:condition` on the property, written in our own words.
-- A value the vendor prints as text, not a number (a connector type, a protocol), is an enumeration value from `ai-factory.ttl`. If none fits, the value is not recorded and the gap is reported; free text is not allowed.
+- An AC medium names its phases and frequency (`ai-factory:AC-3Ph-50Hz`). When the documents give the phases but no frequency, the medium names the phases only (`ai-factory:AC-1Ph`, `ai-factory:AC-3Ph`, `ai-factory:AC-3PhN`); its frequency is 223's generic `s223:Numerical-Frequency`, as on `s223:Electricity-AC`.
+- The coolants a liquid connection point takes are `ai-factory:CoolantProperty` values on the point, one per coolant, each with its provenance; the point's one medium is the most specific medium all of them are or are a kind of (water and 25 percent propylene glycol give `s223:Fluid-Water`). A point that states no coolant has its medium only; `s223:Fluid-Water` alone then means water or an aqueous solution, not plain water.
+- A refrigerant is one of 223's refrigerant media (`s223:Refrigerant-R-134A` ...) or one the schema adds in 223's pattern (`ai-factory:Refrigerant-R-454B`). Where refrigerant lines leave the product, the refrigerant is the medium of those connection points; a circuit sealed inside the product is stated with an `ai-factory:RefrigerantProperty` on the model.
+- A value the vendor prints as text, not a number (a connector type, a protocol), is an enumeration value from `ai-factory.ttl`. Some enumerations have a generic value above specific ones (`ai-factory:PluggableFormFactor-QSFP` above `-QSFP28`, `ai-factory:ManagementProtocol-Modbus` above `-ModbusRTU`); it is used only when the documents do not say which specific value applies. If no value fits, the value is not recorded and the gap is reported: a property value is never free text. Descriptive text that no structured term holds goes only into a feature statement (section 9).
 
 ```turtle
 ai-factory-model:kentec-cdu-lx480t.tcs-supply a ai-factory:LiquidOutlet ;
@@ -121,21 +135,47 @@ Absence of a value means nothing in RDF. When a model's documents were read and 
     ai-factory:checkedSource ai-factory-source:nvidia-sn5600-user-manual, ai-factory-source:nvidia-sn5600-datasheet .
 ```
 
-## 9. Sources
+## 9. Feature statements
+
+A descriptive statement about a product model that no structured term holds, such as that its pumps can be replaced while it runs, is a W3C Web Annotation that describes the model. It is never a property value.
+
+```turtle
+ai-factory-model:example-cdu-l2l-500.feature-1 a oa:Annotation ;
+    oa:motivatedBy oa:describing ;
+    oa:hasTarget ai-factory-model:example-cdu-l2l-500 ;
+    oa:hasBody [ a oa:TextualBody ;
+                 rdf:value "Each of its two circulation pumps can be replaced while the other keeps the unit running."@en ] ;
+    prov:wasDerivedFrom [
+        a oa:SpecificResource ;
+        oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        oa:hasSelector [ a oa:FragmentSelector ;
+                         dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                         rdf:value "page=1" ] ] .
+```
+
+- The identifier is the model's, a dot, `feature-` and a number counted from 1: `ai-factory-model:<model>.feature-<n>`.
+- One statement per annotation: exactly one `oa:TextualBody` whose `rdf:value` is English (`@en`).
+- The text is written in our own words (section 11). Numbers and units, product names and part numbers are written as printed.
+- Every statement carries provenance as in section 7.
+- A value that a structured term can hold is recorded with that term; a statement does not replace it.
+- No compatibility check reads feature statements.
+- `ai-factory-shapes.ttl` checks that every annotation with the describing motivation targets one product model, has one English textual body and cites its source.
+
+## 10. Sources
 
 A source document is an `ai-factory:Source` individual with an English label and `ai-factory:sha256`, the checksum of the original file. Provenance (section 7) points to it. The documents themselves are not part of the ontology.
 
-## 10. Text policy
+## 11. Text policy
 
-- The repository holds no sentence copied from a vendor document: not in definitions, labels, conditions, notes, documentation or commit messages.
+- The repository holds no sentence copied from a vendor document: not in definitions, labels, conditions, feature statements, notes, documentation or commit messages.
 - Allowed: product names, model and part numbers, numbers with units, names of standards, and single technical terms.
 - A text that repeats 10 or more consecutive words of a vendor document counts as copied.
 
-## 11. Language and commits
+## 12. Language and commits
 
 - English only, everywhere in the repository.
 
-## 12. What must pass
+## 13. What must pass
 
 | Check | Tool |
 |---|---|
