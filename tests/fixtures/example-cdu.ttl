@@ -241,17 +241,58 @@ ai-factory-model:example-cdu-l2l-500.power-in.voltage-min
 
 ai-factory-model:example-cdu-l2l-500.tcs-return
     a ai-factory:LiquidInlet ;
-    s223:hasMedium ai-factory:PropyleneGlycolSolution-25Percent ;
+    s223:hasMedium s223:Fluid-Water ;
+    s223:hasProperty
+        ai-factory-model:example-cdu-l2l-500.tcs-return.coolant ,
+        ai-factory-model:example-cdu-l2l-500.tcs-return.coolant-2 ;
     s223:hasRole
         s223:Role-Return ,
         s223:Role-Secondary ;
     s223:isConnectionPointOf ai-factory-model:example-cdu-l2l-500 ;
 .
 
+ai-factory-model:example-cdu-l2l-500.tcs-return.coolant
+    a ai-factory:CoolantProperty ;
+    s223:hasEnumerationKind s223:Mix-Fluid ;
+    s223:hasValue ai-factory:PropyleneGlycolSolution-25Percent ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-return.coolant-2
+    a ai-factory:CoolantProperty ;
+    s223:hasEnumerationKind s223:Mix-Fluid ;
+    s223:hasValue s223:Fluid-Water ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
 ai-factory-model:example-cdu-l2l-500.tcs-supply
     a ai-factory:LiquidOutlet ;
-    s223:hasMedium ai-factory:PropyleneGlycolSolution-25Percent ;
+    s223:hasMedium s223:Fluid-Water ;
     s223:hasProperty
+        ai-factory-model:example-cdu-l2l-500.tcs-supply.coolant ,
+        ai-factory-model:example-cdu-l2l-500.tcs-supply.coolant-2 ,
         ai-factory-model:example-cdu-l2l-500.tcs-supply.flow-max ,
         ai-factory-model:example-cdu-l2l-500.tcs-supply.flow-max-manual ,
         ai-factory-model:example-cdu-l2l-500.tcs-supply.temp-max ,
@@ -260,6 +301,42 @@ ai-factory-model:example-cdu-l2l-500.tcs-supply
         s223:Role-Secondary ,
         s223:Role-Supply ;
     s223:isConnectionPointOf ai-factory-model:example-cdu-l2l-500 ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-supply.coolant
+    a ai-factory:CoolantProperty ;
+    s223:hasEnumerationKind s223:Mix-Fluid ;
+    s223:hasValue ai-factory:PropyleneGlycolSolution-25Percent ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
+.
+
+ai-factory-model:example-cdu-l2l-500.tcs-supply.coolant-2
+    a ai-factory:CoolantProperty ;
+    s223:hasEnumerationKind s223:Mix-Fluid ;
+    s223:hasValue s223:Fluid-Water ;
+    prov:wasDerivedFrom
+        [
+            a oa:SpecificResource ;
+            oa:hasSelector
+                [
+                    a oa:FragmentSelector ;
+                    dcterms:conformsTo <http://tools.ietf.org/rfc/rfc3778> ;
+                    rdf:value "page=2" ;
+                ] ;
+            oa:hasSource ai-factory-source:example-cdu-l2l-500-datasheet ;
+        ] ;
+    ai-factory:basis ai-factory:Basis-Stated ;
 .
 
 ai-factory-model:example-cdu-l2l-500.tcs-supply.flow-max

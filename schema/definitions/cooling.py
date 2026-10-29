@@ -10,15 +10,23 @@ more than one loop. See docs/MODELING.md, decisions C1 to C10.
 Refrigerants are 223's refrigerant media, with the missing ones added below in 223's pattern (decision G17):
 a refrigerant line that leaves a product takes its refrigerant as the medium of its connection point, and a
 circuit sealed inside a product is stated with RefrigerantProperty on the product model.
+
+The coolants a liquid connection point takes are CoolantProperty values on the point, one per coolant, while the
+point keeps one medium: the most specific medium every coolant is or is a kind of (decision G21).
 """
 
-from rdflib.namespace import OWL
+from rdflib import BNode, Literal
+from rdflib.collection import Collection
+from rdflib.namespace import OWL, RDF, SH
 
 from .namespaces import AIF, BRICK, QK, S223, UNIT
 
 WATER = S223["Fluid-Water"]  # covers chilled water, glycol solutions and the 25 percent PG medium
 AIR = S223["Fluid-Air"]
 REFRIGERANT = S223["Constituent-Refrigerant"]
+# The coolant media (decision G21): 223's water media and ours below them (glycol solutions), and dielectric liquids.
+COOLANT_KIND = S223["Mix-Fluid"]
+COOLANT_MEDIA = [WATER, AIF["Fluid-DielectricLiquid"]]
 
 
 def _liquid_pair(subject: str, medium=None, roles_in=(), roles_out=(), what: str = "liquid") -> list[dict]:
@@ -476,6 +484,12 @@ PROPERTIES = {
         "parent": S223.EnumerableProperty,
         "enumeration": REFRIGERANT,
     },
+    "CoolantProperty": {
+        "label": "Coolant property",
+        "definition": "An enumerated property of a liquid connection point naming one coolant the point takes, such as a 25 percent propylene glycol solution or water; a point that takes several coolants has one such property for each, and its medium is the most specific medium all of them are or are a kind of.",
+        "parent": S223.EnumerableProperty,
+        "enumeration": COOLANT_KIND,
+    },
     "PipeJointProperty": {
         "label": "Pipe joint property",
         "definition": "An enumerated property naming how a liquid connection point that is a pipe end joins the piping.",
@@ -521,3 +535,50 @@ RELATIONS = {
         "range": S223["Substance-Medium"],
     },
 }
+
+
+# ---------------------------------------------------------------------------------------------
+# Shapes for coolant properties (decision G21): the value is a coolant medium, and the property sits on a connection
+# point whose medium is that coolant or a broader medium.
+
+COOLANT_ON_POINT = """
+SELECT $this ?value ?medium WHERE {
+  ?point <http://data.ashrae.org/standard223#hasProperty> $this ;
+         <http://data.ashrae.org/standard223#hasMedium> ?medium .
+  $this <http://data.ashrae.org/standard223#hasValue> ?value .
+  FILTER NOT EXISTS { ?value <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?medium }
+}
+"""
+
+
+def add_shapes(builder, module: str) -> None:
+    g = builder.shapes
+    for term in (AIF.CoolantProperty, S223.hasValue, S223.hasProperty, S223.ConnectionPoint, *COOLANT_MEDIA):
+        builder.references.append((f"{module}.add_shapes", term))
+    shape = builder.class_shape(AIF.CoolantProperty)
+
+    media, alternatives = BNode(), []
+    for medium in COOLANT_MEDIA:
+        alternative = BNode()
+        g.add((alternative, SH["class"], medium))
+        alternatives.append(alternative)
+    Collection(g, media, alternatives)
+    value = BNode()
+    g.add((shape, SH.property, value))
+    g.add((value, SH.path, S223.hasValue))
+    g.add((value, SH["or"], media))
+    g.add((value, SH.message, Literal("A coolant property names a coolant medium: water, an aqueous solution or a dielectric liquid.", lang="en")))
+
+    point, inverse = BNode(), BNode()
+    g.add((inverse, SH.inversePath, S223.hasProperty))
+    g.add((shape, SH.property, point))
+    g.add((point, SH.path, inverse))
+    g.add((point, SH.minCount, Literal(1)))
+    g.add((point, SH["class"], S223.ConnectionPoint))
+    g.add((point, SH.message, Literal("A coolant property belongs to a connection point.", lang="en")))
+
+    within = BNode()
+    g.add((shape, SH.sparql, within))
+    g.add((within, RDF.type, SH.SPARQLConstraint))
+    g.add((within, SH.select, Literal(COOLANT_ON_POINT)))
+    g.add((within, SH.message, Literal("The coolant {?value} is neither the medium {?medium} of its connection point nor a narrower medium.", lang="en")))

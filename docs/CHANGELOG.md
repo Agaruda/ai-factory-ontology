@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 (draft)
+
+- A coolant property for liquid connection points (decision G21): one `CoolantProperty` per coolant a point takes, each with its own provenance, valued with the coolant media and checked by shapes (a coolant medium, on a connection point, and the point's medium or a narrower one). The point keeps one medium, the common kind of its coolants.
+- The example CDU's secondary loop takes two coolants; competency question F1 lists the coolants a point names, and a test checks that coolants that do not fit their point are reported.
+- The project version is 0.4.0.
+
 ## 0.3.0 (draft)
 
 - Feature statements: descriptive statements about a product model as W3C Web Annotations with the describing motivation, never property values, with shapes that check their target, English body and provenance (`docs/MODELING.md` X7, `docs/CONVENTIONS.md` section 9). Sections 9 to 12 of `docs/CONVENTIONS.md` become 10 to 13.

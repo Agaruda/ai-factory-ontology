@@ -773,6 +773,53 @@ ai-factory:CoolantManifoldShape
     sh:targetClass ai-factory:CoolantManifold ;
 .
 
+ai-factory:CoolantPropertyShape
+    a sh:NodeShape ;
+    sh:property 
+        [
+            sh:message "A coolant property names a coolant medium: water, an aqueous solution or a dielectric liquid."@en ;
+            sh:or (
+                
+                [
+                    sh:class s223:Fluid-Water ;
+                ]
+                
+                [
+                    sh:class ai-factory:Fluid-DielectricLiquid ;
+                ]
+            ) ;
+            sh:path s223:hasValue ;
+        ] ,
+        [
+            sh:hasValue s223:Mix-Fluid ;
+            sh:maxCount 1 ;
+            sh:path s223:hasEnumerationKind ;
+        ] ,
+        [
+            sh:class s223:ConnectionPoint ;
+            sh:message "A coolant property belongs to a connection point."@en ;
+            sh:minCount 1 ;
+            sh:path
+                [
+                    sh:inversePath s223:hasProperty ;
+                ] ;
+        ] ;
+    sh:sparql
+        [
+            a sh:SPARQLConstraint ;
+            sh:message "The coolant {?value} is neither the medium {?medium} of its connection point nor a narrower medium."@en ;
+            sh:select """
+SELECT $this ?value ?medium WHERE {
+  ?point <http://data.ashrae.org/standard223#hasProperty> $this ;
+         <http://data.ashrae.org/standard223#hasMedium> ?medium .
+  $this <http://data.ashrae.org/standard223#hasValue> ?value .
+  FILTER NOT EXISTS { ?value <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?medium }
+}
+""" ;
+        ] ;
+    sh:targetClass ai-factory:CoolantProperty ;
+.
+
 ai-factory:CoolingCapacityShape
     a sh:NodeShape ;
     sh:property 

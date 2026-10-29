@@ -2,7 +2,7 @@
 
 An extension of [Brick](https://brickschema.org/) 1.4.4 and [ASHRAE Standard 223](https://open223.info/) for AI data centers: GPU servers and rack-scale systems, the network that connects them, and the liquid-cooling and power equipment around them.
 
-**Status:** 0.3.0, draft. The namespace `https://w3id.org/ai-factory#` is provisional and not yet registered.
+**Status:** 0.4.0, draft. The namespace `https://w3id.org/ai-factory#` is provisional and not yet registered.
 
 ## What it covers
 

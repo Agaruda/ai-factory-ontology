@@ -20,7 +20,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     owl:imports
         <http://data.ashrae.org/standard223/1.0/model/all> ,
         <https://brickschema.org/schema/1.4/Brick> ;
-    owl:versionInfo "0.3.0" ;
+    owl:versionInfo "0.4.0" ;
 .
 
 ai-factory:ActiveRearDoorHeatExchanger
@@ -468,6 +468,16 @@ ai-factory:CoolantManifold
         s223:Equipment ,
         brick:HVAC_Equipment ;
     skos:definition "A header that splits one coolant line into many branch connections, or gathers many branches back into one line, for the trays and devices of a rack or a row."@en ;
+.
+
+ai-factory:CoolantProperty
+    a
+        s223:Class ,
+        owl:Class ;
+    rdfs:label "Coolant property"@en ;
+    rdfs:comment "An enumerated property of a liquid connection point naming one coolant the point takes, such as a 25 percent propylene glycol solution or water; a point that takes several coolants has one such property for each, and its medium is the most specific medium all of them are or are a kind of."@en ;
+    rdfs:subClassOf s223:EnumerableProperty ;
+    skos:definition "An enumerated property of a liquid connection point naming one coolant the point takes, such as a 25 percent propylene glycol solution or water; a point that takes several coolants has one such property for each, and its medium is the most specific medium all of them are or are a kind of."@en ;
 .
 
 ai-factory:CoolingCapacity

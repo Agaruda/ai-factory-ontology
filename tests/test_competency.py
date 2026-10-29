@@ -151,8 +151,15 @@ def test_q2_liquid_connections(graph):
 
 def test_f1_accepted_coolant(graph):
     rows = ask(graph, "F1", SERVER)
-    assert column(rows, "medium") == {AIF["PropyleneGlycolSolution-25Percent"]}
+    assert column(rows, "medium") == column(rows, "coolant") == {AIF["PropyleneGlycolSolution-25Percent"]}
     assert {number(r["concentration"]) for r in rows if r.get("constituent") == AIF["Constituent-PropyleneGlycol"]} == {Decimal("25.0")}
+
+
+def test_f1_several_coolants_on_one_point(graph):
+    rows = ask(graph, "F1", CDU)
+    secondary = [r for r in rows if r["point"] == AIFM["example-cdu-l2l-500.tcs-return"]]
+    assert column(secondary, "medium") == {S223["Fluid-Water"]}
+    assert column(secondary, "coolant") == {AIF["PropyleneGlycolSolution-25Percent"], S223["Fluid-Water"]}
 
 
 def test_k1_required_supply(graph):
