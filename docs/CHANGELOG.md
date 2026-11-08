@@ -5,6 +5,7 @@
 - A coolant property for liquid connection points (decision G21): one `CoolantProperty` per coolant a point takes, each with its own provenance, valued with the coolant media and checked by shapes (a coolant medium, on a connection point, and the point's medium or a narrower one). The point keeps one medium, the common kind of its coolants.
 - The example CDU's secondary loop takes two coolants; competency question F1 lists the coolants a point names, and a test checks that coolants that do not fit their point are reported.
 - The project version is 0.4.0.
+- The repository is licensed under the Apache License 2.0 (`LICENSE`). The pinned standards keep their own licenses.
 
 ## 0.3.0 (draft)
 

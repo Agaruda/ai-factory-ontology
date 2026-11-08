@@ -45,4 +45,4 @@ English only, in code, documents, labels and definitions. Definitions are writte
 
 ## License
 
-To be decided before release. The pinned standards under `schema/vendor/` keep their own licenses.
+Apache License 2.0 (`LICENSE`). The pinned standards under `schema/vendor/` keep their own licenses (`schema/vendor/README.md`).
