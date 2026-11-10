@@ -39,6 +39,14 @@ uv run pytest                                    # tests; add -m slow for ASHRAE
 
 The generated files load with the pinned Brick and 223 in any RDF or SHACL tool; no code from this repository is needed to read them.
 
+## Disclaimer
+
+This is an independent project of Agaruda. It is not affiliated with, endorsed by or maintained by NVIDIA, the Brick Consortium, ASHRAE or any equipment vendor. Product and company names are trademarks of their owners and appear only to identify the equipment the schema can describe.
+
+Product-model data published with this ontology, now or later, is for reference only. Values are extracted from publicly available vendor documents by AI-assisted tools and cite the document and page they came from. They are not confirmed by the vendors and are not official specifications. Check the vendor's current documentation before using them for procurement, engineering or safety decisions. The fixtures under `tests/fixtures/` are made-up examples, not real products.
+
+The schema is a draft (0.4.0). Classes, properties and the namespace may change.
+
 ## Contributing
 
 English only, in code, documents, labels and definitions. Definitions are written in our own words: no text copied from vendor documents (`docs/CONVENTIONS.md`, section 11).
